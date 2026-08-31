@@ -228,9 +228,9 @@
     <!-- D. Quiz Section -->
     <section id="quiz" class="quiz-section">
       <div class="quiz-header">
-        <h2><i class="fas fa-pen-to-square"></i> Engineering Security Knowledge Check (20 Questions)</h2>
+        <h2><i class="fas fa-pen-to-square"></i> Engineering Security Knowledge Check (25 Questions)</h2>
         <div>
-          <span>Progress: <strong id="answeredCount">0</strong>/20</span>
+          <span>Progress: <strong id="answeredCount">0</strong>/25</span>
           <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
             <div class="progress-bar-fill" id="quizProgressFill"></div>
           </div>
@@ -248,13 +248,14 @@
     <!-- Results Section -->
     <section id="results" class="results-card">
       <div class="score-circle" id="scoreDisplay">0%</div>
-      <h3 style="margin-bottom: 1rem; color: var(--secondary);">Assessment Complete</h3>
-      <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+      <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
         Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
         Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
         Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
       </p>
-      <button id="downloadCertBtn" class="btn-primary"><i class="fas fa-certificate"></i> Generate Certificate</button>
+      <div id="certLockMsg" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--danger);"></div>
+      <button id="downloadCertBtn" class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-certificate"></i> Generate Certificate</button>
     </section>
   </main>
 
@@ -269,121 +270,201 @@
         text: "What is the primary technical defense against SQL Injection?",
         options: ["Input validation only", "Parameterized queries (prepared statements)", "Web Application Firewall (WAF) alone", "HTML entity encoding"],
         correct: 1,
-        explanation: "Parameterized queries separate SQL code from untrusted user data, preventing the database interpreter from executing attacker inputs as commands."
+        hint: "Bound variables separate code from user data.",
+        whyCorrect: "Parameterized queries separate SQL execution code from untrusted user parameters, ensuring data is never parsed as SQL syntax.",
+        whyWrong: ["Option 1 is wrong because input validation alone can be bypassed by complex encodings.", "Option 3 is wrong because WAFs can be evaded with novel payload syntax.", "Option 4 is wrong because HTML encoding applies to XSS, not database SQL syntax."]
       },
       {
-        text: "Which OWASP API Security risk involves changing resource IDs (e.g., /user/101 to /user/102) to view unauthorized data?",
+        text: "Which OWASP API Security risk involves changing resource IDs (e.g. /user/101 to /user/102) to view unauthorized data?",
         options: ["API1: Broken Object Level Authorization (IDOR)", "API2: Broken Authentication", "API5: Broken Function Level Authorization", "API7: SSRF"],
         correct: 0,
-        explanation: "Broken Object Level Authorization occurs when an API endpoint does not validate that the authenticated user has permission to access the requested object ID."
+        hint: "IDOR happens at the object level.",
+        whyCorrect: "Broken Object Level Authorization (IDOR) occurs when API endpoints fail to validate that the authenticated user owns or has permission to access the specified object ID.",
+        whyWrong: ["Option 2 is wrong because API2 relates to login/token failure.", "Option 3 relates to function/admin level permission checks.", "Option 4 relates to Server-Side Request Forgery."]
       },
       {
         text: "How frequently should ephemeral secrets ideally be rotated in high-security microservice environments?",
         options: ["Every 12 months", "Every 24 hours or less", "Never, if stored in Vault", "Only when a breach occurs"],
         correct: 1,
-        explanation: "Ephemeral secrets expire within short timeframes (e.g. 24 hours), rendering stolen credentials useless to attackers after expiration."
+        hint: "Short lifespan reduces stolen token utility.",
+        whyCorrect: "Ephemeral credentials automatically expire within short windows (e.g. 24 hours), rendering leaked tokens harmless after expiration.",
+        whyWrong: ["Option 1 is wrong because 12 months leaves keys vulnerable to long-term misuse.", "Option 3 is wrong because vault keys still need short time-to-live policies.", "Option 4 is reactive rather than preventative."]
       },
       {
         text: "What is the primary defense against Prompt Injection (LLM01) in AI application development?",
-        options: ["Relying solely on longer system prompts", "Treating LLM inputs as untrusted and restricting tool execution capabilities", "Disabling web browsing", "Using an open-source model"],
+        options: ["Relying solely on longer system prompts", "Treating LLM inputs as untrusted and restricting agent tool execution capabilities", "Disabling web browsing", "Using an open-source model"],
         correct: 1,
-        explanation: "Prompt injection cannot be completely prevented by prompt engineering alone; applications must limit agent tool capabilities and enforce least privilege."
+        hint: "Apply Principle of Least Privilege to AI tool integration.",
+        whyCorrect: "Prompt injection cannot be prevented by system prompts alone; applications must enforce strict tool capability limits and human-in-the-loop approvals.",
+        whyWrong: ["Option 1 is wrong because attackers easily jailbreak system prompts.", "Option 3 is wrong because browsing is just one feature.", "Option 4 is wrong because open-source models are equally susceptible to prompt injection."]
       },
       {
         text: "Which tool type scans project dependencies for known CVE vulnerabilities during CI/CD build execution?",
         options: ["SAST (Static Application Security Testing)", "SCA (Software Composition Analysis)", "DAST (Dynamic Application Security Testing)", "IAST (Interactive Testing)"],
         correct: 1,
-        explanation: "Software Composition Analysis (SCA) specifically scans third-party open-source libraries and dependency manifests for known CVEs."
+        hint: "Software Composition Analysis targets open-source libraries.",
+        whyCorrect: "SCA specifically inspects manifest files and third-party packages against public CVE vulnerability databases.",
+        whyWrong: ["Option 1 scans custom application source code.", "Option 3 scans running web applications.", "Option 4 combines static/dynamic analysis inside runtime environments."]
       },
       {
         text: "In Zero Trust architecture, what protocol is typically enforced for service-to-service communication?",
         options: ["Plain HTTP", "Mutual TLS (mTLS)", "Telnet", "FTP"],
         correct: 1,
-        explanation: "Mutual TLS (mTLS) authenticates and encrypts communication between both the client and server microservices."
+        hint: "Both client and server must verify certificates.",
+        whyCorrect: "mTLS authenticates both microservices mutually and encrypts network traffic across internal microservice networks.",
+        whyWrong: ["Option 1 transmits unencrypted data.", "Option 3 and 4 are legacy unencrypted protocols."]
       },
       {
         text: "Why should detailed stack traces be suppressed in production error responses?",
-        options: ["They slow down the server", "They leak internal framework details, paths, and library versions to potential attackers", "They break JSON formatting", "They consume too much bandwidth"],
+        options: ["They slow down server CPU", "They leak internal framework details, paths, and library versions to potential attackers", "They break JSON formatting", "They consume too much bandwidth"],
         correct: 1,
-        explanation: "Detailed stack traces expose internal implementation details (A05 Security Misconfiguration) that attackers use to craft targeted exploits."
+        hint: "Verbose errors assist attacker reconnaissance.",
+        whyCorrect: "Stack traces disclose technology stack details, database structures, and internal code paths that attackers exploit.",
+        whyWrong: ["Option 1 is wrong because string logging has negligible CPU impact.", "Option 3 is wrong because stack traces can be formatted in JSON.", "Option 4 is wrong because string length impact is minor."]
       },
       {
         text: "What is the recommended approach for validating user input on the server side?",
         options: ["Denylists (blocking specific bad characters)", "Allowlists (defining exact expected formats and schemas)", "Client-side JavaScript validation only", "Regex filtering for '<script>' tags only"],
         correct: 1,
-        explanation: "Allowlists strictly define valid input criteria (type, length, format), ensuring any unexpected or malicious input is rejected by default."
+        hint: "Define what is strictly allowed rather than guessing what is bad.",
+        whyCorrect: "Allowlists strictly enforce valid data types, lengths, and schemas, rejecting all unexpected inputs by default.",
+        whyWrong: ["Option 1 is wrong because attackers easily bypass denylists via obfuscation.", "Option 3 is wrong because client-side JS can be bypassed using curl/Postman.", "Option 4 is wrong because regex denylists miss non-script XSS and injection payloads."]
       },
       {
         text: "Which HTTP header instructs browsers to strictly enforce HTTPS connections and prevent protocol downgrade attacks?",
         options: ["Content-Security-Policy", "HTTP Strict Transport Security (HSTS)", "X-Frame-Options", "Access-Control-Allow-Origin"],
         correct: 1,
-        explanation: "HSTS forces web browsers to interact with the server exclusively using secure HTTPS connections."
+        hint: "HSTS enforces HTTPS.",
+        whyCorrect: "HSTS forces browsers to interact with the server exclusively via encrypted HTTPS connections.",
+        whyWrong: ["Option 1 restricts resource loading sources.", "Option 3 controls iframe embedding.", "Option 4 manages CORS permissions."]
       },
       {
         text: "What security assertion should be added to automated UI suites (e.g., Playwright) during negative security tests?",
         options: ["Assert that clicking submit always logs in", "Assert that sensitive parameters do not leak in URL parameters or console logs", "Assert that CSS colors load correctly", "Assert that response time is under 100ms"],
         correct: 1,
-        explanation: "Security assertions in UI test suites verify that credentials and tokens are not leaked in URLs, page source, or browser console logs."
+        hint: "Test for credential leakage in browser client logs and URLs.",
+        whyCorrect: "Security assertions in UI suites verify that tokens, passwords, and PII are never exposed in URLs, DOM source, or console logs.",
+        whyWrong: ["Option 1 is a functional test.", "Option 3 is a visual regression test.", "Option 4 is a performance test."]
       },
       {
         text: "What is an IDOR vulnerability primarily caused by?",
         options: ["Missing access control checks on server-side endpoints handling object identifiers", "Weak password policies", "Unencrypted database backups", "Missing CORS headers"],
         correct: 0,
-        explanation: "IDOR occurs when access control is missing at the object level on backend API handlers."
+        hint: "Lack of backend authorization checks on record IDs.",
+        whyCorrect: "IDOR occurs when a server endpoint trusts user-supplied resource IDs without checking user permissions.",
+        whyWrong: ["Option 2 relates to credential strength.", "Option 3 relates to data-at-rest protection.", "Option 4 relates to cross-origin browser sharing."]
       },
       {
         text: "Which approach prevents hardcoded secrets from reaching remote git repositories?",
         options: ["Pre-commit scanning hooks (e.g. git-leaks)", "Adding secrets to .gitignore after committing them", "Encrypting git commits with GPG", "Using private GitHub repositories"],
         correct: 0,
-        explanation: "Pre-commit hooks inspect files locally before commit creation, blocking hardcoded keys before they reach remote repositories."
+        hint: "Catch secrets locally before git commit.",
+        whyCorrect: "Pre-commit hooks analyze commit diffs locally, preventing secret commits from entering git history.",
+        whyWrong: ["Option 2 is wrong because committed secrets remain in git commit history.", "Option 3 encrypts developer identity, not secret values.", "Option 4 leaves secrets accessible to all repository collaborators."]
       },
       {
         text: "What is the purpose of Infrastructure as Code (IaC) scanning tools like Checkov or tfsec?",
         options: ["To format Terraform code", "To detect cloud misconfigurations (e.g. open S3 buckets, unencrypted disks) before deployment", "To speed up AWS provisioning", "To generate architectural diagrams"],
         correct: 1,
-        explanation: "IaC scanners analyze cloud template files for security policy violations and misconfigurations prior to deployment."
+        hint: "Detect cloud misconfigurations in Terraform templates.",
+        whyCorrect: "IaC scanners evaluate infrastructure templates against security best practices prior to cloud provisioning.",
+        whyWrong: ["Option 1 is formatting.", "Option 3 relates to execution speed.", "Option 4 is documentation visualization."]
       },
       {
         text: "Which technique mitigates Cross-Site Request Forgery (CSRF)?",
         options: ["Anti-CSRF tokens and SameSite cookie attributes", "Database indexing", "Minifying JavaScript", "Using CORS headers only"],
         correct: 0,
-        explanation: "Anti-CSRF tokens verify request intent, while SameSite cookie flags prevent browsers from automatically attaching cookies to cross-site requests."
+        hint: "Anti-CSRF tokens verify request origin and user intent.",
+        whyCorrect: "Anti-CSRF tokens bind actions to user sessions, while SameSite cookies prevent cross-site request transmission.",
+        whyWrong: ["Option 2 is query performance.", "Option 3 is payload size optimization.", "Option 4 controls cross-domain browser AJAX access, not CSRF form submissions."]
       },
       {
         text: "What is the principle of 'Least Privilege' in cloud IAM?",
         options: ["Giving all developers Admin privileges for speed", "Granting users and service accounts only the minimum permissions required to perform their specific task", "Rotating passwords every 30 days", "Disabling root account MFA"],
         correct: 1,
-        explanation: "Least privilege minimizes potential blast radius by restricting access to necessary resources only."
+        hint: "Grant minimum required access rights.",
+        whyCorrect: "Least privilege minimizes blast radius by ensuring compromised credentials grant minimal access rights.",
+        whyWrong: ["Option 1 creates massive attack blast radius.", "Option 3 is password policy.", "Option 4 weakens root security."]
       },
       {
         text: "What does Software Composition Analysis (SCA) specifically prevent?",
         options: ["SQL injection in custom code", "Inclusion of vulnerable or malicious third-party dependencies", "Buffer overflows in C code", "Phishing emails"],
         correct: 1,
-        explanation: "SCA tools scan third-party dependencies against vulnerability databases."
+        hint: "Scans open-source packages.",
+        whyCorrect: "SCA identifies known CVE vulnerabilities in third-party libraries and open-source packages.",
+        whyWrong: ["Option 1 is checked via SAST/DAST.", "Option 3 is custom code static analysis.", "Option 4 is email gateway defense."]
       },
       {
-        text: "What threat model framework uses the categories Spoofing, Tampering, Repudiation, Info Disclosure, Denial of Service, and Elevation of Privilege?",
+        text: "What threat model framework uses Spoofing, Tampering, Repudiation, Info Disclosure, Denial of Service, and Elevation of Privilege?",
         options: ["DREAD", "STRIDE", "PASTA", "OWASP SAMM"],
         correct: 1,
-        explanation: "STRIDE is the Microsoft-developed threat modeling framework categorizing six core security threat vectors."
+        hint: "Microsoft threat modeling framework acronym.",
+        whyCorrect: "STRIDE is the Microsoft threat modeling framework covering these 6 core threat domains.",
+        whyWrong: ["DREAD is a risk scoring model.", "PASTA is Process for Attack Simulation and Threat Analysis.", "SAMM is a Software Assurance Maturity Model."]
       },
       {
         text: "Why should rate limiting be implemented on API login and registration endpoints?",
         options: ["To save database storage", "To prevent credential stuffing and brute-force password guessing attacks", "To improve search engine indexing", "To speed up network bandwidth"],
         correct: 1,
-        explanation: "Rate limiting restricts high-frequency automated login requests used in brute-force attacks."
+        hint: "Restrict automated high-frequency login attempts.",
+        whyCorrect: "Rate limiting restricts rapid automated login attempts used in brute-force and credential stuffing attacks.",
+        whyWrong: ["Option 1 does not affect storage.", "Option 3 is search engine optimization.", "Option 4 does not increase network bandwidth."]
       },
       {
         text: "What is SSRF (Server-Side Request Forgery)?",
-        options: ["An attacker coercing a server to send unauthorized requests to internal or external systems", "A client-side script execution in browser", "Modifying local cookies", "Overwriting local storage"],
+        options: ["An attacker coercing a web server to make unauthorized HTTP requests to internal or external systems", "A client-side script execution in browser", "Modifying local cookies", "Overwriting local storage"],
         correct: 0,
-        explanation: "SSRF occurs when a web server fetches a remote resource specified by an attacker without adequate validation."
+        hint: "The server makes HTTP requests on behalf of the attacker.",
+        whyCorrect: "SSRF allows an attacker to abuse server functionality to read internal cloud metadata or query private internal services.",
+        whyWrong: ["Option 2 describes XSS.", "Option 3 is local cookie manipulation.", "Option 4 is HTML5 storage modification."]
       },
       {
         text: "What is the recommended method for storing user passwords in a database?",
         options: ["Base64 encoding", "AES-256 reversible encryption", "Strong salted cryptographic hash functions (e.g., Argon2, bcrypt)", "MD5 hash"],
         correct: 2,
-        explanation: "Argon2 or bcrypt with unique per-user salt prevents password recovery even if database contents are exfiltrated."
+        hint: "One-way salted hashing algorithms.",
+        whyCorrect: "Argon2 and bcrypt with unique salts slow down dictionary attacks and prevent password recovery even if database records are stolen.",
+        whyWrong: ["Option 1 is encoding, easily decoded.", "Option 2 is reversible encryption, exposing master key vulnerability.", "Option 4 MD5 is broken and vulnerable to collision attacks."]
+      },
+      {
+        text: "While monitoring server logs, you see rapid 403 Forbidden spikes coming from a single IP attempting multiple API endpoints. What should you do?",
+        options: ["Ignore it", "Block/throttle the IP at the WAF/Gateway and notify the SOC", "Delete the logs", "Reboot the database"],
+        correct: 1,
+        hint: "403 spikes indicate automated endpoint scanning.",
+        whyCorrect: "Throttling/blocking the IP stops automated directory brute-forcing and alerting SOC initiates threat intelligence tracking.",
+        whyWrong: ["Option 1 ignores active scanning.", "Option 3 destroys forensic evidence.", "Option 4 causes unnecessary system downtime."]
+      },
+      {
+        text: "What is a 'Magecart' supply chain attack?",
+        options: ["Compromising a third-party JavaScript library to inject credit card skimmers into checkout pages", "SQL injection in cart", "Phishing cart users", "Overloading cart bandwidth"],
+        correct: 0,
+        hint: "Client-side script tampering on payment pages.",
+        whyCorrect: "Magecart attacks tamper with third-party JS scripts (like analytics/ad scripts) to steal form input data directly in the browser.",
+        whyWrong: ["Option 1 is server-side SQLi.", "Option 3 is social engineering.", "Option 4 is DoS."]
+      },
+      {
+        text: "What is container image vulnerability scanning in Docker/Kubernetes CI/CD pipelines?",
+        options: ["Scanning container OS packages and dependencies (e.g., via Trivy/Clair) for known CVEs before deployment", "Formatting Dockerfiles", "Compressing images", "Checking container RAM"],
+        correct: 0,
+        hint: "Detecting CVEs in base container OS layers.",
+        whyCorrect: "Container scanners inspect base images and installed packages for vulnerabilities prior to registry push.",
+        whyWrong: ["Option 2 is linting.", "Option 3 is image optimization.", "Option 4 is runtime metrics monitoring."]
+      },
+      {
+        text: "What is 'Immutable Infrastructure'?",
+        options: ["Replacing cloud instances entirely with fresh configured builds rather than SSH patching live servers", "Never updating servers", "Storing code on read-only disks", "Hardcoding server IPs"],
+        correct: 0,
+        hint: "Destroy and replace rather than modify in place.",
+        whyCorrect: "Immutable infrastructure ensures servers are never modified in production, preventing configuration drift and persistent malware backdoors.",
+        whyWrong: ["Option 2 leaves systems unpatched.", "Option 3 is physical hardware lock.", "Option 4 hinders auto-scaling."]
+      },
+      {
+        text: "Why should CORS (Cross-Origin Resource Sharing) headers be configured restrictively?",
+        options: ["To prevent unauthorized external domains from making cross-origin authenticated browser requests to your APIs", "To compress HTTP traffic", "To format JSON output", "To speed up DNS lookup"],
+        correct: 0,
+        hint: "Restrict wildcards (*) in Access-Control-Allow-Origin for authenticated endpoints.",
+        whyCorrect: "Wildcard CORS headers allow malicious external websites to make authenticated API calls on behalf of logged-in users.",
+        whyWrong: ["Option 2 is compression.", "Option 3 is parsing.", "Option 4 is DNS resolution."]
       }
     ];
 

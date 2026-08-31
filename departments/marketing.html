@@ -210,9 +210,9 @@
 
     <section id="quiz" class="quiz-section">
       <div class="quiz-header">
-        <h2><i class="fas fa-pen-to-square"></i> Marketing Security Knowledge Check (20 Questions)</h2>
+        <h2><i class="fas fa-pen-to-square"></i> Marketing Security Knowledge Check (25 Questions)</h2>
         <div>
-          <span>Progress: <strong id="answeredCount">0</strong>/20</span>
+          <span>Progress: <strong id="answeredCount">0</strong>/25</span>
           <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
             <div class="progress-bar-fill" id="quizProgressFill"></div>
           </div>
@@ -229,13 +229,14 @@
 
     <section id="results" class="results-card">
       <div class="score-circle" id="scoreDisplay">0%</div>
-      <h3 style="margin-bottom: 1rem; color: var(--secondary);">Assessment Complete</h3>
-      <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+      <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
         Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
         Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
         Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
       </p>
-      <button id="downloadCertBtn" class="btn-primary"><i class="fas fa-certificate"></i> Generate Certificate</button>
+      <div id="certLockMsg" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--danger);"></div>
+      <button id="downloadCertBtn" class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-certificate"></i> Generate Certificate</button>
     </section>
   </main>
 
@@ -248,123 +249,323 @@
     const marketingQuestions = [
       {
         text: "What email authentication record allows domain owners to declare which mail servers are authorized to send email on their behalf?",
-        options: ["SPF (Sender Policy Framework)", "SSL", "DNS CNAME", "FTP"],
+        options: [
+          "SPF (Sender Policy Framework)",
+          "SSL Certificate",
+          "DNS CNAME",
+          "FTP Server Record"
+        ],
         correct: 0,
-        explanation: "SPF DNS records specify authorized sending mail servers to prevent domain spoofing."
+        hint: "Sender Policy Framework lists sending IPs.",
+        whyCorrect: "SPF DNS records specify authorized sending mail server IP addresses to prevent email domain spoofing.",
+        whyWrong: ["Option 1 encrypts Web HTTPS traffic.", "Option 2 creates DNS aliases.", "Option 4 is file transfer."]
       },
       {
         text: "What is the primary danger of putting recipient email addresses in the CC field instead of BCC or automated marketing tools?",
-        options: ["It slows down email delivery", "It exposes all recipient email addresses to everyone on the list, causing a PII data breach", "It increases spam scores", "It corrupts images"],
+        options: [
+          "It slows down email delivery speed",
+          "It exposes all recipient email addresses to everyone on the list, causing a PII data breach",
+          "It increases spam filter scores",
+          "It corrupts embedded graphics"
+        ],
         correct: 1,
-        explanation: "Exposing customer email addresses in CC violates data privacy regulations and leaks contact lists."
+        hint: "CC reveals all email addresses to every recipient.",
+        whyCorrect: "Exposing customer email addresses in CC violates data privacy regulations and leaks contact lists.",
+        whyWrong: ["Option 0 is delivery processing.", "Option 2 is spam filter scoring.", "Option 3 is image rendering."]
       },
       {
         text: "How should shared corporate social media accounts (e.g. official Twitter or LinkedIn) be accessed safely?",
-        options: ["Sharing passwords in public Slack channels", "Through a centralized social media management platform (Hootsuite/Sprout) with individual logins & MFA", "Using a simple 6-character password", "Disabling MFA"],
+        options: [
+          "Sharing plaintext passwords in group Slack channels",
+          "Through a centralized social media management platform (Hootsuite/Sprout) with individual logins & MFA",
+          "Using a simple 6-character password",
+          "Disabling MFA for convenience"
+        ],
         correct: 1,
-        explanation: "Social media management platforms enforce individual authentication and audit logs without sharing raw credentials."
+        hint: "Centralized platforms eliminate raw password sharing.",
+        whyCorrect: "Social management tools grant individual access without disclosing raw master passwords, providing audit trails.",
+        whyWrong: ["Option 0 exposes passwords in chat logs.", "Option 2 uses easily cracked passwords.", "Option 3 disables critical multi-factor defense."]
       },
       {
         text: "What does DMARC stand for and do?",
-        options: ["Digital Marketing and Reporting Code", "Domain-based Message Authentication, Reporting, and Conformance; instructs receiving servers how to handle failed SPF/DKIM checks", "Direct Media Access Control", "Data Mining Rules"],
+        options: [
+          "Digital Marketing and Reporting Code",
+          "Domain-based Message Authentication, Reporting, and Conformance; instructs receiving mail servers how to handle SPF/DKIM failures",
+          "Direct Media Access Control",
+          "Data Mining Rules"
+        ],
         correct: 1,
-        explanation: "DMARC leverages SPF and DKIM to prevent email domain spoofing and phishing."
+        hint: "Defines policies (Reject/Quarantine) for failed SPF/DKIM checks.",
+        whyCorrect: "DMARC leverages SPF and DKIM to instruct receiving mail servers to reject or quarantine fake domain emails.",
+        whyWrong: ["Option 0 is marketing terminology.", "Option 2 is network hardware.", "Option 3 is analytics rules."]
       },
       {
         text: "What privacy law requirement mandates giving users a clear way to unsubscribe from marketing communications?",
-        options: ["CAN-SPAM / GDPR / CCPA regulations", "Copyright Act", "DMCA", "SOX Act"],
+        options: [
+          "CAN-SPAM / GDPR / CCPA regulations",
+          "Copyright Act",
+          "DMCA",
+          "Sarbanes-Oxley Act"
+        ],
         correct: 0,
-        explanation: "Privacy laws mandate opt-out/unsubscribe mechanisms for commercial emails."
+        hint: "Anti-spam and privacy laws enforce opt-out mechanisms.",
+        whyCorrect: "Privacy frameworks mandate accessible, automated unsubscribe links in commercial communications.",
+        whyWrong: ["Option 1 protects intellectual property.", "Option 2 handles digital media copyright.", "Option 3 handles corporate financial auditing."]
       },
       {
         text: "What is a 'Magecart' or digital web skimming attack?",
-        options: ["Compromised third-party JavaScript scripts on a website stealing customer payment data", "A social media scam", "A printed flyer fraud", "An email autoresponder bug"],
+        options: [
+          "Compromised third-party JavaScript scripts on a website stealing customer payment data directly in the browser",
+          "A social media scam post",
+          "A printed flyer fraud",
+          "An email autoresponder bug"
+        ],
         correct: 0,
-        explanation: "Web skimming compromises client-side scripts (such as analytics or ad tags) to exfiltrate input data."
+        hint: "Client-side script tampering harvesting checkout data.",
+        whyCorrect: "Magecart attacks compromise third-party tracking/ad scripts to scrape credit card numbers entered on web pages.",
+        whyWrong: ["Option 1 is social engineering.", "Option 2 is physical advertising.", "Option 3 is software auto-reply."]
       },
       {
-        text: "Why should third-party CMS plugins (e.g., WordPress plugins) be strictly audited and updated?",
-        options: ["Outdated plugins are prime attack vectors for website defacement, backdoor installation, and malware injection", "To change website fonts", "To increase image resolution", "To reduce web hosting costs"],
+        text: "Why should third-party CMS plugins (e.g. WordPress plugins) be strictly audited and updated?",
+        options: [
+          "Outdated plugins are prime attack vectors for website defacement, backdoor installation, and malware injection",
+          "To change website typography",
+          "To increase image resolution",
+          "To reduce web hosting costs"
+        ],
         correct: 0,
-        explanation: "Vulnerable CMS plugins account for a majority of marketing website compromises."
+        hint: "Unpatched plugins account for most marketing site hacks.",
+        whyCorrect: "Vulnerable CMS plugins allow attackers to execute remote code, deface sites, or insert SEO spam backdoors.",
+        whyWrong: ["Option 1 is CSS design.", "Option 2 is image processing.", "Option 3 is server hosting pricing."]
       },
       {
         text: "What action should be taken if a lookalike brand domain (`company-free-gift.com`) is found scamming users?",
-        options: ["Ignore it", "Report the domain to Security/Legal to issue a domain abuse takedown notice", "Buy products from it", "Retweet it"],
+        options: [
+          "Ignore it",
+          "Report the domain to Security/Legal to issue a domain abuse takedown notice",
+          "Buy products from it",
+          "Retweet it"
+        ],
         correct: 1,
-        explanation: "Domain abuse takedowns mitigate brand impersonation and protect customers."
+        hint: "File domain abuse takedown requests.",
+        whyCorrect: "Takedown notices sent to domain registrars remove scam sites that damage brand reputation.",
+        whyWrong: ["Option 0 allows ongoing customer scamming.", "Option 2 funds cybercriminals.", "Option 3 amplifies the scam."]
       },
       {
         text: "Under GDPR, what condition must be met before adding a European customer to a promotional marketing email list?",
-        options: ["Freely given, explicit opt-in consent", "No consent needed", "Implied consent from browsing website", "Asking them 10 times"],
+        options: [
+          "Freely given, explicit opt-in consent",
+          "No consent needed",
+          "Implied consent from browsing website",
+          "Asking them 10 times"
+        ],
         correct: 0,
-        explanation: "GDPR strictly mandates explicit, affirmative opt-in consent for promotional messaging."
+        hint: "GDPR mandates explicit affirmative action.",
+        whyCorrect: "GDPR strictly mandates explicit opt-in consent prior to sending promotional marketing emails.",
+        whyWrong: ["Option 1 violates GDPR.", "Option 2 pre-checked boxes are illegal under GDPR.", "Option 3 is persistent spam."]
       },
       {
         text: "What security measure prevents former agency contractors from accessing corporate social accounts?",
-        options: ["Immediate offboarding and access revocation upon project completion", "Changing password once a year", "Asking them nicely not to log in", "Deleting posts"],
+        options: [
+          "Immediate offboarding and access revocation upon project completion",
+          "Changing password once a year",
+          "Asking them nicely not to log in",
+          "Deleting past posts"
+        ],
         correct: 0,
-        explanation: "Prompt offboarding ensures third-party contractors lose access when contracts end."
+        hint: "Prompt account deprovisioning.",
+        whyCorrect: "Immediate offboarding revokes API tokens and platform seats as soon as agency contracts end.",
+        whyWrong: ["Option 1 leaves a 12-month window for unauthorized access.", "Option 2 relies on trust rather than access control.", "Option 3 affects past content, not login access."]
       },
       {
         text: "What is Google Tag Manager (GTM) script auditing?",
-        options: ["Reviewing third-party tracking tags to ensure no unauthorized scripts exfiltrate user data", "Formatting blog posts", "Compressing PNG files", "Checking spelling"],
+        options: [
+          "Reviewing third-party tracking tags to ensure no unauthorized scripts exfiltrate user data",
+          "Formatting blog posts",
+          "Compressing PNG files",
+          "Checking spelling"
+        ],
         correct: 0,
-        explanation: "Auditing GTM tags prevents unauthorized third-party scripts from harvesting user data."
+        hint: "Audit third-party tags for data exfiltration.",
+        whyCorrect: "Auditing GTM ensures injected third-party tracking tags do not leak sensitive customer data.",
+        whyWrong: ["Option 1 is content editing.", "Option 2 is image optimization.", "Option 3 is copy proofreading."]
       },
       {
         text: "Why are unreleased marketing campaign graphics classified as Confidential?",
-        options: ["To prevent trade secret leaks, market manipulation, and premature press exposure", "They take up disk space", "Because they are copyrighted", "To slow down launches"],
+        options: [
+          "To prevent trade secret leaks, market manipulation, and premature press exposure",
+          "They take up disk space",
+          "Because they are copyrighted",
+          "To slow down launches"
+        ],
         correct: 0,
-        explanation: "Unreleased campaigns contain strategic business information that must remain confidential."
+        hint: "Protects competitive advantage before public launch.",
+        whyCorrect: "Unreleased marketing collateral contains strategic product intelligence that competitors could exploit if leaked.",
+        whyWrong: ["Option 1 is file storage.", "Option 2 is legal copyright.", "Option 4 is operational delay."]
       },
       {
         text: "What is DKIM (DomainKeys Identified Mail)?",
-        options: ["A cryptographic digital signature attached to outgoing emails verifying the message was not altered in transit", "A domain registration fee", "A keyword search tool", "An image format"],
+        options: [
+          "A cryptographic digital signature attached to outgoing emails verifying the message was not altered in transit",
+          "A domain registration fee",
+          "A keyword search tool",
+          "An image format"
+        ],
         correct: 0,
-        explanation: "DKIM uses public key cryptography to authenticate email sender domain integrity."
+        hint: "Cryptographic email signature.",
+        whyCorrect: "DKIM uses public key cryptography to prove an email was sent by the domain owner and unaltered.",
+        whyWrong: ["Option 1 is domain pricing.", "Option 2 is search index.", "Option 3 is graphics."]
       },
       {
         text: "What should lead collection forms on landing pages enforce?",
-        options: ["HTTPS encryption and server-side input validation", "Plaintext HTTP submit", "Disabling CAPTCHA", "Unvalidated input fields"],
+        options: [
+          "HTTPS encryption and server-side input validation",
+          "Plaintext HTTP submit",
+          "Disabling CAPTCHA",
+          "Unvalidated input fields"
+        ],
         correct: 0,
-        explanation: "HTTPS encrypts submitted lead PII, while server-side validation blocks injection attacks."
+        hint: "HTTPS encrypts PII submitted in web forms.",
+        whyCorrect: "HTTPS encrypts submitted PII over the wire, while server-side validation blocks injection attacks.",
+        whyWrong: ["Option 1 transmits PII unencrypted over public Wi-Fi.", "Option 2 allows bot spam.", "Option 3 opens injection vulnerabilities."]
       },
       {
         text: "What risk arises from downloading marketing images or assets from untrusted public websites?",
-        options: ["Copyright infringement, malware payload embedding, or steganography risks", "Faster download speeds", "Better image resolution", "Automatic translation"],
+        options: [
+          "Copyright infringement, malware payload embedding, or steganography risks",
+          "Faster download speeds",
+          "Better image resolution",
+          "Automatic translation"
+        ],
         correct: 0,
-        explanation: "Untrusted downloads expose the organization to licensing lawsuits and embedded malware."
+        hint: "Untrusted downloads can contain malware or copyright traps.",
+        whyCorrect: "Free untrusted downloads may contain malware or trigger copyright lawsuits.",
+        whyWrong: ["Option 1 is download performance.", "Option 2 is image quality.", "Option 3 is language translation."]
       },
       {
         text: "What is a 'Typosquatting' domain?",
-        options: ["A domain name registered by attackers that closely mimics a legitimate brand name (e.g. `goggle.com`) to deceive users", "A domain with high traffic", "An internal testing domain", "A search engine"],
+        options: [
+          "A domain name registered by attackers that closely mimics a legitimate brand name (e.g. `goggle.com`) to deceive users",
+          "A domain with high traffic",
+          "An internal testing domain",
+          "A search engine"
+        ],
         correct: 0,
-        explanation: "Typosquatting relies on common user typing errors to direct traffic to phishing sites."
+        hint: "Takes advantage of common user typing errors.",
+        whyCorrect: "Typosquatting relies on user spelling mistakes to direct victims to scam or phishing websites.",
+        whyWrong: ["Option 1 is web traffic volume.", "Option 2 is internal dev environment.", "Option 4 is web indexing."]
       },
       {
         text: "How quickly should opt-out / unsubscribe requests be processed according to CAN-SPAM laws?",
-        options: ["Within 10 business days maximum (best practice is automated immediate removal)", "Within 6 months", "Never", "Only if requested twice"],
+        options: [
+          "Within 10 business days maximum (best practice is automated immediate removal)",
+          "Within 6 months",
+          "Never",
+          "Only if requested twice"
+        ],
         correct: 0,
-        explanation: "CAN-SPAM dictates strict timelines (10 business days max) for processing opt-out requests."
+        hint: "CAN-SPAM dictates a 10 business day maximum deadline.",
+        whyCorrect: "CAN-SPAM legally requires processing unsubscribe requests within 10 business days maximum.",
+        whyWrong: ["Option 1 violates CAN-SPAM regulations.", "Option 2 violates anti-spam law.", "Option 3 ignores opt-outs."]
       },
       {
         text: "What is the safest way to store corporate social media passwords?",
-        options: ["An encrypted corporate password manager with MFA enabled", "In a shared Google Doc", "In a group chat", "On a white board"],
+        options: [
+          "An encrypted corporate password manager with MFA enabled",
+          "In a shared Google Doc",
+          "In a group chat",
+          "On a whiteboard"
+        ],
         correct: 0,
-        explanation: "Password managers store credentials securely without exposing plaintext passwords."
+        hint: "Encrypted password manager with master passphrase.",
+        whyCorrect: "Password managers store credentials in encrypted vaults accessible only via authenticated master passphrases.",
+        whyWrong: ["Option 1 is plain text doc.", "Option 2 exposes secrets in chat history.", "Option 3 exposes credentials physically."]
       },
       {
         text: "What is the purpose of a Cookie Consent Banner on marketing websites?",
-        options: ["To comply with privacy laws (GDPR/ePrivacy) by informing users and gaining consent before setting tracking cookies", "To show website announcements", "To block ad blockers", "To speed up site load times"],
+        options: [
+          "To comply with privacy laws (GDPR/ePrivacy) by informing users and gaining consent before setting tracking cookies",
+          "To show website announcements",
+          "To block ad blockers",
+          "To speed up site load times"
+        ],
         correct: 0,
-        explanation: "Cookie consent banners ensure legal compliance before firing tracking tags."
+        hint: "Informs users and requests consent for non-essential cookies.",
+        whyCorrect: "Cookie banners satisfy privacy compliance by requiring opt-in consent before tracking tags fire.",
+        whyWrong: ["Option 1 is banner advertising.", "Option 2 is anti-adblocker scripts.", "Option 3 is performance optimization."]
       },
       {
         text: "What is 'Brand Impersonation'?",
-        options: ["Cybercriminals pretending to be a known brand to trick victims into revealing sensitive info or paying money", "A competitor selling similar products", "A parody video", "A new marketing slogan"],
+        options: [
+          "Cybercriminals pretending to be a known brand to trick victims into revealing sensitive info or paying money",
+          "A competitor selling similar products",
+          "A parody video",
+          "A new marketing slogan"
+        ],
         correct: 0,
-        explanation: "Brand impersonation leverages established corporate reputation to conduct scams."
+        hint: "Misusing brand reputation to conduct fraud.",
+        whyCorrect: "Brand impersonation abuses corporate logos and trust to trick customers into revealing credentials or sending money.",
+        whyWrong: ["Option 1 is market competition.", "Option 2 is satire.", "Option 3 is marketing copy."]
+      },
+      {
+        text: "An influencer agency emails a zip archive labeled `Sponsorship_Contract.zip` containing a `.js` file inside. What should you do?",
+        options: [
+          "Double click the .js file to execute it",
+          "Do not execute scripts; report the suspicious attachment to Security",
+          "Upload it to corporate social media",
+          "Forward to all marketers"
+        ],
+        correct: 1,
+        hint: "Contract attachments should never be executable JavaScript files.",
+        whyCorrect: "Executable JavaScript files inside zip attachments are Trojan malware vectors.",
+        whyWrong: ["Option 0 executes malware.", "Option 2 uploads malware publicly.", "Option 3 spreads infection internally."]
+      },
+      {
+        text: "Why should marketing teams avoid buying third-party email lists off unverified websites?",
+        options: [
+          "Unverified lists contain spam traps, lack explicit GDPR opt-in consent, and damage domain sender reputation",
+          "It uses too much disk space",
+          "The emails are too short",
+          "It changes email fonts"
+        ],
+        correct: 0,
+        hint: "Purchased lists lead to high bounce rates and legal fines.",
+        whyCorrect: "Purchased lists lack consent under GDPR and trigger spam blocklists (like Spamhaus), ruining domain deliverability.",
+        whyWrong: ["Option 1 is file size.", "Option 2 is string length.", "Option 3 is typography."]
+      },
+      {
+        text: "What is 'Ad Fraud' or Malvertising?",
+        options: [
+          "Injecting malicious ads or compromised ad networks to redirect web visitors to malware sites",
+          "Expensive ad pricing",
+          "Poor ad design",
+          "Declining ad clicks"
+        ],
+        correct: 0,
+        hint: "Malicious code delivered via ad networks.",
+        whyCorrect: "Malvertising embeds malicious scripts into ad networks, compromising users who view or click the ads.",
+        whyWrong: ["Option 1 is ad pricing.", "Option 2 is creative design.", "Option 3 is ad conversion performance."]
+      },
+      {
+        text: "How does a Content Security Policy (CSP) header protect marketing websites?",
+        options: [
+          "Restricts which external domains can execute scripts or load assets on your web pages, blocking XSS and skimmers",
+          "Formats blog posts",
+          "Compresses images",
+          "Improves SEO ranks"
+        ],
+        correct: 0,
+        hint: "Defines trusted sources for scripts and images.",
+        whyCorrect: "CSP restricts executable script sources, blocking malicious third-party script injection.",
+        whyWrong: ["Option 1 is layout formatting.", "Option 2 is asset compression.", "Option 3 is search engine rank."]
+      },
+      {
+        text: "What is the primary responsibility of a Marketer regarding customer data privacy?",
+        options: ["Collecting as much data as possible without asking", "Respecting customer consent, securing collected PII, and upholding brand trust", "Selling customer email lists", "Ignoring privacy policies"],
+        correct: 1,
+        hint: "Protect customer data trust and privacy consent.",
+        whyCorrect: "Ethical marketing respects consent, protects customer PII, and builds long-term brand trust.",
+        whyWrong: ["Option 0 violates data minimization.", "Option 2 violates privacy laws.", "Option 3 breaches compliance."]
       }
     ];
 

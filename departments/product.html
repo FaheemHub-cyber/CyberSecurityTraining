@@ -209,9 +209,9 @@
 
     <section id="quiz" class="quiz-section">
       <div class="quiz-header">
-        <h2><i class="fas fa-pen-to-square"></i> Product Management Security Knowledge Check (20 Questions)</h2>
+        <h2><i class="fas fa-pen-to-square"></i> Product Management Security Knowledge Check (25 Questions)</h2>
         <div>
-          <span>Progress: <strong id="answeredCount">0</strong>/20</span>
+          <span>Progress: <strong id="answeredCount">0</strong>/25</span>
           <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
             <div class="progress-bar-fill" id="quizProgressFill"></div>
           </div>
@@ -228,13 +228,14 @@
 
     <section id="results" class="results-card">
       <div class="score-circle" id="scoreDisplay">0%</div>
-      <h3 style="margin-bottom: 1rem; color: var(--secondary);">Assessment Complete</h3>
-      <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+      <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
         Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
         Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
         Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
       </p>
-      <button id="downloadCertBtn" class="btn-primary"><i class="fas fa-certificate"></i> Generate Certificate</button>
+      <div id="certLockMsg" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--danger);"></div>
+      <button id="downloadCertBtn" class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-certificate"></i> Generate Certificate</button>
     </section>
   </main>
 
@@ -247,123 +248,328 @@
     const productQuestions = [
       {
         text: "What is 'Privacy by Design' (PbD) in product management?",
-        options: ["Adding a privacy statement at product launch", "Integrating privacy protections and data minimization as default settings throughout the product development lifecycle", "Letting legal handle all compliance", "Hiding user settings"],
+        options: [
+          "Adding a privacy statement at product launch",
+          "Integrating privacy protections and data minimization as default settings throughout the product development lifecycle",
+          "Letting legal handle all compliance",
+          "Hiding user settings"
+        ],
         correct: 1,
-        explanation: "Privacy by Design mandates that privacy controls are architected into features from inception."
+        hint: "Embedding privacy into architecture by default.",
+        whyCorrect: "Privacy by Design mandates that privacy controls and data minimization are architected into features from inception.",
+        whyWrong: ["Option 0 is reactive policy.", "Option 2 abdicates product responsibility.", "Option 3 hides user control."]
       },
       {
         text: "In the STRIDE threat modeling framework, what threat category corresponds to an attacker modifying data in transit or storage?",
-        options: ["Spoofing", "Tampering", "Repudiation", "Elevation of Privilege"],
+        options: [
+          "Spoofing",
+          "Tampering",
+          "Repudiation",
+          "Elevation of Privilege"
+        ],
         correct: 1,
-        explanation: "Tampering involves unauthorized modification of data or system memory."
+        hint: "Tampering refers to unauthorized data modification.",
+        whyCorrect: "Tampering involves unauthorized modification of data or system memory.",
+        whyWrong: ["Option 0 is identity impersonation.", "Option 2 is missing audit logs.", "Option 3 is gaining unauthorized permissions."]
       },
       {
         text: "When should a Critical severity security bug be prioritized relative to new feature requests?",
-        options: ["After the quarterly feature release", "Immediately as a P0 blocker in the current sprint", "In next year's roadmap", "Only if customers complain"],
+        options: [
+          "After the quarterly feature release",
+          "Immediately as a P0 blocker in the current sprint",
+          "In next year's roadmap",
+          "Only if customers complain"
+        ],
         correct: 1,
-        explanation: "Critical vulnerabilities pose active breach risks and must take precedence over feature deliverables."
+        hint: "Critical security flaws take precedence over feature deliverables.",
+        whyCorrect: "Critical vulnerabilities pose active breach risks and must be prioritized immediately as P0 blockers.",
+        whyWrong: ["Option 0 delays fixing active vulnerabilities.", "Option 2 exposes systems for a year.", "Option 3 waits for a breach incident."]
       },
       {
         text: "Why is a Product Requirement Document (PRD) incomplete without a Security & Privacy section?",
-        options: ["Because security requirements affect architecture, compliance, data handling, and user acceptance criteria from day one", "To increase document length", "To slow down engineers", "To satisfy marketing"],
+        options: [
+          "Because security requirements affect architecture, compliance, data handling, and acceptance criteria from day one",
+          "To increase document length",
+          "To slow down engineers",
+          "To satisfy marketing"
+        ],
         correct: 0,
-        explanation: "Addressing security in PRDs prevents expensive architecture refactoring late in the release cycle."
+        hint: "Defines security acceptance criteria early in development.",
+        whyCorrect: "Addressing security in PRDs prevents expensive architecture refactoring late in the release cycle.",
+        whyWrong: ["Option 1 is document formatting.", "Option 2 is operational delay.", "Option 3 is marketing copy."]
       },
       {
         text: "What does the 'Right to be Forgotten' under GDPR require product managers to build?",
-        options: ["A search bar", "Automated mechanisms to permanently erase or anonymize a user's personal data upon request", "Backup restoration tools", "Data export to PDF"],
+        options: [
+          "A search bar",
+          "Automated mechanisms to permanently erase or anonymize a user's personal data upon request",
+          "Backup restoration tools",
+          "Data export to PDF"
+        ],
         correct: 1,
-        explanation: "GDPR Article 17 grants users the legal right to request erasure of their personal data."
+        hint: "GDPR Article 17 user data erasure workflows.",
+        whyCorrect: "GDPR Article 17 grants users the legal right to request complete data erasure or anonymization.",
+        whyWrong: ["Option 0 is search UI.", "Option 2 is data backup.", "Option 3 is data export."]
       },
       {
         text: "What percentage of engineering capacity is typically recommended to allocate for security refactoring and debt reduction?",
-        options: ["0%", "15% - 20%", "75%", "100%"],
+        options: [
+          "0%",
+          "15% - 20%",
+          "75%",
+          "100%"
+        ],
         correct: 1,
-        explanation: "Allocating 15-20% engineering bandwidth ensures continuous security maintenance and debt reduction."
+        hint: "Allocating 15-20% bandwidth maintains continuous security.",
+        whyCorrect: "Allocating 15-20% engineering bandwidth ensures continuous security maintenance and debt reduction.",
+        whyWrong: ["Option 0 leads to massive security debt.", "Option 2 starves feature development.", "Option 3 stops feature delivery."]
       },
       {
         text: "What risk arises when integrating third-party software SDKs or SaaS APIs without security vetting?",
-        options: ["Supply chain vulnerabilities, unauthorized data harvesting, and compliance breaches", "Slower internet speeds", "Higher code coverage", "Easier UI design"],
+        options: [
+          "Supply chain vulnerabilities, unauthorized data harvesting, and compliance breaches",
+          "Slower internet speeds",
+          "Higher code coverage",
+          "Easier UI design"
+        ],
         correct: 0,
-        explanation: "Third-party SDKs inherit system permissions and can introduce severe supply chain risks."
+        hint: "Third-party SDKs inherit system permissions.",
+        whyCorrect: "Third-party SDKs inherit system permissions and can introduce severe supply chain risks.",
+        whyWrong: ["Option 1 is network speed.", "Option 2 is unit test metrics.", "Option 3 is visual design."]
       },
       {
         text: "In STRIDE, what threat category addresses an actor denying they performed an action because system logs are missing?",
-        options: ["Spoofing", "Repudiation", "Information Disclosure", "Denial of Service"],
+        options: [
+          "Spoofing",
+          "Repudiation",
+          "Information Disclosure",
+          "Denial of Service"
+        ],
         correct: 1,
-        explanation: "Repudiation occurs when actions cannot be definitively proven due to lack of non-repudiable audit trails."
+        hint: "Lack of non-repudiable audit logs.",
+        whyCorrect: "Repudiation occurs when actions cannot be definitively proven due to lack of non-repudiable audit trails.",
+        whyWrong: ["Option 0 is identity impersonation.", "Option 2 is data leakage.", "Option 3 is resource exhaustion."]
       },
       {
         text: "How should product managers handle feature flags during high-risk security deployments?",
-        options: ["Use feature flags to enable rapid rollout control and immediate kill-switch toggling if issues arise", "Never use feature flags", "Hardcode all flags", "Keep flags open forever"],
+        options: [
+          "Use feature flags to enable rapid rollout control and immediate kill-switch toggling if issues arise",
+          "Never use feature flags",
+          "Hardcode all flags",
+          "Keep flags open forever"
+        ],
         correct: 0,
-        explanation: "Feature flags provide operational safety and immediate rollback capability during risky releases."
+        hint: "Feature flags provide immediate rollback capability.",
+        whyCorrect: "Feature flags provide operational safety and immediate kill-switch rollback capabilities during risky releases.",
+        whyWrong: ["Option 1 removes rollout control.", "Option 2 hardcodes values.", "Option 3 leaves stale code."]
       },
       {
         text: "What is 'Security Debt'?",
-        options: ["Financial loans for buying firewalls", "The accumulated unaddressed security vulnerabilities and outdated dependencies in a product codebase", "Monthly cloud hosting bills", "Legal fees"],
+        options: [
+          "Financial loans for buying firewalls",
+          "The accumulated unaddressed security vulnerabilities and outdated dependencies in a product codebase",
+          "Monthly cloud hosting bills",
+          "Legal fees"
+        ],
         correct: 1,
-        explanation: "Security debt accumulates interest over time, increasing breach likelihood and remediation cost."
+        hint: "Unaddressed vulnerabilities accumulating interest over time.",
+        whyCorrect: "Security debt accumulates interest over time, increasing breach likelihood and remediation cost.",
+        whyWrong: ["Option 0 is commercial loans.", "Option 2 is hosting infrastructure costs.", "Option 3 is legal expenses."]
       },
       {
         text: "Why are audit logs essential for administrative and financial product features?",
-        options: ["They provide non-repudiable records of who performed specific actions, aiding incident investigation and SOC 2 compliance", "They format UI buttons", "They decrease database storage", "They improve SEO"],
+        options: [
+          "They provide non-repudiable records of who performed specific actions, aiding incident investigation and SOC 2 compliance",
+          "They format UI buttons",
+          "They decrease database storage",
+          "They improve SEO"
+        ],
         correct: 0,
-        explanation: "Audit logs establish accountability and forensic evidence during security investigations."
+        hint: "Audit trails establish non-repudiable accountability.",
+        whyCorrect: "Audit logs establish accountability and forensic evidence during security investigations.",
+        whyWrong: ["Option 1 is UI formatting.", "Option 2 increases storage slightly.", "Option 3 is search engine optimization."]
       },
       {
         text: "What is Adaptive / Risk-Based Authentication in product UX?",
-        options: ["Requiring 5 passwords every time", "Adjusting authentication prompts dynamically based on user risk signals (device, location, IP anomaly)", "Disabling passwords entirely", "Using static security questions"],
+        options: [
+          "Requiring 5 passwords every time",
+          "Adjusting authentication prompts dynamically based on user risk signals (device, location, IP anomaly)",
+          "Disabling passwords entirely",
+          "Using static security questions"
+        ],
         correct: 1,
-        explanation: "Adaptive authentication optimizes security by stepping up verification only when anomalous risk is detected."
+        hint: "Dynamic step-up authentication based on risk signals.",
+        whyCorrect: "Adaptive authentication optimizes security by stepping up verification only when anomalous risk is detected.",
+        whyWrong: ["Option 0 creates massive UX friction.", "Option 2 removes primary authentication.", "Option 3 uses easily cracked questions."]
       },
       {
         text: "What is a Bug Bounty Program?",
-        options: ["A reward program paying crowdsourced ethical hackers for responsibly disclosing undiscovered vulnerabilities in a product", "A software testing tool", "An internal bonus for developers", "A game"],
+        options: [
+          "A reward program paying crowdsourced ethical hackers for responsibly disclosing undiscovered vulnerabilities in a product",
+          "A software testing tool",
+          "An internal bonus for developers",
+          "A game"
+        ],
         correct: 0,
-        explanation: "Bug bounty programs leverage external security researchers to identify vulnerabilities prior to malicious exploitation."
+        hint: "Crowdsourced ethical hacker vulnerability reporting.",
+        whyCorrect: "Bug bounty programs leverage external security researchers to identify vulnerabilities prior to malicious exploitation.",
+        whyWrong: ["Option 1 is automated software.", "Option 2 is internal employee bonus.", "Option 3 is video game."]
       },
       {
         text: "What does SOC 2 Type II certification evaluate in a product business?",
-        options: ["Product color schemes", "The operational effectiveness of security, availability, and confidentiality controls over a extended audit period (6-12 months)", "Employee salary levels", "Sales revenue"],
+        options: [
+          "Product color schemes",
+          "The operational effectiveness of security, availability, and confidentiality controls over an extended audit period (6-12 months)",
+          "Employee salary levels",
+          "Sales revenue"
+        ],
         correct: 1,
-        explanation: "SOC 2 Type II assesses long-term operational adherence to trust services security criteria."
+        hint: "Evaluates operational effectiveness over 6-12 months.",
+        whyCorrect: "SOC 2 Type II assesses long-term operational adherence to trust services security criteria.",
+        whyWrong: ["Option 0 is brand design.", "Option 2 is HR payroll.", "Option 3 is sales metrics."]
       },
       {
         text: "In STRIDE, what category corresponds to an unauthorized user gaining admin rights?",
-        options: ["Elevation of Privilege", "Information Disclosure", "Spoofing", "Tampering"],
+        options: [
+          "Elevation of Privilege",
+          "Information Disclosure",
+          "Spoofing",
+          "Tampering"
+        ],
         correct: 0,
-        explanation: "Elevation of privilege occurs when a user gains permissions beyond their assigned role."
+        hint: "Gaining permissions beyond assigned role.",
+        whyCorrect: "Elevation of privilege occurs when a user gains permissions beyond their assigned role.",
+        whyWrong: ["Option 1 is data leakage.", "Option 2 is impersonation.", "Option 3 is data modification."]
       },
       {
         text: "What is 'Data Minimization' in product specification?",
-        options: ["Compressing images", "Collecting and retaining only the minimum personal data strictly necessary to fulfill a feature's purpose", "Deleting all database records daily", "Storing data in text files"],
+        options: [
+          "Compressing images",
+          "Collecting and retaining only the minimum personal data strictly necessary to fulfill a feature's purpose",
+          "Deleting all database records daily",
+          "Storing data in text files"
+        ],
         correct: 1,
-        explanation: "Data minimization reduces privacy risk and compliance scope by restricting collected data."
+        hint: "Collect only what is strictly necessary.",
+        whyCorrect: "Data minimization reduces privacy risk and compliance scope by restricting collected data.",
+        whyWrong: ["Option 0 is image optimization.", "Option 2 destroys required data.", "Option 3 is file formatting."]
       },
       {
         text: "Why should product managers conduct rapid security reviews (Security Agent checklists) before UAT?",
-        options: ["To catch business logic flaws, permission bypasses, and rate limiting gaps before final testing", "To replace developer unit tests", "To bypass QA testing entirely", "To write marketing copy"],
+        options: [
+          "To catch business logic flaws, permission bypasses, and rate limiting gaps before final testing",
+          "To replace developer unit tests",
+          "To bypass QA testing entirely",
+          "To write marketing copy"
+        ],
         correct: 0,
-        explanation: "Pre-UAT security reviews catch high-level architectural and configuration flaws early."
+        hint: "Pre-UAT checklist evaluating business logic and config.",
+        whyCorrect: "Pre-UAT security reviews catch high-level architectural and configuration flaws early.",
+        whyWrong: ["Option 1 does not replace unit tests.", "Option 2 does not replace QA.", "Option 3 is marketing copy."]
       },
       {
         text: "What is a Vulnerability Disclosure Policy (VDP / security.txt)?",
-        options: ["A public document outlining how security researchers can safely report security flaws to your company", "A marketing brochure", "An internal employee list", "A press release"],
+        options: [
+          "A public document outlining how security researchers can safely report security flaws to your company",
+          "A marketing brochure",
+          "An internal employee list",
+          "A press release"
+        ],
         correct: 0,
-        explanation: "VDPs provide a clear, safe channel for external researchers to disclose vulnerabilities."
+        hint: "Public policy guiding safe vulnerability disclosures.",
+        whyCorrect: "VDPs provide a clear, safe channel for external researchers to disclose vulnerabilities.",
+        whyWrong: ["Option 1 is promotional material.", "Option 2 is internal HR document.", "Option 3 is public PR statement."]
       },
       {
         text: "What is the cost ratio of fixing a security vulnerability in production versus during the design phase?",
-        options: ["1:1 (Same cost)", "Fixing in production costs up to 30x more due to emergency patching, re-testing, downtime, and breach liability", "Production is cheaper", "Zero cost"],
+        options: [
+          "1:1 (Same cost)",
+          "Fixing in production costs up to 30x more due to emergency patching, re-testing, downtime, and breach liability",
+          "Production is cheaper",
+          "Zero cost"
+        ],
         correct: 1,
-        explanation: "Shifting security left saves significant financial and technical resources."
+        hint: "Fixing bugs late costs significantly more.",
+        whyCorrect: "Shifting security left saves significant financial and technical resources compared to post-launch hotfixes.",
+        whyWrong: ["Option 0 ignores breach liabilities.", "Option 2 is factually incorrect.", "Option 3 ignores developer labor."]
       },
       {
         text: "What role does a Product Manager play in Zero Trust implementation?",
-        options: ["PMs ensure product specs enforce strict role-based access control (RBAC), least privilege, and step-up auth boundaries across user journeys", "PMs configure network firewalls", "PMs write encryption code", "PMs inspect server CPUs"],
+        options: [
+          "PMs ensure product specs enforce strict role-based access control (RBAC), least privilege, and step-up auth boundaries across user journeys",
+          "PMs configure network firewalls",
+          "PMs write encryption code",
+          "PMs inspect server CPUs"
+        ],
         correct: 0,
-        explanation: "PMs define functional access boundaries and authorization models matching Zero Trust principles."
+        hint: "PMs define functional access boundaries matching Zero Trust.",
+        whyCorrect: "PMs define functional access boundaries and authorization models matching Zero Trust principles.",
+        whyWrong: ["Option 1 is network engineering.", "Option 2 is software engineering.", "Option 3 is hardware ops."]
+      },
+      {
+        text: "A new feature requirement asks to store credit card CVV codes permanently in the database to speed up re-ordering. What should the PM do?",
+        options: [
+          "Reject storing CVV permanently; PCI-DSS strictly prohibits storing CVV post-authorization",
+          "Approve the requirement for faster checkout",
+          "Store CVVs in plaintext",
+          "Email CVVs to sales"
+        ],
+        correct: 0,
+        hint: "PCI-DSS strictly forbids permanent CVV storage.",
+        whyCorrect: "PCI-DSS strictly prohibits storing CVV sensitive authentication data after transaction authorization.",
+        whyWrong: ["Option 1 violates PCI-DSS compliance.", "Option 2 exposes unencrypted card data.", "Option 3 leaks financial PII."]
+      },
+      {
+        text: "What is 'Threat Modeling' in product design?",
+        options: [
+          "Structured analysis identifying security risks, threat actors, and attack vectors before code is written",
+          "3D graphic design",
+          "Financial forecasting",
+          "A marketing presentation"
+        ],
+        correct: 0,
+        hint: "Analyzing attack vectors during product specification.",
+        whyCorrect: "Threat modeling identifies architectural attack surfaces and mitigations early in product design.",
+        whyWrong: ["Option 1 is visual art.", "Option 2 is finance.", "Option 3 is promotional sales."]
+      },
+      {
+        text: "Why should PMs mandate rate limiting on public registration and password reset API endpoints?",
+        options: [
+          "To prevent bot automated account creation, spam, and brute-force enumeration",
+          "To slow down user growth",
+          "To reduce font size",
+          "To save CSS memory"
+        ],
+        correct: 0,
+        hint: "Prevents automated bot spam and enumeration.",
+        whyCorrect: "Rate limiting prevents automated bots from creating fake accounts or spamming password resets.",
+        whyWrong: ["Option 1 is growth metrics.", "Option 2 is typography.", "Option 3 is CSS rendering."]
+      },
+      {
+        text: "What is a 'Data Processing Agreement' (DPA) with SaaS vendors?",
+        options: [
+          "A legal contract regulating how third-party vendors process, store, and protect customer personal data",
+          "A software license key",
+          "A hardware warranty",
+          "A marketing brochure"
+        ],
+        correct: 0,
+        hint: "Legally binding agreement governing vendor data handling.",
+        whyCorrect: "DPAs mandate that third-party vendors comply with privacy regulations when handling corporate customer PII.",
+        whyWrong: ["Option 1 is license entitlement.", "Option 2 is physical warranty.", "Option 3 is promotional copy."]
+      },
+      {
+        text: "What is the primary benefit of shifting security left in the product roadmap?",
+        options: [
+          "Lower remediation costs, faster secure releases, and built-in customer trust",
+          "Adding extra sprint meetings",
+          "Increasing code complexity",
+          "Disabling QA testing"
+        ],
+        correct: 0,
+        hint: "Catching security flaws early saves time and money.",
+        whyCorrect: "Shifting security left addresses vulnerabilities early, building resilient products while saving engineering effort.",
+        whyWrong: ["Option 1 is meeting overhead.", "Option 2 is technical bloat.", "Option 3 removes quality control."]
       }
     ];
 

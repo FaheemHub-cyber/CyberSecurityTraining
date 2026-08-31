@@ -163,7 +163,7 @@
           <span class="scenario-title">Scenario 2: Wire Transfer Routing Change Request</span>
           <span class="scenario-badge">Critical Severity</span>
         </div>
-        <p>Before closing a major deal, an email from the client's procurement department requests sending payment to a updated offshore bank account.</p>
+        <p>Before closing a major deal, an email from the client's procurement department requests sending payment to an updated offshore bank account.</p>
         <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
         <div class="solution-box">
           <p><strong>Threat:</strong> Business Email Compromise (BEC) / Payment Hijacking.</p>
@@ -211,9 +211,9 @@
 
     <section id="quiz" class="quiz-section">
       <div class="quiz-header">
-        <h2><i class="fas fa-pen-to-square"></i> Sales Security Knowledge Check (20 Questions)</h2>
+        <h2><i class="fas fa-pen-to-square"></i> Sales Security Knowledge Check (25 Questions)</h2>
         <div>
-          <span>Progress: <strong id="answeredCount">0</strong>/20</span>
+          <span>Progress: <strong id="answeredCount">0</strong>/25</span>
           <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
             <div class="progress-bar-fill" id="quizProgressFill"></div>
           </div>
@@ -230,13 +230,14 @@
 
     <section id="results" class="results-card">
       <div class="score-circle" id="scoreDisplay">0%</div>
-      <h3 style="margin-bottom: 1rem; color: var(--secondary);">Assessment Complete</h3>
-      <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+      <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
         Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
         Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
         Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
       </p>
-      <button id="downloadCertBtn" class="btn-primary"><i class="fas fa-certificate"></i> Generate Certificate</button>
+      <div id="certLockMsg" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--danger);"></div>
+      <button id="downloadCertBtn" class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-certificate"></i> Generate Certificate</button>
     </section>
   </main>
 
@@ -249,123 +250,323 @@
     const salesQuestions = [
       {
         text: "What is Business Email Compromise (BEC) targeting sales teams?",
-        options: ["A bug in email formatting", "Attackers impersonating executives, customers, or vendors to reroute payments or exfiltrate data", "A type of database query", "A social media advertisement"],
+        options: [
+          "A bug in email formatting software",
+          "Attackers impersonating executives, customers, or vendors to reroute wire payments or exfiltrate pipeline data",
+          "A database query language error",
+          "A social media advertisement policy"
+        ],
         correct: 1,
-        explanation: "BEC fraud involves social engineering or compromised email accounts used to manipulate payment instructions."
+        hint: "BEC impersonates trusted deal partners.",
+        whyCorrect: "BEC relies on social engineering or compromised email accounts to trick sales/finance reps into modifying payment instructions.",
+        whyWrong: ["Option 1 is a minor UI bug.", "Option 3 is a database issue.", "Option 4 is marketing policy."]
       },
       {
-        text: "What should a sales representative do if a customer asks detailed technical questions on SOC 2 controls they don't know?",
-        options: ["Make up plausible answers to close the deal fast", "Refer the prospect to the official Trust Center or Security Compliance team", "Send internal raw source code", "Ignore the questions"],
+        text: "What should a sales representative do if a prospect asks detailed technical questions on SOC 2 controls they don't know?",
+        options: [
+          "Make up plausible answers to close the deal fast",
+          "Refer the prospect to the official Trust Center portal or Security Compliance team",
+          "Send internal raw infrastructure code",
+          "Ignore the questions"
+        ],
         correct: 1,
-        explanation: "Inaccurate responses create legal liability; refer prospects to official security documentation."
+        hint: "Inaccurate security commitments create legal liability.",
+        whyCorrect: "Referring prospects to official security documentation ensures accurate, legally binding security responses.",
+        whyWrong: ["Option 1 creates legal liability.", "Option 3 leaks internal intellectual property.", "Option 4 loses customer trust."]
       },
       {
         text: "Where should customer lead records and contact notes be stored?",
-        options: ["In local Excel files on your personal desktop", "Exclusively in the enterprise CRM (Salesforce/HubSpot) with proper access controls", "In public Google Sheets", "In personal notebook apps"],
+        options: [
+          "In local Excel files on personal desktop",
+          "Exclusively in the enterprise CRM (Salesforce/HubSpot) with proper access controls",
+          "In public Google Sheets",
+          "In personal notebook apps"
+        ],
         correct: 1,
-        explanation: "Centralized CRM storage ensures access auditing, encryption, and compliance with data privacy regulations."
+        hint: "Centralized CRM provides audit trails.",
+        whyCorrect: "Centralized CRM storage ensures access controls, encryption, and compliance with data privacy regulations.",
+        whyWrong: ["Option 1 lacks encryption and audit trails.", "Option 3 exposes PII publicly.", "Option 4 prevents central offboarding."]
       },
       {
         text: "How should payment bank detail changes received via email be verified?",
-        options: ["Replying 'Is this correct?' to the same email", "Verifying via direct phone call to a known, verified controller number", "Accepting immediately", "Forwarding to social media"],
+        options: [
+          "Replying 'Is this correct?' to the same email address",
+          "Verifying via direct phone call to a known, verified controller phone number",
+          "Accepting immediately without checking",
+          "Forwarding to social media"
+        ],
         correct: 1,
-        explanation: "Out-of-band verbal confirmation prevents BEC wire transfer fraud."
+        hint: "Out-of-band verification prevents wire fraud.",
+        whyCorrect: "Calling a known controller number verifies the request out-of-band, stopping payment hijacking.",
+        whyWrong: ["Option 1 connects back to the attacker.", "Option 3 risks full wire payment loss.", "Option 4 leaks deal info."]
       },
       {
         text: "What should you do if an inbound lead emails a `.exe` file labeled 'RFP_Requirements.exe'?",
-        options: ["Double click to open it", "Do not open executable files; report to IT Security", "Rename it to .docx", "Forward to all sales reps"],
+        options: [
+          "Double click to open it",
+          "Do not open executable files; report the email to IT Security",
+          "Rename it to .docx",
+          "Forward to all sales reps"
+        ],
         correct: 1,
-        explanation: "Executable files sent via email are frequently Trojan malware payloads."
+        hint: "RFPs are never executable program files.",
+        whyCorrect: "Executable attachments sent via email are Trojan malware payloads.",
+        whyWrong: ["Option 1 infects your endpoint.", "Option 3 does not change executable binary code.", "Option 4 spreads malware internally."]
       },
       {
         text: "Why are privacy screens recommended for sales reps working on laptops during travel?",
-        options: ["They increase screen brightness", "They prevent shoulder surfing and visual eavesdropping on sensitive contract details", "They prevent malware", "They speed up Wi-Fi"],
+        options: [
+          "They increase screen brightness",
+          "They prevent shoulder surfing and visual eavesdropping on sensitive contract details",
+          "They block malware",
+          "They speed up Wi-Fi"
+        ],
         correct: 1,
-        explanation: "Privacy screens narrow viewing angles to block visual inspection in crowded public spaces."
+        hint: "Blocks side viewing angles in crowded planes/cafes.",
+        whyCorrect: "Privacy screens narrow viewing angles so travelers next to you cannot read pricing or contract terms.",
+        whyWrong: ["Option 1 is display settings.", "Option 3 is software security.", "Option 4 is network performance."]
       },
       {
         text: "What platform should be used to execute binding customer contracts securely?",
-        options: ["Unencrypted plain email attachments", "Approved enterprise e-signature platforms (DocuSign/Adobe Sign)", "Slack messages", "Public message boards"],
+        options: [
+          "Unencrypted plain email attachments",
+          "Approved enterprise e-signature platforms (DocuSign/Adobe Sign)",
+          "Slack messages",
+          "Public message boards"
+        ],
         correct: 1,
-        explanation: "Enterprise e-signature tools provide audit trails, non-repudiation, and encryption."
+        hint: "Provides legal non-repudiation and encryption.",
+        whyCorrect: "Enterprise e-signature tools provide audit trails, encryption, and legally binding non-repudiation.",
+        whyWrong: ["Option 1 lacks signature audit trails.", "Option 3 is informal chat.", "Option 4 exposes contracts publicly."]
       },
       {
         text: "What risk is associated with exporting mass CRM contact lists to local personal devices?",
-        options: ["Data loss, privacy non-compliance (GDPR/CCPA), and credential exfiltration if device is lost", "CRM running faster", "Duplicate emails", "Faster deal closing"],
+        options: [
+          "Data loss, privacy non-compliance (GDPR/CCPA), and credential exfiltration if device is lost",
+          "CRM running faster",
+          "Duplicate emails",
+          "Faster deal closing"
+        ],
         correct: 0,
-        explanation: "Local exports bypass central CRM audit trails and security protections."
+        hint: "Local exports bypass central CRM security boundaries.",
+        whyCorrect: "Unencrypted local exports expose client PII to theft if the personal laptop is lost or infected.",
+        whyWrong: ["Option 2 is CRM backend performance.", "Option 3 is data deduplication.", "Option 4 is sales velocity."]
       },
       {
         text: "What document must typically be signed before sharing confidential product roadmaps with prospects?",
-        options: ["Non-Disclosure Agreement (NDA)", "Purchase Order", "Marketing Consent Form", "Software License"],
+        options: [
+          "Non-Disclosure Agreement (NDA)",
+          "Purchase Order",
+          "Marketing Consent Form",
+          "Software License"
+        ],
         correct: 0,
-        explanation: "An NDA legally binds both parties to confidentiality regarding non-public information."
+        hint: "Legal confidentiality agreement.",
+        whyCorrect: "An NDA legally binds both parties to maintain confidentiality regarding unreleased features.",
+        whyWrong: ["Option 2 is financial authorization.", "Option 3 is marketing opt-in.", "Option 4 is software usage rights."]
       },
       {
         text: "Why do attackers target sales representatives specifically?",
-        options: ["Sales reps have public contact info and regularly open external attachments from unknown senders", "Sales reps write code", "Sales reps manage cloud firewalls", "Sales reps run database servers"],
+        options: [
+          "Sales reps have public contact info and regularly open external attachments from unknown senders",
+          "Sales reps write source code",
+          "Sales reps manage cloud firewalls",
+          "Sales reps run database servers"
+        ],
         correct: 0,
-        explanation: "Sales reps' external openness makes them prime targets for spear-phishing and malicious attachment attacks."
+        hint: "Sales reps are external-facing and eager to open new prospect files.",
+        whyCorrect: "Sales reps' open external role makes them attractive targets for spear-phishing and malicious RFP attachments.",
+        whyWrong: ["Option 2 is engineering.", "Option 3 is DevOps/Infra.", "Option 4 is database administration."]
       },
       {
-        text: "What should a sales rep do immediately if their laptop is stolen at a trade show?",
-        options: ["Buy a new laptop at a retail store and say nothing", "Report to IT Security immediately to trigger remote wipe and token revocation", "Wait until returning to office next week", "Post on LinkedIn"],
+        text: "What should a sales representative do immediately if their laptop is stolen at a trade show?",
+        options: [
+          "Buy a new laptop at a retail store and say nothing",
+          "Report to IT Security immediately to trigger remote wipe and token revocation",
+          "Wait until returning to office next week",
+          "Post on LinkedIn"
+        ],
         correct: 1,
-        explanation: "Immediate reporting minimizes data exposure risk through remote wiping."
+        hint: "Remote wipe prevents local data exfiltration.",
+        whyCorrect: "Prompt reporting allows IT to issue a remote wipe command before disk encryption can be bypassed.",
+        whyWrong: ["Option 1 hides device loss.", "Option 3 gives thieves days to extract local data.", "Option 4 is social media notification."]
       },
       {
         text: "What network security measure is mandatory when accessing sales tools over hotel Wi-Fi?",
         options: ["Corporate VPN", "Disabling firewall", "Using public DNS", "Disabling antivirus"],
         correct: 0,
-        explanation: "VPNs encrypt network traffic on untrusted hotel/public Wi-Fi networks."
+        hint: "Encrypted tunnel over untrusted networks.",
+        whyCorrect: "VPNs encrypt all traffic across untrusted hotel and conference Wi-Fi networks.",
+        whyWrong: ["Option 2 exposes local ports.", "Option 3 does not encrypt traffic.", "Option 4 removes endpoint protection."]
       },
       {
         text: "Which of the following is a sign of a CRM login phishing attempt?",
-        options: ["URL reading `salesforce-security-login-check.biz` instead of `salesforce.com`", "Prompting for valid MFA", "HTTPS lock icon on valid domain", "Official SSO redirect"],
+        options: [
+          "URL reading `salesforce-security-login-check.biz` instead of `salesforce.com`",
+          "Prompting for valid MFA",
+          "HTTPS lock icon on valid domain",
+          "Official SSO redirect"
+        ],
         correct: 0,
-        explanation: "Spoofed lookalike domains are used in credential harvesting campaigns."
+        hint: "Lookalike domains attempt credential harvesting.",
+        whyCorrect: "Spoofed domains mimic official CRM login portals to harvest user passwords.",
+        whyWrong: ["Option 2 is legitimate MFA.", "Option 3 is valid TLS.", "Option 4 is official SSO."]
       },
       {
         text: "What is 'Credential Stuffing' in the context of sales accounts?",
-        options: ["Automated attacks testing stolen username/password pairs across CRM logins", "Filling out CRM forms", "Exporting contact lists", "Upgrading software"],
+        options: [
+          "Automated attacks testing stolen username/password pairs across CRM logins",
+          "Filling out CRM forms",
+          "Exporting contact lists",
+          "Upgrading software"
+        ],
         correct: 0,
-        explanation: "Attackers use automated tools to test leaked credentials on CRM portals."
+        hint: "Testing leaked passwords across CRM portals.",
+        whyCorrect: "Credential stuffing uses automated bots to test leaked credentials against CRM portals.",
+        whyWrong: ["Option 2 is routine data entry.", "Option 3 is list export.", "Option 4 is software maintenance."]
       },
       {
         text: "Why is call recording in sales tools (Gong/Chorus) subject to privacy regulations?",
-        options: ["It captures audio data and potential PII of participants requiring consent under laws like GDPR", "It uses video bandwidth", "It slows down internet", "It increases cloud costs"],
+        options: [
+          "It captures audio data and potential PII of participants requiring consent under laws like GDPR",
+          "It uses video bandwidth",
+          "It slows down internet",
+          "It increases cloud costs"
+        ],
         correct: 0,
-        explanation: "Recording conversations requires compliance with wiretap and data privacy laws."
+        hint: "Wiretapping and privacy laws require participant notification.",
+        whyCorrect: "Recording calls captures participant voice PII, requiring explicit opt-in disclosure.",
+        whyWrong: ["Option 2 is video rendering.", "Option 3 is network speed.", "Option 4 is infrastructure pricing."]
       },
       {
         text: "What is the rule regarding sales discount matrices and internal pricing sheets?",
-        options: ["Publish them on public blogs", "Treat as Internal/Confidential; do not distribute publicly without authorization", "Email to competitors", "Post on Reddit"],
+        options: [
+          "Publish them on public blogs",
+          "Treat as Internal/Confidential; do not distribute publicly without authorization",
+          "Email to competitors",
+          "Post on Reddit"
+        ],
         correct: 1,
-        explanation: "Internal pricing documents are trade secrets classified as Confidential."
+        hint: "Internal pricing is proprietary trade secret.",
+        whyCorrect: "Pricing sheets contain confidential commercial terms that damage competitive advantage if leaked.",
+        whyWrong: ["Option 1 leaks trade secrets.", "Option 3 destroys margin advantage.", "Option 4 exposes pricing publicly."]
       },
       {
         text: "How does SOC 2 compliance help the sales team?",
-        options: ["Provides independent third-party verification of security controls to satisfy prospect procurement requirements", "Replaces sales demos", "Eliminates need for contracts", "Automates cold calls"],
+        options: [
+          "Provides independent third-party verification of security controls to satisfy prospect procurement requirements",
+          "Replaces sales demos",
+          "Eliminates need for contracts",
+          "Automates cold calls"
+        ],
         correct: 0,
-        explanation: "SOC 2 reports demonstrate security posture to prospect risk assessment teams."
+        hint: "Third-party security audit report.",
+        whyCorrect: "SOC 2 reports demonstrate rigorous operational security to prospect risk assessment teams.",
+        whyWrong: ["Option 2 does not replace product demos.", "Option 3 does not eliminate legal contracts.", "Option 4 is telemarketing."]
       },
       {
         text: "What should a sales representative do if a prospect offers to send sensitive data via unencrypted email?",
-        options: ["Provide a link to the company's secure file upload portal", "Accept the email", "Ask them to post on social media", "Ignore the files"],
+        options: [
+          "Provide a link to the company's secure file upload portal",
+          "Accept the email",
+          "Ask them to post on social media",
+          "Ignore the files"
+        ],
         correct: 0,
-        explanation: "Secure file upload portals ensure encryption in transit and at rest."
+        hint: "Encrypted upload portals safeguard data in transit.",
+        whyCorrect: "Secure file upload portals enforce TLS encryption and authenticated storage for prospect files.",
+        whyWrong: ["Option 1 transmits data in plaintext.", "Option 3 exposes files publicly.", "Option 4 ignores prospect requests."]
       },
       {
         text: "What is the risk of using unauthorized personal messaging apps (WhatsApp/Telegram) for official deal terms?",
-        options: ["Lack of compliance archiving, audit logs, and security oversight", "Faster message delivery", "Free emojis", "Clearer calls"],
+        options: [
+          "Lack of compliance archiving, audit logs, and security oversight",
+          "Faster message delivery",
+          "Free emojis",
+          "Clearer calls"
+        ],
         correct: 0,
-        explanation: "Unsanctioned channels create compliance and record-keeping gaps (Shadow IT)."
+        hint: "Shadow IT chat tools lack enterprise archiving.",
+        whyCorrect: "Unsanctioned messaging apps bypass corporate record retention, audit trails, and legal discovery.",
+        whyWrong: ["Option 2 is messaging speed.", "Option 3 is UI features.", "Option 4 is audio quality."]
       },
       {
         text: "Why should sales reps avoid sharing generic login accounts to CRM platforms?",
-        options: ["Shared logins prevent individual accountability and violate audit requirements", "It costs less money", "It speeds up CRM", "It disables MFA"],
+        options: [
+          "Shared logins prevent individual accountability and violate audit requirements",
+          "It costs less money",
+          "It speeds up CRM",
+          "It disables MFA"
+        ],
         correct: 0,
-        explanation: "Individual user accounts are necessary for audit trails and access revocation."
+        hint: "Individual accountability requires unique credentials.",
+        whyCorrect: "Shared logins destroy individual audit trails, making it impossible to attribute unauthorized data exports.",
+        whyWrong: ["Option 2 is license cost.", "Option 3 is software speed.", "Option 4 is authentication configuration."]
+      },
+      {
+        text: "A prospect calls asking you to email them your company's full employee org chart and internal extension directory. What should you do?",
+        options: [
+          "Send it immediately to be helpful",
+          "Refuse the request as internal data and report the reconnaissance attempt to Security",
+          "Post it on LinkedIn",
+          "Ask for $100 first"
+        ],
+        correct: 1,
+        hint: "Org charts are used for social engineering spear-phishing.",
+        whyCorrect: "Internal directories are used by attackers to map targets for spear-phishing and vishing attacks.",
+        whyWrong: ["Option 1 leaks internal organizational structures.", "Option 3 exposes staff to social engineering.", "Option 4 is bribery."]
+      },
+      {
+        text: "While presenting a slide deck to a client over screen share, a popup alert shows a sensitive internal Slack chat message. How could this be prevented?",
+        options: [
+          "Enable 'Do Not Disturb' / Presentation Mode before screen sharing",
+          "Share your entire desktop instead of single window",
+          "Type faster",
+          "Disable antivirus"
+        ],
+        correct: 0,
+        hint: "Presentation mode suppresses notification popups.",
+        whyCorrect: "Enabling Do Not Disturb mode prevents notification popups from leaking internal chats or customer data during presentations.",
+        whyWrong: ["Option 1 exposes more desktop popups.", "Option 3 does not hide popups.", "Option 4 removes security protection."]
+      },
+      {
+        text: "A departing sales rep attempts to download 10,000 lead records from CRM right before their final day. What security control stops this?",
+        options: [
+          "CRM mass export restrictions and DLP alert rules",
+          "Disabling monitor brightness",
+          "Deleting CRM accounts early",
+          "Changing company logo"
+        ],
+        correct: 0,
+        hint: "DLP and rate-limiting rules prevent bulk data theft.",
+        whyCorrect: "CRM export caps and Data Loss Prevention (DLP) rules restrict mass lead exfiltration by departing staff.",
+        whyWrong: ["Option 1 is display settings.", "Option 3 prevents legitimate work before departure.", "Option 4 is branding."]
+      },
+      {
+        text: "What is 'Invoice Fraud' targeting sales transactions?",
+        options: [
+          "Attackers altering payment routing details on invoices to intercept deal funds",
+          "Sending duplicate receipts",
+          "Discounts on contracts",
+          "Calculating tax incorrectly"
+        ],
+        correct: 0,
+        hint: "Interception of wire transfer banking numbers.",
+        whyCorrect: "Invoice fraud intercepts billing communications to swap legitimate account numbers with attacker bank accounts.",
+        whyWrong: ["Option 2 is billing duplicate.", "Option 3 is commercial pricing.", "Option 4 is accounting error."]
+      },
+      {
+        text: "Why must sales reps verify that prospect data collection complies with local privacy regulations (GDPR/CCPA)?",
+        options: [
+          "Fines for non-compliance can reach millions of dollars and damage company reputation",
+          "It makes CRM load slower",
+          "It changes email fonts",
+          "It increases tax rates"
+        ],
+        correct: 0,
+        hint: "Data protection authorities issue massive fines for unauthorized PII processing.",
+        whyCorrect: "Privacy regulations impose strict financial penalties (up to 4% of global turnover) for unlawful PII processing.",
+        whyWrong: ["Option 2 is database performance.", "Option 3 is font formatting.", "Option 4 is corporate taxation."]
       }
     ];
 

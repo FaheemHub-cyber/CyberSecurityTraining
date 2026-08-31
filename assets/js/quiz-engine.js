@@ -1,5 +1,9 @@
 /**
  * SecureHub Interactive Quiz Engine & Training Portal JS
+ * Updated to support:
+ * 1. 80% score threshold for certificate download.
+ * 2. Hints toggleable per question.
+ * 3. Detailed post-submit feedback (Why correct answer is right & Why wrong options are incorrect).
  */
 
 class QuizEngine {
@@ -26,6 +30,7 @@ class QuizEngine {
     this.wrongCountEl = document.getElementById('wrongCount');
     this.unansweredCountEl = document.getElementById('unansweredCount');
     this.certBtn = document.getElementById('downloadCertBtn');
+    this.certLockMsg = document.getElementById('certLockMsg');
 
     if (this.submitBtn) {
       this.submitBtn.addEventListener('click', () => this.submit());
@@ -50,11 +55,56 @@ class QuizEngine {
       qDiv.className = 'question-item';
       qDiv.id = `q-item-${idx}`;
 
+      // Question header with text and Hint button
+      const qHeader = document.createElement('div');
+      qHeader.style.display = 'flex';
+      qHeader.style.justifySpaceBetween = 'space-between';
+      qHeader.style.alignItems = 'flex-start';
+      qHeader.style.gap = '1rem';
+      qHeader.style.marginBottom = '0.75rem';
+
       const text = document.createElement('div');
       text.className = 'question-text';
+      text.style.marginBottom = '0';
       text.innerHTML = `<strong>Q${idx + 1}.</strong> ${q.text}`;
-      qDiv.appendChild(text);
+      qHeader.appendChild(text);
 
+      if (q.hint) {
+        const hintBtn = document.createElement('button');
+        hintBtn.className = 'btn-solution';
+        hintBtn.style.marginTop = '0';
+        hintBtn.style.whiteSpace = 'nowrap';
+        hintBtn.style.fontSize = '0.8rem';
+        hintBtn.style.padding = '0.25rem 0.6rem';
+        hintBtn.innerHTML = `<i class="fas fa-lightbulb"></i> Hint`;
+        hintBtn.onclick = () => {
+          const hintBox = document.getElementById(`hint-box-${idx}`);
+          if (hintBox) {
+            hintBox.style.display = hintBox.style.display === 'block' ? 'none' : 'block';
+          }
+        };
+        qHeader.appendChild(hintBtn);
+      }
+
+      qDiv.appendChild(qHeader);
+
+      // Hint box element
+      if (q.hint) {
+        const hintBox = document.createElement('div');
+        hintBox.id = `hint-box-${idx}`;
+        hintBox.style.display = 'none';
+        hintBox.style.background = '#fff8e6';
+        hintBox.style.border = '1px solid #ffe58f';
+        hintBox.style.borderRadius = '8px';
+        hintBox.style.padding = '0.6rem 1rem';
+        hintBox.style.fontSize = '0.88rem';
+        hintBox.style.color = '#873800';
+        hintBox.style.marginBottom = '0.85rem';
+        hintBox.innerHTML = `<strong>💡 Hint:</strong> ${q.hint}`;
+        qDiv.appendChild(hintBox);
+      }
+
+      // Options
       const optionsList = document.createElement('div');
       optionsList.className = 'options-list';
 
@@ -119,12 +169,28 @@ class QuizEngine {
       const userAns = this.userAnswers[idx];
       const expBox = document.getElementById(`exp-box-${idx}`);
 
+      // Format why-correct and why-wrong explanations
+      let explanationHTML = '';
+      if (q.whyCorrect) {
+        explanationHTML += `<div style="margin-top: 0.5rem;"><strong>✅ Why Correct:</strong> ${q.whyCorrect}</div>`;
+      } else if (q.explanation) {
+        explanationHTML += `<div style="margin-top: 0.5rem;"><strong>Explanation:</strong> ${q.explanation}</div>`;
+      }
+
+      if (q.whyWrong && Array.isArray(q.whyWrong)) {
+        explanationHTML += `<div style="margin-top: 0.5rem;"><strong>❌ Why Other Answers Are Incorrect:</strong><ul style="padding-left: 1.2rem; margin-top: 0.2rem;">`;
+        q.whyWrong.forEach(item => {
+          explanationHTML += `<li>${item}</li>`;
+        });
+        explanationHTML += `</ul></div>`;
+      }
+
       if (userAns === null) {
         unansweredCount++;
         if (expBox) {
           expBox.className = 'explanation-box explanation-incorrect';
           expBox.style.display = 'block';
-          expBox.innerHTML = `<strong>Unanswered.</strong> Correct Answer: <em>${q.options[q.correct]}</em>.<br>${q.explanation || ''}`;
+          expBox.innerHTML = `<strong>⚠️ Unanswered.</strong> Correct Answer: <em>${q.options[q.correct]}</em>.<br>${explanationHTML}`;
         }
       } else if (userAns === q.correct) {
         correctCount++;
@@ -134,7 +200,7 @@ class QuizEngine {
         if (expBox) {
           expBox.className = 'explanation-box explanation-correct';
           expBox.style.display = 'block';
-          expBox.innerHTML = `<strong>Correct!</strong> <br>${q.explanation || ''}`;
+          expBox.innerHTML = `<strong>✅ Correct!</strong><br>${explanationHTML}`;
         }
       } else {
         wrongCount++;
@@ -147,7 +213,7 @@ class QuizEngine {
         if (expBox) {
           expBox.className = 'explanation-box explanation-incorrect';
           expBox.style.display = 'block';
-          expBox.innerHTML = `<strong>Incorrect.</strong> Correct Answer: <em>${q.options[q.correct]}</em>.<br>${q.explanation || ''}`;
+          expBox.innerHTML = `<strong>❌ Incorrect.</strong> Correct Answer: <em>${q.options[q.correct]}</em>.<br>${explanationHTML}`;
         }
       }
     });
@@ -160,6 +226,28 @@ class QuizEngine {
       if (this.correctCountEl) this.correctCountEl.textContent = correctCount;
       if (this.wrongCountEl) this.wrongCountEl.textContent = wrongCount;
       if (this.unansweredCountEl) this.unansweredCountEl.textContent = unansweredCount;
+
+      // Handle 80% Score Threshold for Certificate Download
+      if (this.score >= 80) {
+        if (this.certBtn) {
+          this.certBtn.disabled = false;
+          this.certBtn.style.opacity = '1';
+          this.certBtn.style.cursor = 'pointer';
+        }
+        if (this.certLockMsg) {
+          this.certLockMsg.style.display = 'none';
+        }
+      } else {
+        if (this.certBtn) {
+          this.certBtn.disabled = true;
+          this.certBtn.style.opacity = '0.5';
+          this.certBtn.style.cursor = 'not-allowed';
+        }
+        if (this.certLockMsg) {
+          this.certLockMsg.style.display = 'block';
+          this.certLockMsg.innerHTML = `<i class="fas fa-lock"></i> Certificate requires a passing score of <strong>80% or higher</strong>. Please review explanations and retake the test.`;
+        }
+      }
 
       this.resultsSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -195,9 +283,7 @@ class QuizEngine {
     const data = JSON.parse(localStorage.getItem('securehub_progress') || '{}');
     if (data[this.departmentId]) {
       const record = data[this.departmentId];
-      if (this.resultsSection && record.score !== undefined) {
-        // Option to display previous result info
-      }
+      // Optional pre-fill
     }
   }
 
@@ -221,6 +307,11 @@ class QuizEngine {
   }
 
   generateCertificate() {
+    if (this.score < 80) {
+      alert("Certificate requires a minimum score of 80% to download.");
+      return;
+    }
+
     const data = JSON.parse(localStorage.getItem('securehub_progress') || '{}');
     const deptRecord = data[this.departmentId] || { score: this.score };
     const dateStr = new Date().toLocaleDateString();
@@ -232,29 +323,29 @@ class QuizEngine {
       <head>
         <title>Certificate of Completion - SecureHub</title>
         <style>
-          body { font-family: 'Georgia', serif; text-align: center; padding: 50px; background: #f8fafc; }
-          .cert-border { border: 10px double #0f172a; padding: 40px; background: #fff; max-width: 800px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-          h1 { font-size: 36px; color: #1e293b; margin-bottom: 10px; }
-          h2 { font-size: 24px; color: #2563eb; margin-bottom: 30px; }
-          p { font-size: 18px; color: #475569; line-height: 1.6; }
-          .highlight { font-weight: bold; color: #0f172a; }
-          .score { font-size: 28px; font-weight: bold; color: #16a34a; margin: 20px 0; }
-          .footer { margin-top: 50px; display: flex; justify-content: space-between; padding: 0 50px; }
-          .sig-line { border-top: 1px solid #94a3b8; width: 200px; font-size: 14px; color: #64748b; padding-top: 5px; }
+          body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif; text-align: center; padding: 50px; background: #f5f5f7; }
+          .cert-border { border: 8px solid #0071e3; padding: 50px; background: #fff; max-width: 800px; margin: auto; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); }
+          h1 { font-size: 34px; color: #1d1d1f; margin-bottom: 10px; font-weight: 700; }
+          h2 { font-size: 22px; color: #0071e3; margin-bottom: 30px; font-weight: 600; }
+          p { font-size: 18px; color: #86868b; line-height: 1.6; }
+          .highlight { font-weight: 700; color: #1d1d1f; }
+          .score { font-size: 28px; font-weight: 800; color: #34c759; margin: 25px 0; letter-spacing: -0.02em; }
+          .footer { margin-top: 60px; display: flex; justify-content: space-between; padding: 0 40px; }
+          .sig-line { border-top: 2px solid #e5e5ea; width: 220px; font-size: 14px; color: #86868b; padding-top: 8px; font-weight: 500; }
         </style>
       </head>
       <body>
         <div class="cert-border">
           <h1>🛡️ SecureHub Training Portal</h1>
-          <h2>Certificate of Security Training Completion</h2>
-          <p>This is to certify that an employee in the department</p>
-          <p class="highlight" style="font-size: 26px;">${this.departmentId.toUpperCase()} TEAM</p>
-          <p>has successfully completed the Security & Policy Training module with a score of:</p>
-          <div class="score">${deptRecord.score}% SCORE</div>
+          <h2>Certificate of Completion & Compliance</h2>
+          <p>This certifies that an employee in the department</p>
+          <p class="highlight" style="font-size: 26px; text-transform: uppercase; color: #0071e3;">${this.departmentId} TEAM</p>
+          <p>has successfully passed the Security & Policy Training module meeting the 80% threshold with a score of:</p>
+          <div class="score">${deptRecord.score}% PASSING SCORE</div>
           <p>Issued on: <span class="highlight">${dateStr}</span></p>
           <div class="footer">
             <div class="sig-line">Chief Information Security Officer</div>
-            <div class="sig-line">SecureHub Compliance</div>
+            <div class="sig-line">SecureHub Compliance Board</div>
           </div>
         </div>
       </body>
@@ -264,7 +355,6 @@ class QuizEngine {
   }
 }
 
-// Global utility for scenario solution toggling
 function toggleSolution(btn) {
   const solutionBox = btn.nextElementSibling;
   if (solutionBox.style.display === 'block') {
@@ -276,7 +366,6 @@ function toggleSolution(btn) {
   }
 }
 
-// Update global header progress on page load
 document.addEventListener('DOMContentLoaded', () => {
   const data = JSON.parse(localStorage.getItem('securehub_progress') || '{}');
   const deptIds = ['engineering', 'general', 'sales', 'marketing', 'design', 'product', 'support'];
