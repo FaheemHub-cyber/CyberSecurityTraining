@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Security · SecureHub Training Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="../index.html">Home</a>
+      <a href="#policies">Policies</a>
+      <a href="#theory">Theory</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#quiz">Quiz</a>
+      <a href="../shared/common-policies.html">Common Policies</a>
+      <a href="../shared/glossary.html">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Progress: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Secure Marketing · Protecting Brand & Customer Data</h1>
+    <p>Security guidelines for marketing professionals, content creators, and social media managers. Safeguard corporate brand assets, marketing automation platforms, social accounts, and email deliverability.</p>
+  </section>
+
+  <main class="container">
+    <section id="policies">
+      <h2 class="section-title"><i class="fas fa-file-contract"></i> Marketing Security Policies</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-copyright"></i> 1. Brand & Content Security Policy</h3>
+          <p>Protecting intellectual property, brand assets, and upcoming releases.</p>
+          <ul>
+            <li>Store official brand assets and logo vectors in approved central repositories.</li>
+            <li>Unreleased campaign collateral is classified as Confidential until official launch.</li>
+            <li>Enforce mandatory multi-stage editorial approval workflows for public media releases.</li>
+            <li>Protect brand domains against typo-squatting and impersonation.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-envelope-open-text"></i> 2. Customer Data & Automation Policy</h3>
+          <p>Securing marketing automation platforms (Mailchimp/HubSpot) and email lists.</p>
+          <ul>
+            <li>Strict compliance with GDPR, CCPA, and CAN-SPAM opt-in / opt-out requirements.</li>
+            <li>Marketing email lists must be sanitized and encrypted; never store raw emails in open drives.</li>
+            <li>Honor unsubscribes automatically within 24 hours.</li>
+            <li>Conduct privacy impact assessments before launching lead collection campaigns.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-hashtag"></i> 3. Social Media Account Security Policy</h3>
+          <p>Safeguarding corporate social handles (Twitter/X, LinkedIn, YouTube).</p>
+          <ul>
+            <li>Enforce mandatory MFA and password manager storage for all corporate social logins.</li>
+            <li>Use centralized social media management platforms (Hootsuite/Sprout) rather than sharing raw logins.</li>
+            <li>Immediate access revocation when team members or agency contractors offboard.</li>
+            <li>Establish an emergency social media crisis response protocol.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-globe"></i> 4. Website & Analytics Security Policy</h3>
+          <p>Maintaining CMS platforms (WordPress/Webflow) and tracking scripts.</p>
+          <ul>
+            <li>CMS plugins and themes must undergo security vetting before installation.</li>
+            <li>Audit third-party JavaScript tags in Google Tag Manager (GTM) to prevent data leaking.</li>
+            <li>Ensure analytics tools anonymize IP addresses and conform to cookie consent banners.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-bullseye"></i> 5. Campaign & Vendor Vetting Policy</h3>
+          <p>Managing third-party agencies and lead gen partners.</p>
+          <ul>
+            <li>External marketing agencies must sign Non-Disclosure Agreements and DPAs.</li>
+            <li>Campaign landing page lead forms must enforce server-side validation and HTTPS.</li>
+            <li>Conduct security reviews of marketing SaaS tools before purchasing.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="theory" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-book-open"></i> Marketing Security Theory</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-shield-cat"></i> Brand Protection & Impersonation Attacks</h3>
+          <p>How cybercriminals hijack brand trust.</p>
+          <ul>
+            <li>Attackers create fake domain names (e.g. `company-promo-rewards.com`) to scam customers.</li>
+            <li>Social media account hijacks damage brand reputation and stock valuation.</li>
+            <li>Active monitoring for fake brand apps, ads, and phishing sites.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-at"></i> Email Authentication: SPF, DKIM & DMARC</h3>
+          <p>Techniques to protect corporate domain email deliverability.</p>
+          <ul>
+            <li><strong>SPF (Sender Policy Framework):</strong> Specifies authorized sending mail servers.</li>
+            <li><strong>DKIM (DomainKeys Identified Mail):</strong> Cryptographic signature verifying email integrity.</li>
+            <li><strong>DMARC:</strong> Policy instructing receivers how to handle unauthenticated emails (Reject/Quarantine).</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-scale-balanced"></i> Data Privacy Compliance in Marketing</h3>
+          <p>Legal standards governing marketing data collection.</p>
+          <ul>
+            <li>Explicit opt-in consent required for electronic marketing under GDPR.</li>
+            <li>Clear privacy policy links mandatory on all lead generation forms.</li>
+            <li>Right to Be Forgotten: Honoring customer requests to delete lead records.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-key"></i> Social Media Account Takeovers</h3>
+          <p>Vectors used to hijack corporate social accounts.</p>
+          <ul>
+            <li>Weak, shared passwords communicated over unencrypted chat channels.</li>
+            <li>Phishing emails targeting social media managers ("Your account is verified! Click here").</li>
+            <li>Malicious browser extensions stealing session tokens.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-puzzle-piece"></i> Third-Party Marketing Tool Risks</h3>
+          <p>Managing third-party tracking scripts and integrations.</p>
+          <ul>
+            <li>Magecart attacks: Compromised marketing scripts injecting credit card scrapers into sites.</li>
+            <li>Supply chain vulnerabilities in CMS plugins.</li>
+            <li>Regular auditing and sunsetting of unused marketing tracking tags.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-vial"></i> Real-World Marketing Scenarios</h2>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 1: Corporate Twitter Account Hijacked</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>An attacker logs into the official corporate Twitter handle and posts crypto scam links to 500,000 followers.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Root Cause:</strong> Password was shared in a Slack channel without MFA enabled.</p>
+          <p><strong>Action:</strong> Immediately reset password, revoke active sessions, enable hardware/app MFA, delete scam posts, and publish a public clarification statement.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 2: Mass Email Sent using CC instead of BCC</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>A marketer sends a newsletter to 2,000 VIP customers placing all recipient email addresses in the `To/CC` field.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Impact:</strong> Massive customer PII breach exposing private email lists to all recipients.</p>
+          <p><strong>Action:</strong> Notify the Security and Privacy Compliance team immediately. Issue an apology follow-up and conduct mandatory training on marketing automation tool usage.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 3: Fake Brand Site Running Scam Ads</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>A lookalike website `securehub-discounts.top` uses company logo assets to run Google Ads scamming customers.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> File immediate trademark infringement and abuse takedown notices with the registrar, hosting provider, and ad network.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 4: Vulnerable CMS Plugin Defaces Marketing Blog</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>An outdated WordPress SEO plugin is exploited, replacing the company homepage banner with malicious spam.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Take site offline temporarily, restore clean backup, update/patch all CMS plugins, and audit web server logs.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 5: Unapproved Campaign Launch Leaks Unannounced Feature</span>
+          <span class="scenario-badge">Medium Severity</span>
+        </div>
+        <p>A social media contractor accidentally publishes unreleased product feature graphics 2 weeks before the official launch date.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Delete the post immediately, review social media management approval workflows, and restrict publisher access permissions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="quiz-section">
+      <div class="quiz-header">
+        <h2><i class="fas fa-pen-to-square"></i> Marketing Security Knowledge Check (20 Questions)</h2>
+        <div>
+          <span>Progress: <strong id="answeredCount">0</strong>/20</span>
+          <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
+            <div class="progress-bar-fill" id="quizProgressFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="quiz-actions">
+        <button id="resetBtn" class="btn-secondary"><i class="fas fa-rotate-left"></i> Reset Test</button>
+        <button id="submitBtn" class="btn-primary"><i class="fas fa-paper-plane"></i> Submit & View Score</button>
+      </div>
+    </section>
+
+    <section id="results" class="results-card">
+      <div class="score-circle" id="scoreDisplay">0%</div>
+      <h3 style="margin-bottom: 1rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+        Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
+        Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
+        Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
+      </p>
+      <button id="downloadCertBtn" class="btn-primary"><i class="fas fa-certificate"></i> Generate Certificate</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>SecureHub Security Training Portal &bull; Marketing Module &bull; <i class="fas fa-shield-halved"></i></p>
+  </footer>
+
+  <script src="../assets/js/quiz-engine.js"></script>
+  <script>
+    const marketingQuestions = [
+      {
+        text: "What email authentication record allows domain owners to declare which mail servers are authorized to send email on their behalf?",
+        options: ["SPF (Sender Policy Framework)", "SSL", "DNS CNAME", "FTP"],
+        correct: 0,
+        explanation: "SPF DNS records specify authorized sending mail servers to prevent domain spoofing."
+      },
+      {
+        text: "What is the primary danger of putting recipient email addresses in the CC field instead of BCC or automated marketing tools?",
+        options: ["It slows down email delivery", "It exposes all recipient email addresses to everyone on the list, causing a PII data breach", "It increases spam scores", "It corrupts images"],
+        correct: 1,
+        explanation: "Exposing customer email addresses in CC violates data privacy regulations and leaks contact lists."
+      },
+      {
+        text: "How should shared corporate social media accounts (e.g. official Twitter or LinkedIn) be accessed safely?",
+        options: ["Sharing passwords in public Slack channels", "Through a centralized social media management platform (Hootsuite/Sprout) with individual logins & MFA", "Using a simple 6-character password", "Disabling MFA"],
+        correct: 1,
+        explanation: "Social media management platforms enforce individual authentication and audit logs without sharing raw credentials."
+      },
+      {
+        text: "What does DMARC stand for and do?",
+        options: ["Digital Marketing and Reporting Code", "Domain-based Message Authentication, Reporting, and Conformance; instructs receiving servers how to handle failed SPF/DKIM checks", "Direct Media Access Control", "Data Mining Rules"],
+        correct: 1,
+        explanation: "DMARC leverages SPF and DKIM to prevent email domain spoofing and phishing."
+      },
+      {
+        text: "What privacy law requirement mandates giving users a clear way to unsubscribe from marketing communications?",
+        options: ["CAN-SPAM / GDPR / CCPA regulations", "Copyright Act", "DMCA", "SOX Act"],
+        correct: 0,
+        explanation: "Privacy laws mandate opt-out/unsubscribe mechanisms for commercial emails."
+      },
+      {
+        text: "What is a 'Magecart' or digital web skimming attack?",
+        options: ["Compromised third-party JavaScript scripts on a website stealing customer payment data", "A social media scam", "A printed flyer fraud", "An email autoresponder bug"],
+        correct: 0,
+        explanation: "Web skimming compromises client-side scripts (such as analytics or ad tags) to exfiltrate input data."
+      },
+      {
+        text: "Why should third-party CMS plugins (e.g., WordPress plugins) be strictly audited and updated?",
+        options: ["Outdated plugins are prime attack vectors for website defacement, backdoor installation, and malware injection", "To change website fonts", "To increase image resolution", "To reduce web hosting costs"],
+        correct: 0,
+        explanation: "Vulnerable CMS plugins account for a majority of marketing website compromises."
+      },
+      {
+        text: "What action should be taken if a lookalike brand domain (`company-free-gift.com`) is found scamming users?",
+        options: ["Ignore it", "Report the domain to Security/Legal to issue a domain abuse takedown notice", "Buy products from it", "Retweet it"],
+        correct: 1,
+        explanation: "Domain abuse takedowns mitigate brand impersonation and protect customers."
+      },
+      {
+        text: "Under GDPR, what condition must be met before adding a European customer to a promotional marketing email list?",
+        options: ["Freely given, explicit opt-in consent", "No consent needed", "Implied consent from browsing website", "Asking them 10 times"],
+        correct: 0,
+        explanation: "GDPR strictly mandates explicit, affirmative opt-in consent for promotional messaging."
+      },
+      {
+        text: "What security measure prevents former agency contractors from accessing corporate social accounts?",
+        options: ["Immediate offboarding and access revocation upon project completion", "Changing password once a year", "Asking them nicely not to log in", "Deleting posts"],
+        correct: 0,
+        explanation: "Prompt offboarding ensures third-party contractors lose access when contracts end."
+      },
+      {
+        text: "What is Google Tag Manager (GTM) script auditing?",
+        options: ["Reviewing third-party tracking tags to ensure no unauthorized scripts exfiltrate user data", "Formatting blog posts", "Compressing PNG files", "Checking spelling"],
+        correct: 0,
+        explanation: "Auditing GTM tags prevents unauthorized third-party scripts from harvesting user data."
+      },
+      {
+        text: "Why are unreleased marketing campaign graphics classified as Confidential?",
+        options: ["To prevent trade secret leaks, market manipulation, and premature press exposure", "They take up disk space", "Because they are copyrighted", "To slow down launches"],
+        correct: 0,
+        explanation: "Unreleased campaigns contain strategic business information that must remain confidential."
+      },
+      {
+        text: "What is DKIM (DomainKeys Identified Mail)?",
+        options: ["A cryptographic digital signature attached to outgoing emails verifying the message was not altered in transit", "A domain registration fee", "A keyword search tool", "An image format"],
+        correct: 0,
+        explanation: "DKIM uses public key cryptography to authenticate email sender domain integrity."
+      },
+      {
+        text: "What should lead collection forms on landing pages enforce?",
+        options: ["HTTPS encryption and server-side input validation", "Plaintext HTTP submit", "Disabling CAPTCHA", "Unvalidated input fields"],
+        correct: 0,
+        explanation: "HTTPS encrypts submitted lead PII, while server-side validation blocks injection attacks."
+      },
+      {
+        text: "What risk arises from downloading marketing images or assets from untrusted public websites?",
+        options: ["Copyright infringement, malware payload embedding, or steganography risks", "Faster download speeds", "Better image resolution", "Automatic translation"],
+        correct: 0,
+        explanation: "Untrusted downloads expose the organization to licensing lawsuits and embedded malware."
+      },
+      {
+        text: "What is a 'Typosquatting' domain?",
+        options: ["A domain name registered by attackers that closely mimics a legitimate brand name (e.g. `goggle.com`) to deceive users", "A domain with high traffic", "An internal testing domain", "A search engine"],
+        correct: 0,
+        explanation: "Typosquatting relies on common user typing errors to direct traffic to phishing sites."
+      },
+      {
+        text: "How quickly should opt-out / unsubscribe requests be processed according to CAN-SPAM laws?",
+        options: ["Within 10 business days maximum (best practice is automated immediate removal)", "Within 6 months", "Never", "Only if requested twice"],
+        correct: 0,
+        explanation: "CAN-SPAM dictates strict timelines (10 business days max) for processing opt-out requests."
+      },
+      {
+        text: "What is the safest way to store corporate social media passwords?",
+        options: ["An encrypted corporate password manager with MFA enabled", "In a shared Google Doc", "In a group chat", "On a white board"],
+        correct: 0,
+        explanation: "Password managers store credentials securely without exposing plaintext passwords."
+      },
+      {
+        text: "What is the purpose of a Cookie Consent Banner on marketing websites?",
+        options: ["To comply with privacy laws (GDPR/ePrivacy) by informing users and gaining consent before setting tracking cookies", "To show website announcements", "To block ad blockers", "To speed up site load times"],
+        correct: 0,
+        explanation: "Cookie consent banners ensure legal compliance before firing tracking tags."
+      },
+      {
+        text: "What is 'Brand Impersonation'?",
+        options: ["Cybercriminals pretending to be a known brand to trick victims into revealing sensitive info or paying money", "A competitor selling similar products", "A parody video", "A new marketing slogan"],
+        correct: 0,
+        explanation: "Brand impersonation leverages established corporate reputation to conduct scams."
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new QuizEngine('marketing', marketingQuestions);
+    });
+  </script>
+</body>
+</html>

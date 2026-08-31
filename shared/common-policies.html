@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organization Common Security Policies · SecureHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="../index.html">Home</a>
+      <a href="common-policies.html" class="active">Common Policies</a>
+      <a href="glossary.html">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Progress: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Organization Common Security Policies</h1>
+    <p>Core security and compliance policies applicable across all departments and roles within our organization.</p>
+  </section>
+
+  <main class="container">
+    <div class="cards-grid" style="grid-template-columns: 1fr;">
+      <div class="info-card">
+        <h3><i class="fas fa-file-shield"></i> 1. Master Acceptable Use Policy (AUP)</h3>
+        <p>This policy governs the acceptable use of all corporate technology resources, hardware, cloud services, and network infrastructure.</p>
+        <ul>
+          <li><strong>Ownership:</strong> All devices, email accounts, and data generated on corporate systems remain sole property of the organization.</li>
+          <li><strong>Prohibited Conduct:</strong> Torrenting, installing unsanctioned software (Shadow IT), attempting privilege escalation, or bypassing network controls.</li>
+          <li><strong>Monitoring & Privacy:</strong> Corporate systems are continuously monitored for security events; employees should have no expectation of privacy on work-issued assets.</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3><i class="fas fa-layer-group"></i> 2. Enterprise Data Classification Standard</h3>
+        <p>Information assets must be categorized into four tiers with specific handling requirements:</p>
+        <ul>
+          <li><strong style="color: green;">Public:</strong> Marketing collateral, press releases, public website text. Free external distribution allowed.</li>
+          <li><strong style="color: blue;">Internal:</strong> Intranet wikis, organizational charts, internal policies. Restricted to employees; non-public.</li>
+          <li><strong style="color: orange;">Confidential:</strong> Financial statements, customer contracts, roadmap specs. Requires NDA or management approval to share.</li>
+          <li><strong style="color: red;">Restricted:</strong> PII, credit cards, credentials, API keys, source code. Highest protection level; encrypted at rest & in transit.</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3><i class="fas fa-key"></i> 3. Enterprise Identity & Password Policy</h3>
+        <p>Mandatory standards for authentication and access control.</p>
+        <ul>
+          <li><strong>Passphrase Complexity:</strong> Passwords must be at least 16 characters long or consist of 4 random words generated via password manager.</li>
+          <li><strong>Multi-Factor Authentication (MFA):</strong> MFA is mandatory on every internal portal and cloud service without exception.</li>
+          <li><strong>Zero Credential Sharing:</strong> Individual user accounts must never be shared among team members.</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3><i class="fas fa-laptop-house"></i> 4. Remote & Mobile Work Policy</h3>
+        <p>Ensuring security across hybrid work environments.</p>
+        <ul>
+          <li>Corporate VPN mandatory when connecting via public Wi-Fi networks.</li>
+          <li>Physical screen privacy filters required in public travel environments.</li>
+          <li>Devices must enforce automatic lock after 5 minutes of inactivity.</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3><i class="fas fa-triangle-exclamation"></i> 5. Incident Response & Reporting Policy</h3>
+        <p>Framework for identifying and reporting potential security breaches.</p>
+        <ul>
+          <li><strong>Reporting Channels:</strong> Email security@company-securehub.com or call 24/7 Hotline +1-800-555-SECURE.</li>
+          <li><strong>No-Blame Culture:</strong> Employees who report accidental clicks or security errors immediately will not face punitive action.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>SecureHub Security Training Portal &bull; Common Policies &bull; <i class="fas fa-shield-halved"></i></p>
+  </footer>
+  <script src="../assets/js/quiz-engine.js"></script>
+</body>
+</html>

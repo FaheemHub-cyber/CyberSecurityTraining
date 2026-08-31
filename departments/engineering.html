@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engineering · SecureHub Training Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="../index.html">Home</a>
+      <a href="#policies">Policies</a>
+      <a href="#theory">Theory</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#quiz">Quiz</a>
+      <a href="../shared/common-policies.html">Common Policies</a>
+      <a href="../shared/glossary.html">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Progress: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Secure Engineering · Code to Cloud</h1>
+    <p>Comprehensive security guidelines for software engineers, devops, and cloud architects. Learn secure coding, OWASP top risks, secrets management, and automated security testing.</p>
+  </section>
+
+  <main class="container">
+    <!-- A. Role-Specific Policies -->
+    <section id="policies">
+      <h2 class="section-title"><i class="fas fa-file-contract"></i> Engineering Policies</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-code-commit"></i> 1. Secure Development Lifecycle (SDLC) Policy</h3>
+          <p>Security requirements integrated into every sprint and release phase.</p>
+          <ul>
+            <li>Security gate requirements in sprint planning & design phase.</li>
+            <li>Mandatory Threat Modeling (STRIDE) for high-risk architecture changes.</li>
+            <li>Automated SAST & DAST quality gates blocking vulnerabilities in CI/CD.</li>
+            <li>Code review checklist: input validation, permission checks, logging.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-cubes-stacked"></i> 2. Dependency & Supply Chain Policy</h3>
+          <p>Mitigating third-party library and package risks.</p>
+          <ul>
+            <li>Software Composition Analysis (SCA) active in all repos (Dependabot/Snyk).</li>
+            <li>Strict package version pinning and checksum verification.</li>
+            <li>Vulnerability threshold: Zero high/critical CVEs allowed in release builds.</li>
+            <li>Formal security approval required for new open-source dependencies.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-key"></i> 3. Secrets Management Policy</h3>
+          <p>Zero tolerance for hardcoded keys, API tokens, or credentials.</p>
+          <ul>
+            <li>No secrets in source code, configuration files, or docker images ever.</li>
+            <li>HashiCorp Vault or Cloud Secret Manager required for secret storage.</li>
+            <li>Ephemeral secret usage: credentials expire and rotate automatically within 24 hours.</li>
+            <li>Pre-commit hooks (git-leaks) enabled on all developer machines.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-network-wired"></i> 4. API Security Policy</h3>
+          <p>Securing microservices and external endpoint exposure.</p>
+          <ul>
+            <li>OAuth2 / OpenID Connect (OIDC) authentication for all service endpoints.</li>
+            <li>Strict server-side input validation using allowlists and schemas.</li>
+            <li>Rate limiting and request throttling enforced at the API Gateway.</li>
+            <li>Output encoding and proper HTTP security headers on all API responses.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-cloud"></i> 5. Infrastructure as Code (IaC) Policy</h3>
+          <p>Hardening cloud configurations prior to deployment.</p>
+          <ul>
+            <li>Terraform/CloudFormation security scanning (Checkov/tfsec) in pipelines.</li>
+            <li>Strict Principle of Least Privilege for IAM roles and service accounts.</li>
+            <li>VPC network segmentation, private subnets, and zero public S3 buckets.</li>
+            <li>Immutable infrastructure principles: replace instance rather than SSH patch.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- B. Engineering-Specific Theory -->
+    <section id="theory" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-book-open"></i> Engineering Security Theory</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-bug"></i> OWASP Top 10 Deep Dive</h3>
+          <p>Primary web application vulnerabilities and mitigations.</p>
+          <ul>
+            <li><strong>A01 Broken Access Control:</strong> Enforce server-side authorization checks for every object access.</li>
+            <li><strong>A02 Cryptographic Failures:</strong> Protect data in transit (TLS 1.3) and at rest (AES-256).</li>
+            <li><strong>A03 Injection:</strong> Use parameterized queries (prepared statements) for all database operations.</li>
+            <li><strong>A04 Insecure Design:</strong> Perform threat modeling before writing code.</li>
+            <li><strong>A05 Security Misconfiguration:</strong> Disable unused features, default accounts, and detailed stack traces.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-plug"></i> OWASP API Security Top 10</h3>
+          <p>Top vulnerabilities specific to modern APIs.</p>
+          <ul>
+            <li><strong>API1 IDOR (Broken Object Level Authorization):</strong> Validate user permissions against requesting user ID on every record lookup.</li>
+            <li><strong>API2 Broken Authentication:</strong> Implement robust token validation and anti-brute-force controls.</li>
+            <li><strong>API3 Broken Property Authorization:</strong> Prevent mass assignment and over-posting vulnerabilities.</li>
+            <li><strong>API4 Unrestricted Resource Consumption:</strong> Set execution timeouts and rate limits.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-robot"></i> OWASP LLM / AI Security</h3>
+          <p>Securing AI models and LLM integration.</p>
+          <ul>
+            <li><strong>LLM01 Prompt Injection:</strong> Treat user prompts as untrusted input; isolate system prompts.</li>
+            <li><strong>LLM02 Sensitive Info Disclosure:</strong> Sanitize training data and RAG context windows.</li>
+            <li><strong>LLM03 Excessive Agency:</strong> Limit LLM agent autonomous tool capabilities and require human verification.</li>
+            <li><strong>LLM04 Supply Chain Risks:</strong> Verify third-party model weights and datasets.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-diagram-project"></i> Secure CI/CD & Testing</h3>
+          <p>Shifting security left into pipelines and UI automation.</p>
+          <ul>
+            <li>Integrate SAST, DAST, container image scanning into Pull Requests.</li>
+            <li>Artifact signing (Cosign) to prevent build tampering.</li>
+            <li><strong>UI Automation Security Assertions:</strong> Verify security headers (CSP, HSTS) and error stack suppression in Playwright/Cypress functional test suites.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-lock"></i> Zero Trust Architecture</h3>
+          <p>Never trust, always verify internal machine traffic.</p>
+          <ul>
+            <li>Enforce Mutual TLS (mTLS) for microservice-to-service communication.</li>
+            <li>Network micro-segmentation using Service Mesh (Istio/Linkerd).</li>
+            <li>Apply Least Privilege to service accounts and cloud container roles.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- C. Engineering Scenarios -->
+    <section id="scenarios" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-vial"></i> Real-World Engineering Scenarios</h2>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 1: SQL Injection Discovery during Code Review</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>During a Pull Request review, you notice code building a query like: <code>"SELECT * FROM users WHERE email = '" + req.body.email + "'"</code>.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Impact:</strong> Database compromise, authentication bypass, full data exfiltration.</p>
+          <p><strong>Fix:</strong> Refactor to parameterized queries or ORM binding: <code>db.query("SELECT * FROM users WHERE email = ?", [req.body.email])</code>.</p>
+          <p><strong>Prevention:</strong> Static code analysis (SAST) rules in CI/CD pipeline blocking raw string concatenation in SQL execution calls.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 2: AWS API Secret Key Committed to Repository</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>A developer accidentally commits a hardcoded AWS secret access key in a test script to GitHub.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Impact:</strong> Automated bot scanning discovers the key within minutes, launching unauthorized crypto-mining instances.</p>
+          <p><strong>Fix:</strong> Immediately revoke/rotate the AWS key in AWS IAM. Purge commit history or delete repo access. Audit CloudTrail for suspicious activity.</p>
+          <p><strong>Prevention:</strong> Mandatory pre-commit git hooks (git-leaks), use IAM Instance Profiles/Vault short-lived ephemeral tokens.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 3: Broken Object Level Authorization (IDOR)</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>An API endpoint <code>GET /api/v1/orders/1042</code> returns order details. A user changes <code>1042</code> to <code>1043</code> and sees another customer's invoice.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Impact:</strong> Mass customer PII leak and unauthorized data access.</p>
+          <p><strong>Fix:</strong> Add explicit authorization checks verifying <code>order.userId === currentUser.id</code> on the backend before returning data.</p>
+          <p><strong>Prevention:</strong> Automated API security testing assertions and using non-sequential UUIDs for resource identifiers.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 4: Dependency Vulnerability (Log4j / Supply Chain Attack)</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>A critical Remote Code Execution vulnerability is disclosed in a deeply nested Java logging dependency used in production.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Impact:</strong> Total compromise of servers running the vulnerable library.</p>
+          <p><strong>Fix:</strong> Upgrade the package version immediately or apply temporary JVM mitigations (-Dlog4j2.formatMsgNoLookups=true). Re-build and deploy.</p>
+          <p><strong>Prevention:</strong> Automated Software Composition Analysis (SCA) alerts and strict dependency version controls.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 5: Excessive Agency in AI Agent Integration</span>
+          <span class="scenario-badge">Medium Severity</span>
+        </div>
+        <p>An AI support bot integrated with an internal database plugin accidentally executes a `DROP TABLE` command after receiving a malicious user prompt.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Impact:</strong> Data deletion and service downtime.</p>
+          <p><strong>Fix:</strong> Restrict AI agent database connections to read-only service accounts. Implement strict output verification filters.</p>
+          <p><strong>Prevention:</strong> Apply Principle of Least Privilege to machine accounts and enforce human-in-the-loop approvals for destructive operations.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- D. Quiz Section -->
+    <section id="quiz" class="quiz-section">
+      <div class="quiz-header">
+        <h2><i class="fas fa-pen-to-square"></i> Engineering Security Knowledge Check (20 Questions)</h2>
+        <div>
+          <span>Progress: <strong id="answeredCount">0</strong>/20</span>
+          <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
+            <div class="progress-bar-fill" id="quizProgressFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="quiz-actions">
+        <button id="resetBtn" class="btn-secondary"><i class="fas fa-rotate-left"></i> Reset Test</button>
+        <button id="submitBtn" class="btn-primary"><i class="fas fa-paper-plane"></i> Submit & View Score</button>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results-card">
+      <div class="score-circle" id="scoreDisplay">0%</div>
+      <h3 style="margin-bottom: 1rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+        Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
+        Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
+        Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
+      </p>
+      <button id="downloadCertBtn" class="btn-primary"><i class="fas fa-certificate"></i> Generate Certificate</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>SecureHub Security Training Portal &bull; Engineering Module &bull; <i class="fas fa-shield-halved"></i></p>
+  </footer>
+
+  <script src="../assets/js/quiz-engine.js"></script>
+  <script>
+    const engineeringQuestions = [
+      {
+        text: "What is the primary technical defense against SQL Injection?",
+        options: ["Input validation only", "Parameterized queries (prepared statements)", "Web Application Firewall (WAF) alone", "HTML entity encoding"],
+        correct: 1,
+        explanation: "Parameterized queries separate SQL code from untrusted user data, preventing the database interpreter from executing attacker inputs as commands."
+      },
+      {
+        text: "Which OWASP API Security risk involves changing resource IDs (e.g., /user/101 to /user/102) to view unauthorized data?",
+        options: ["API1: Broken Object Level Authorization (IDOR)", "API2: Broken Authentication", "API5: Broken Function Level Authorization", "API7: SSRF"],
+        correct: 0,
+        explanation: "Broken Object Level Authorization occurs when an API endpoint does not validate that the authenticated user has permission to access the requested object ID."
+      },
+      {
+        text: "How frequently should ephemeral secrets ideally be rotated in high-security microservice environments?",
+        options: ["Every 12 months", "Every 24 hours or less", "Never, if stored in Vault", "Only when a breach occurs"],
+        correct: 1,
+        explanation: "Ephemeral secrets expire within short timeframes (e.g. 24 hours), rendering stolen credentials useless to attackers after expiration."
+      },
+      {
+        text: "What is the primary defense against Prompt Injection (LLM01) in AI application development?",
+        options: ["Relying solely on longer system prompts", "Treating LLM inputs as untrusted and restricting tool execution capabilities", "Disabling web browsing", "Using an open-source model"],
+        correct: 1,
+        explanation: "Prompt injection cannot be completely prevented by prompt engineering alone; applications must limit agent tool capabilities and enforce least privilege."
+      },
+      {
+        text: "Which tool type scans project dependencies for known CVE vulnerabilities during CI/CD build execution?",
+        options: ["SAST (Static Application Security Testing)", "SCA (Software Composition Analysis)", "DAST (Dynamic Application Security Testing)", "IAST (Interactive Testing)"],
+        correct: 1,
+        explanation: "Software Composition Analysis (SCA) specifically scans third-party open-source libraries and dependency manifests for known CVEs."
+      },
+      {
+        text: "In Zero Trust architecture, what protocol is typically enforced for service-to-service communication?",
+        options: ["Plain HTTP", "Mutual TLS (mTLS)", "Telnet", "FTP"],
+        correct: 1,
+        explanation: "Mutual TLS (mTLS) authenticates and encrypts communication between both the client and server microservices."
+      },
+      {
+        text: "Why should detailed stack traces be suppressed in production error responses?",
+        options: ["They slow down the server", "They leak internal framework details, paths, and library versions to potential attackers", "They break JSON formatting", "They consume too much bandwidth"],
+        correct: 1,
+        explanation: "Detailed stack traces expose internal implementation details (A05 Security Misconfiguration) that attackers use to craft targeted exploits."
+      },
+      {
+        text: "What is the recommended approach for validating user input on the server side?",
+        options: ["Denylists (blocking specific bad characters)", "Allowlists (defining exact expected formats and schemas)", "Client-side JavaScript validation only", "Regex filtering for '<script>' tags only"],
+        correct: 1,
+        explanation: "Allowlists strictly define valid input criteria (type, length, format), ensuring any unexpected or malicious input is rejected by default."
+      },
+      {
+        text: "Which HTTP header instructs browsers to strictly enforce HTTPS connections and prevent protocol downgrade attacks?",
+        options: ["Content-Security-Policy", "HTTP Strict Transport Security (HSTS)", "X-Frame-Options", "Access-Control-Allow-Origin"],
+        correct: 1,
+        explanation: "HSTS forces web browsers to interact with the server exclusively using secure HTTPS connections."
+      },
+      {
+        text: "What security assertion should be added to automated UI suites (e.g., Playwright) during negative security tests?",
+        options: ["Assert that clicking submit always logs in", "Assert that sensitive parameters do not leak in URL parameters or console logs", "Assert that CSS colors load correctly", "Assert that response time is under 100ms"],
+        correct: 1,
+        explanation: "Security assertions in UI test suites verify that credentials and tokens are not leaked in URLs, page source, or browser console logs."
+      },
+      {
+        text: "What is an IDOR vulnerability primarily caused by?",
+        options: ["Missing access control checks on server-side endpoints handling object identifiers", "Weak password policies", "Unencrypted database backups", "Missing CORS headers"],
+        correct: 0,
+        explanation: "IDOR occurs when access control is missing at the object level on backend API handlers."
+      },
+      {
+        text: "Which approach prevents hardcoded secrets from reaching remote git repositories?",
+        options: ["Pre-commit scanning hooks (e.g. git-leaks)", "Adding secrets to .gitignore after committing them", "Encrypting git commits with GPG", "Using private GitHub repositories"],
+        correct: 0,
+        explanation: "Pre-commit hooks inspect files locally before commit creation, blocking hardcoded keys before they reach remote repositories."
+      },
+      {
+        text: "What is the purpose of Infrastructure as Code (IaC) scanning tools like Checkov or tfsec?",
+        options: ["To format Terraform code", "To detect cloud misconfigurations (e.g. open S3 buckets, unencrypted disks) before deployment", "To speed up AWS provisioning", "To generate architectural diagrams"],
+        correct: 1,
+        explanation: "IaC scanners analyze cloud template files for security policy violations and misconfigurations prior to deployment."
+      },
+      {
+        text: "Which technique mitigates Cross-Site Request Forgery (CSRF)?",
+        options: ["Anti-CSRF tokens and SameSite cookie attributes", "Database indexing", "Minifying JavaScript", "Using CORS headers only"],
+        correct: 0,
+        explanation: "Anti-CSRF tokens verify request intent, while SameSite cookie flags prevent browsers from automatically attaching cookies to cross-site requests."
+      },
+      {
+        text: "What is the principle of 'Least Privilege' in cloud IAM?",
+        options: ["Giving all developers Admin privileges for speed", "Granting users and service accounts only the minimum permissions required to perform their specific task", "Rotating passwords every 30 days", "Disabling root account MFA"],
+        correct: 1,
+        explanation: "Least privilege minimizes potential blast radius by restricting access to necessary resources only."
+      },
+      {
+        text: "What does Software Composition Analysis (SCA) specifically prevent?",
+        options: ["SQL injection in custom code", "Inclusion of vulnerable or malicious third-party dependencies", "Buffer overflows in C code", "Phishing emails"],
+        correct: 1,
+        explanation: "SCA tools scan third-party dependencies against vulnerability databases."
+      },
+      {
+        text: "What threat model framework uses the categories Spoofing, Tampering, Repudiation, Info Disclosure, Denial of Service, and Elevation of Privilege?",
+        options: ["DREAD", "STRIDE", "PASTA", "OWASP SAMM"],
+        correct: 1,
+        explanation: "STRIDE is the Microsoft-developed threat modeling framework categorizing six core security threat vectors."
+      },
+      {
+        text: "Why should rate limiting be implemented on API login and registration endpoints?",
+        options: ["To save database storage", "To prevent credential stuffing and brute-force password guessing attacks", "To improve search engine indexing", "To speed up network bandwidth"],
+        correct: 1,
+        explanation: "Rate limiting restricts high-frequency automated login requests used in brute-force attacks."
+      },
+      {
+        text: "What is SSRF (Server-Side Request Forgery)?",
+        options: ["An attacker coercing a server to send unauthorized requests to internal or external systems", "A client-side script execution in browser", "Modifying local cookies", "Overwriting local storage"],
+        correct: 0,
+        explanation: "SSRF occurs when a web server fetches a remote resource specified by an attacker without adequate validation."
+      },
+      {
+        text: "What is the recommended method for storing user passwords in a database?",
+        options: ["Base64 encoding", "AES-256 reversible encryption", "Strong salted cryptographic hash functions (e.g., Argon2, bcrypt)", "MD5 hash"],
+        correct: 2,
+        explanation: "Argon2 or bcrypt with unique per-user salt prevents password recovery even if database contents are exfiltrated."
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new QuizEngine('engineering', engineeringQuestions);
+    });
+  </script>
+</body>
+</html>
