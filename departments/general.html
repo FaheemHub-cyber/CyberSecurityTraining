@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>General Security · SecureHub Training Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="../index.html">Home</a>
+      <a href="#policies">Policies</a>
+      <a href="#theory">Theory</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#quiz">Quiz</a>
+      <a href="../shared/common-policies.html">Common Policies</a>
+      <a href="../shared/glossary.html">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Progress: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Security for Everyone · Protecting Our Organization</h1>
+    <p>Essential security practices for all team members across the organization. Learn how to recognize social engineering, protect company data, work safely remotely, and report real-world incidents quickly.</p>
+  </section>
+
+  <main class="container">
+    <!-- A. Role-Specific Policies -->
+    <section id="policies">
+      <h2 class="section-title"><i class="fas fa-file-contract"></i> General Organization Policies</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-laptop"></i> 1. Acceptable Use Policy (AUP)</h3>
+          <p>Guidelines for corporate systems, internet, and personal device (BYOD) usage.</p>
+          <ul>
+            <li>Company hardware & accounts are strictly for authorized business operations.</li>
+            <li>No unauthorized software, torrenting, or bypass proxies permitted.</li>
+            <li>Social media policy: Do not post confidential work details or internal photos.</li>
+            <li>Maintain email hygiene; do not use work email for personal registrations.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-database"></i> 2. Data Classification & Handling Policy</h3>
+          <p>Proper categorizing and safeguarding organizational information.</p>
+          <ul>
+            <li><strong>Public:</strong> Marketing content approved for external distribution.</li>
+            <li><strong>Internal:</strong> Intranet documents, policies, internal Slack chats.</li>
+            <li><strong>Confidential:</strong> Financial reports, customer databases, contracts.</li>
+            <li><strong>Restricted:</strong> PII, API tokens, passwords, security keys.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-building-lock"></i> 3. Physical Security Policy</h3>
+          <p>Securing physical offices, workstations, and visitor access.</p>
+          <ul>
+            <li>Wear employee ID badges visibly at all times in office premises.</li>
+            <li>Clean Desk Policy: Lock physical documents and laptops when away from desk.</li>
+            <li>Prevent tailgating; do not allow non-badged visitors to follow you through doors.</li>
+            <li>Use secure cross-cut shredder bins for paper documents containing sensitive data.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-house-laptop"></i> 4. Remote & Hybrid Work Policy</h3>
+          <p>Maintaining security while working from home or public places.</p>
+          <ul>
+            <li>Always connect through company VPN when using public or home Wi-Fi networks.</li>
+            <li>Use privacy screen filters in public cafes, airports, or trains.</li>
+            <li>Never leave work devices unattended in vehicles or public spaces.</li>
+            <li>Ensure home Wi-Fi routers use WPA3/WPA2 encryption with strong passwords.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-bell"></i> 5. Incident Reporting Policy</h3>
+          <p>Mandatory steps when security incidents or suspicious events occur.</p>
+          <ul>
+            <li>Report lost/stolen laptops or mobile phones immediately to IT Security.</li>
+            <li>Report suspicious emails via the PhishAlarm button or security email.</li>
+            <li>No-blame culture: Always report accidental clicks or mistakes immediately.</li>
+            <li>24/7 Security Hotline: 8870682288 / aabdulfaheem@hubstream.net.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- B. Theory Section -->
+    <section id="theory" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-book-open"></i> Core Security Theory</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-masks-theater"></i> Social Engineering Fundamentals</h3>
+          <p>How attackers manipulate human trust and psychology.</p>
+          <ul>
+            <li>Common tactics: Urgency ("Act within 10 mins!"), Authority ("CEO request"), Fear, and Curiosity.</li>
+            <li>Pretexting: Attackers creating elaborate fake scenarios to gain trust.</li>
+            <li>Always verify identity through an independent, verified out-of-band communication channel.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.cisa.gov/news-events/news/social-engineering-tactics" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> CISA Social Engineering Defense Guide</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=4a_333a_912" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Social Engineering Attacks - Social-Engineer.org</a></li>
+              <li><a href="https://www.youtube.com/watch?v=8901x04_b12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> How Hackers Manipulation Works - Chris Hadnagy</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 0)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 1 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-fish-fins"></i> Phishing, Smishing & Vishing</h3>
+          <p>Recognizing multi-channel scam attempts.</p>
+          <ul>
+            <li><strong>Phishing (Email):</strong> Lookalike domains (e.g. micros0ft.com), grammatical errors, fake urgency.</li>
+            <li><strong>Smishing (SMS):</strong> Fake delivery tracking links or security alert texts.</li>
+            <li><strong>Vishing (Voice / Phone):</strong> Scammers impersonating IT support or bank representatives.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.eff.org/wp/defending-against-phishing" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> EFF Guide to Recognizing Phishing & Spearphishing</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=7891x04_c12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Phishing Mechanics & Red Flags - Computerphile</a></li>
+              <li><a href="https://www.youtube.com/watch?v=3451x04_d12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Smishing & Vishing Defense Tactics</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 1)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 2 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-shield-halved"></i> MFA & Push Bombing Defense</h3>
+          <p>Securing multi-factor authentication systems.</p>
+          <ul>
+            <li>MFA requires two or more factors: Something you know, have, or are.</li>
+            <li><strong>Push Bombing Attacks:</strong> Attackers spamming 50+ login approvals to force accidental 'Approve' click.</li>
+            <li>Never approve unrequested MFA push prompts. Always report them to Security.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> NIST Authenticators & MFA Guidelines</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=1231x04_e12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Why SMS 2FA is Insecure & Passkeys Rule - Fireship</a></li>
+              <li><a href="https://www.youtube.com/watch?v=4561x04_f12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> FIDO2 YubiKeys Stopping Phishing</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 2)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 3 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-vault"></i> Password Security & Password Managers</h3>
+          <p>Best practices for credential hygiene.</p>
+          <ul>
+            <li>Never reuse passwords across personal and work applications.</li>
+            <li>Use the approved company Password Manager (1Password / Bitwarden) to generate 16+ character passphrases.</li>
+            <li>Never write down passwords on post-it notes or unencrypted text files on desktop.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://bitwarden.com/resources/password-security-guide/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> Bitwarden Password Security Guide</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=7891x04_g12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> How Password Managers Work - Tom Scott</a></li>
+              <li><a href="https://www.youtube.com/watch?v=0121x04_h12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> The Science of Passwords - Computerphile</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 3)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 4 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-user-shield"></i> Data Privacy & PII Protection</h3>
+          <p>Handling Personally Identifiable Information (PII).</p>
+          <ul>
+            <li>PII includes SSNs, full names, home addresses, phone numbers, and financial details.</li>
+            <li>Compliance mandates: GDPR, CCPA require data minimization and strict access controls.</li>
+            <li>Never send unencrypted PII via external email or public chat channels.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.sans.org/white-papers/physical-security" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> SANS Physical Security Best Practices</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=3451x04_i12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Physical Penetration Testing Highlights - Deviant Ollam</a></li>
+              <li><a href="https://www.youtube.com/watch?v=6781x04_j12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Tailgating & Badge Cloning Prevention</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 4)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 5 (Required)
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- C. General Scenarios -->
+    <section id="scenarios" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-vial"></i> Real-World General Scenarios</h2>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 1: Black Command Line Window Flashing Randomly on Screen</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>While browsing or opening a document, a black command line window (CMD / Terminal) pops up randomly on your screen and quickly disappears multiple times.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> Active malware script / PowerShell backdoor execution attempt in background.</p>
+          <p><strong>Action:</strong> Disconnect network/Wi-Fi immediately and contact the Security Team / IT Helpdesk right away. Do not ignore it or reboot without informing security.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 2: Urgent CEO Email Request for Gift Cards</span>
+          <span class="scenario-badge">High Urgency</span>
+        </div>
+        <p>You receive an urgent email signed by the company CEO stating: "I'm in a conference and need 10 Apple gift cards for clients immediately. Send codes via email."</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Red Flags:</strong> Urgency, request for gift cards, external sender domain typo.</p>
+          <p><strong>Action:</strong> Do NOT purchase cards or reply. Call the CEO on a known official phone number or verify with HR. Report the email to security.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 3: MFA Push Notification Bombing</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>Your phone receives 20 consecutive authenticator push notifications at 2:00 AM while you are asleep or relaxing.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> An attacker has obtained your primary password and is attempting to fatigue you into tapping 'Approve'.</p>
+          <p><strong>Action:</strong> Reject all prompts. Log in immediately and change your primary password. Report the incident to IT Security.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 4: Tailgating at Office Entrance</span>
+          <span class="scenario-badge">Medium Severity</span>
+        </div>
+        <p>A person wearing delivery uniform holding large boxes follows closely behind you as you scan your badge at the secure office door.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> Physical security breach via tailgating.</p>
+          <p><strong>Action:</strong> Politely ask them to wait or swipe their own badge, or direct them to reception. Do not hold the door open for non-badged individuals.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 5: USB Drive Found in Parking Lot</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>You find a USB flash drive labeled "Executive Salaries 2026" sitting on the sidewalk near the building entrance.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> USB Drop Attack containing automated malware/keylogger execution triggers.</p>
+          <p><strong>Action:</strong> Do NOT plug the drive into any work or personal computer. Turn the drive directly over to the Security team.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- D. Quiz Section -->
+    <section id="quiz" class="quiz-section" style="position: relative;">
+      <div id="quizOverlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(245,245,247,0.92); z-index:100; backdrop-filter: blur(8px); display:flex; align-items:center; justify-content:center;"></div>
+      <div class="quiz-header">
+        <h2><i class="fas fa-pen-to-square"></i> General Security Knowledge Check (25 Questions)</h2>
+        <div>
+          <span>Progress: <strong id="answeredCount">0</strong>/25</span>
+          <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
+            <div class="progress-bar-fill" id="quizProgressFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="quiz-actions">
+        <button id="resetBtn" class="btn-secondary"><i class="fas fa-rotate-left"></i> Reset Test</button>
+        <button id="submitBtn" class="btn-primary"><i class="fas fa-paper-plane"></i> Submit & View Score</button>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results-card">
+      <div id="mascotDisplay"></div>
+      <div class="score-circle" id="scoreDisplay">0%</div>
+      <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
+        Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
+        Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
+        Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
+      </p>
+      <div id="certLockMsg" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--danger);"></div>
+      <button id="downloadCertBtn" class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-certificate"></i> Generate Certificate</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>SecureHub Security Training Portal &bull; General Module &bull; <i class="fas fa-shield-halved"></i> &bull; Property of Hubstream India Pvt Limited</p>
+  </footer>
+
+  <script src="../assets/js/quiz-engine.js"></script>
+  <script>
+    const generalQuestions = [
+      {
+        text: "You notice a black command line window (CMD/Terminal) popping up randomly on your screen and disappearing. What should you do?",
+        options: [
+          "Ignore it as a routine Windows background update",
+          "Immediately disconnect from Wi-Fi/network and contact the Security Team",
+          "Restart your computer and continue working",
+          "Close all browser tabs and wait until tomorrow"
+        ],
+        correct: 1,
+        hint: "Unexpected command prompts running scripts indicate background malware execution.",
+        whyCorrect: "A flashing command prompt often means a malicious script (PowerShell/CMD backdoor) is attempting execution in the background. Disconnecting network stops data exfiltration and contacting security initiates containment.",
+        whyWrong: [
+          "Option 1 is wrong because legitimate updates rarely flash random unhandled CMD windows repeatedly.",
+          "Option 3 is wrong because rebooting alone does not eliminate active malware and may trigger persistence mechanisms.",
+          "Option 4 is wrong because closing browsers does not stop local system command execution."
+        ]
+      },
+      {
+        text: "What is the best way to verify an unexpected email from your CEO asking for urgent financial gift card purchases?",
+        options: [
+          "Reply directly to the email asking for confirmation",
+          "Call the CEO on a known official internal phone number or speak in person",
+          "Forward the request to coworkers to ask if it's real",
+          "Purchase the gift cards immediately to avoid getting reprimanded"
+        ],
+        correct: 1,
+        hint: "Never verify a suspicious email by replying to the same email channel.",
+        whyCorrect: "Calling on an independent, verified phone number ensures you are speaking directly to the genuine CEO, bypassing spoofed email headers.",
+        whyWrong: [
+          "Option 1 is wrong because if the email is spoofed or compromised, the attacker will reply confirming the fraudulent request.",
+          "Option 3 is wrong because coworkers won't know if the CEO sent a private request and it wastes time.",
+          "Option 4 is wrong because urgency and gift cards are classic social engineering red flags."
+        ]
+      },
+      {
+        text: "What should you do if you find an unknown USB flash drive lying on the floor in the office parking lot?",
+        options: [
+          "Plug it into your laptop to check who owns it",
+          "Hand it over to IT Security immediately without plugging it in",
+          "Leave it on a breakroom table for someone else to claim",
+          "Plug it into a personal home computer instead"
+        ],
+        correct: 1,
+        hint: "USB drop attacks rely on human curiosity to bypass firewalls.",
+        whyCorrect: "Handing the drive to IT Security prevents malicious auto-run payloads or keyloggers from infecting corporate endpoints.",
+        whyWrong: [
+          "Option 1 is wrong because plugging in unknown USBs triggers automated malware execution (USB Drop Attack).",
+          "Option 3 is wrong because another employee might plug it in out of curiosity.",
+          "Option 4 is wrong because it infects your personal computer and home network."
+        ]
+      },
+      {
+        text: "What is 'tailgating' in the context of physical security?",
+        options: ["Driving too close to another vehicle", "Following an authorized person through a secure door without scanning your own badge", "A social media scam technique", "Overloading a server with requests"],
+        correct: 1,
+        hint: "Think about physical office door access and badge scanning.",
+        whyCorrect: "Tailgating allows unauthorized individuals physical access to restricted office areas by following badged personnel.",
+        whyWrong: [
+          "Option 1 is wrong because that refers to road driving, not physical cybersecurity.",
+          "Option 3 is wrong because tailgating is a physical security breach, not a social media attack.",
+          "Option 4 is wrong because that describes a Denial of Service (DoS) attack."
+        ]
+      },
+      {
+        text: "What is the safest way to store work-related passwords?",
+        options: [
+          "Written on a sticky note placed under your keyboard",
+          "In an unencrypted text file saved on your desktop",
+          "In the company-approved corporate Password Manager",
+          "In your web browser's unencrypted local memory"
+        ],
+        correct: 2,
+        hint: "Look for the tool that provides zero-knowledge encryption.",
+        whyCorrect: "Approved password managers securely encrypt passwords behind a single master passphrase and MFA, generating long unique passwords.",
+        whyWrong: [
+          "Option 1 is wrong because physical sticky notes are easily read by visitors or cleaners.",
+          "Option 2 is wrong because plain text files are indexed and stolen by malware keyloggers.",
+          "Option 4 is wrong because browser memory can be extracted by malicious extensions or local scripts."
+        ]
+      },
+      {
+        text: "What action should you take if your phone receives 20 consecutive MFA push notifications at 2:00 AM?",
+        options: [
+          "Approve them so your phone stops buzzing",
+          "Deny/Reject all prompts immediately and notify IT Security",
+          "Ignore them and go back to sleep",
+          "Turn off your Wi-Fi and approve the next prompt"
+        ],
+        correct: 1,
+        hint: "Multiple unexpected prompts mean someone knows your password.",
+        whyCorrect: "Rejecting prompts blocks the attacker who has stolen your primary password (MFA Fatigue/Push Bombing). Reporting alerts security to reset your credentials.",
+        whyWrong: [
+          "Option 1 is wrong because clicking 'Approve' grants the attacker immediate access to your account.",
+          "Option 3 is wrong because the attacker still holds your primary password.",
+          "Option 4 is wrong because approving grants access regardless of connection method."
+        ]
+      },
+      {
+        text: "Which keyboard shortcut immediately locks a Windows workstation screen when stepping away from your desk?",
+        options: ["Ctrl + C", "Win + L", "Alt + Tab", "Ctrl + Alt + Del"],
+        correct: 1,
+        hint: "Windows key + L (Lock).",
+        whyCorrect: "Win + L instantly locks the screen, preventing physical unauthorized access while away from your workstation.",
+        whyWrong: [
+          "Option 1 is copy command.",
+          "Option 3 switches active application windows.",
+          "Option 4 opens security options menu but requires extra clicks to lock."
+        ]
+      },
+      {
+        text: "What data classification applies to customer personal records, social security numbers, or banking details?",
+        options: ["Public", "Internal", "Restricted / Confidential", "Unclassified"],
+        correct: 2,
+        hint: "PII requires the highest level of regulatory protection.",
+        whyCorrect: "Restricted/Confidential classification mandates strict encryption, audit logging, and restricted access under GDPR/CCPA laws.",
+        whyWrong: [
+          "Option 1 is wrong because public data is for open external distribution.",
+          "Option 2 is wrong because internal data is for general employee viewing, not sensitive PII.",
+          "Option 4 is wrong because all corporate data must be classified."
+        ]
+      },
+      {
+        text: "What is 'Smishing'?",
+        options: ["Phishing attacks conducted via SMS text messages", "Phishing via voice phone calls", "Malware hidden inside PDF files", "Social media impersonation"],
+        correct: 0,
+        hint: "SMS + Phishing = Smishing.",
+        whyCorrect: "Smishing refers specifically to phishing links or malicious prompts sent via mobile text messages (SMS).",
+        whyWrong: [
+          "Option 2 is wrong because voice phone phishing is called Vishing.",
+          "Option 3 is wrong because PDF malware is an email or download attachment vector.",
+          "Option 4 is wrong because social media scams are social engineering."
+        ]
+      },
+      {
+        text: "Why must you connect to the company VPN when working on public Wi-Fi at an airport or coffee shop?",
+        options: [
+          "To speed up your internet download speed",
+          "To encrypt all network traffic and protect against local eavesdropping / Man-in-the-Middle attacks",
+          "To bypass company web filters", "To save laptop battery power"
+        ],
+        correct: 1,
+        hint: "Public Wi-Fi networks transmit unencrypted wireless signals.",
+        whyCorrect: "VPNs create an encrypted tunnel that shields credentials, cookies, and traffic from eavesdroppers on untrusted public networks.",
+        whyWrong: [
+          "Option 1 is wrong because VPN encryption slightly decreases network speed.",
+          "Option 3 is wrong because VPN routes traffic through company filters.",
+          "Option 4 is wrong because encryption processing consumes slightly more battery."
+        ]
+      },
+      {
+        text: "What does a 'Clean Desk Policy' mandate for employees leaving their desks at the end of the day?",
+        options: [
+          "Cleaning monitors with glass cleaner",
+          "Locking away sensitive physical documents, notebooks, and laptops",
+          "Organizing desktop shortcuts",
+          "Leaving documents on desks for cleaners"
+        ],
+        correct: 1,
+        hint: "Physical papers can expose confidential data to unauthorized visitors.",
+        whyCorrect: "Locking away documents and hardware prevents physical theft, unauthorized viewing, and insider espionage.",
+        whyWrong: [
+          "Option 1 is wrong because it refers to physical sanitation, not information security.",
+          "Option 3 is wrong because it refers to software file organization.",
+          "Option 4 is wrong because leaving documents visible exposes sensitive data."
+        ]
+      },
+      {
+        text: "What should you do if you accidentally click a link in a suspicious email and enter your password?",
+        options: [
+          "Immediately change your password, disconnect network, and notify IT Security",
+          "Shut down your laptop and pretend nothing happened",
+          "Delete the email and hope the attacker doesn't notice",
+          "Wait 3 days to see if any weird activity occurs"
+        ],
+        correct: 0,
+        hint: "Immediate containment reduces the breach window.",
+        whyCorrect: "Promptly changing credentials and notifying security allows IT to revoke active session tokens and contain potential compromises.",
+        whyWrong: [
+          "Option 1 is wrong because hiding the mistake gives attackers unlimited time to exploit your credentials.",
+          "Option 3 is wrong because deleting the email does not revoke the compromised password.",
+          "Option 4 is wrong because delayed reporting leads to full account takeover."
+        ]
+      },
+      {
+        text: "Which of the following is a classic indicator of a phishing email?",
+        options: [
+          "Artificial urgency ('Act in 10 minutes or account suspended!'), mismatched sender domain, and generic greetings",
+          "An email from your manager on the official domain with expected project details",
+          "An official calendar event invitation sent via Google Workspace",
+          "A monthly internal newsletter digest"
+        ],
+        correct: 0,
+        hint: "Attackers rely on emotional manipulation and typo-squatting.",
+        whyCorrect: "Artificial urgency and domain display name mismatches are designed to trick recipients into acting without verifying.",
+        whyWrong: [
+          "Option 2 is normal business communication.",
+          "Option 3 is routine calendar functionality.",
+          "Option 4 is expected internal communication."
+        ]
+      },
+      {
+        text: "What is Multi-Factor Authentication (MFA)?",
+        options: [
+          "Using two different web browsers at the same time",
+          "Requiring two or more distinct verification factors (e.g. password + authenticator code) to gain access",
+          "Changing your password every 14 days",
+          "Using both uppercase and lowercase letters in your password"
+        ],
+        correct: 1,
+        hint: "Something you know + something you have.",
+        whyCorrect: "MFA blocks 99% of automated credential attacks by requiring a second physical token or authenticator app code.",
+        whyWrong: [
+          "Option 1 is wrong because running browsers is not an authentication control.",
+          "Option 3 is wrong because password rotation is a password policy, not MFA.",
+          "Option 4 is wrong because character cases relate to password complexity."
+        ]
+      },
+      {
+        text: "Why is reusing the same password across personal and corporate accounts dangerous?",
+        options: [
+          "It confuses password managers",
+          "If a personal site suffers a breach, attackers will test those leaked credentials against corporate accounts (Credential Stuffing)",
+          "It consumes extra server memory",
+          "It slows down login speed"
+        ],
+        correct: 1,
+        hint: "Breaches on third-party sites leak username/password pairs.",
+        whyCorrect: "Credential stuffing scripts automatically test leaked username/password combinations across thousands of enterprise portals.",
+        whyWrong: [
+          "Option 1 is wrong because password managers handle any passwords easily.",
+          "Option 3 is wrong because text string length does not affect server RAM.",
+          "Option 4 is wrong because authentication time remains identical."
+        ]
+      },
+      {
+        text: "What is 'Vishing'?",
+        options: [
+          "Voice phishing conducted over phone calls or VoIP",
+          "Video call recording scam",
+          "Visual screen shoulder surfing",
+          "Virtual machine malware"
+        ],
+        correct: 0,
+        hint: "Voice + Phishing = Vishing.",
+        whyCorrect: "Vishing involves phone scammers posing as IT support or bank representatives to trick victims into revealing passwords or MFA codes.",
+        whyWrong: [
+          "Option 2 is wrong because video scams are deepfakes or social engineering.",
+          "Option 3 is wrong because shoulder surfing is physical visual inspection.",
+          "Option 4 is wrong because virtual machine attacks relate to hypervisors."
+        ]
+      },
+      {
+        text: "Who should you notify immediately if your company-issued mobile phone or laptop is lost or stolen?",
+        options: [
+          "Local police department only",
+          "IT Security / Helpdesk immediately so they can trigger remote wipe and revoke tokens",
+          "Wait until your next weekly 1-on-1 meeting",
+          "Your cellular service carrier"
+        ],
+        correct: 1,
+        hint: "Remote wipe capabilities prevent data exfiltration from stolen hardware.",
+        whyCorrect: "Immediate reporting enables IT Security to issue a remote wipe command before attackers can bypass disk encryption.",
+        whyWrong: [
+          "Option 1 is wrong because police cannot remotely wipe corporate devices.",
+          "Option 3 is wrong because waiting hours/days gives thieves time to exfiltrate data.",
+          "Option 4 is wrong because phone carriers cannot wipe device memory."
+        ]
+      },
+      {
+        text: "Can public posts on personal social media accounts pose a security threat to your company?",
+        options: [
+          "No, social media has no connection to work",
+          "Yes, because attackers gather intelligence (OSINT) on team hierarchies, tech stacks, and software tools to craft targeted spear-phishing",
+          "Only if you post photos of your food",
+          "No, because privacy settings protect everything"
+        ],
+        correct: 1,
+        hint: "Open Source Intelligence (OSINT) powers targeted spear-phishing.",
+        whyCorrect: "Attackers scrape LinkedIn, Twitter, and Instagram to identify team structures, vendors, and tools used for spear-phishing campaigns.",
+        whyWrong: [
+          "Option 1 is wrong because personal posts reveal work relationships and tech stacks.",
+          "Option 3 is wrong because food photos rarely contain enterprise intelligence.",
+          "Option 4 is wrong because social media privacy settings are frequently bypassed or public."
+        ]
+      },
+      {
+        text: "What is the recommended approach for creating a strong, memorable master passphrase?",
+        options: [
+          "Use your pet's name followed by '123'",
+          "Combine 4 or more random, unrelated words into a long passphrase (e.g. 'CorrectHorseBatteryStaple!')",
+          "Use 'Password2026!'",
+          "Use your birthdate and address"
+        ],
+        correct: 1,
+        hint: "Length matters more than complex character substitution.",
+        whyCorrect: "Long passphrases consisting of random words exponentially increase entropy, resisting brute-force tools while remaining easy to remember.",
+        whyWrong: [
+          "Option 1 is wrong because pet names are easily guessed via social media.",
+          "Option 3 is wrong because 'Password' is in every dictionary attack list.",
+          "Option 4 is wrong because birthdates are public record PII."
+        ]
+      },
+      {
+        text: "What is 'Pretexting' in social engineering?",
+        options: [
+          "Sending SMS text messages",
+          "Inventing a believable fake scenario/persona to trick a victim into sharing sensitive data or granting access",
+          "Writing security policies in advance",
+          "Testing firewalls"
+        ],
+        correct: 1,
+        hint: "Creating a 'pretext' or fake story.",
+        whyCorrect: "Pretexting involves crafting a fabricated backstory (e.g., impersonating an auditor or vendor) to gain victim trust.",
+        whyWrong: [
+          "Option 1 is wrong because texting is SMS communication.",
+          "Option 3 is wrong because policy writing is administrative governance.",
+          "Option 4 is wrong because firewall testing is technical scanning."
+        ]
+      },
+      {
+        text: "What incident reporting culture does our organization maintain?",
+        options: [
+          "A strict penalty culture where human mistakes are punished",
+          "A no-blame culture encouraging immediate reporting of security errors so threats can be contained quickly",
+          "A silent culture where security is kept secret",
+          "An automated-only culture"
+        ],
+        correct: 1,
+        hint: "We encourage open communication to minimize breach impact.",
+        whyCorrect: "A no-blame culture ensures employees feel safe reporting accidental clicks immediately, allowing security to isolate threats fast.",
+        whyWrong: [
+          "Option 1 is wrong because punitive cultures cause employees to hide security mistakes, leading to catastrophic undetected breaches.",
+          "Option 3 is wrong because secrecy prevents organization-wide learning.",
+          "Option 4 is wrong because human vigilance is essential alongside automation."
+        ]
+      },
+      {
+        text: "An unexpected pop-up window claims your system is infected and instructs you to call a toll-free number. What should you do?",
+        options: [
+          "Call the toll-free number immediately for help",
+          "Close the browser tab/process and report the scareware pop-up to IT Security",
+          "Pay the fee shown on the pop-up",
+          "Download the 'antivirus cleaner' tool linked in the pop-up"
+        ],
+        correct: 1,
+        hint: "Tech support scareware pop-ups are browser-based scams.",
+        whyCorrect: "Scareware pop-ups attempt to trick users into calling fake tech support scammers or installing real malware. Closing the tab and reporting stops the attack.",
+        whyWrong: [
+          "Option 1 is wrong because the toll-free number connects directly to scammers.",
+          "Option 3 is wrong because paying money feeds cybercriminals without fixing anything.",
+          "Option 4 is wrong because the linked cleaner tool is actual malware."
+        ]
+      },
+      {
+        text: "What should you do if an unknown person calls your desk phone asking for internal server IP addresses for an 'audit'?",
+        options: [
+          "Provide the IP addresses immediately to be helpful",
+          "Refuse to share internal technical details and report the suspicious call to IT Security",
+          "Transfer the caller to your direct manager without checking",
+          "Give them fake numbers and hang up"
+        ],
+        correct: 1,
+        hint: "Internal network topology is confidential internal data.",
+        whyCorrect: "Vishing attackers conduct network reconnaissance by phone; internal IP addresses and server names must never be disclosed to unverified callers.",
+        whyWrong: [
+          "Option 1 is wrong because it leaks internal network architecture to attackers.",
+          "Option 3 is wrong because it passes the scam call to another employee without reporting.",
+          "Option 4 is wrong because reporting the attempt is required for SOC threat intelligence."
+        ]
+      },
+      {
+        text: "Why should you avoid using work email addresses to register for personal shopping or gaming sites?",
+        options: [
+          "It uses up company server storage",
+          "If those third-party sites are breached, your work email becomes targeted for spam, phishing, and credential stuffing attacks",
+          "It slows down work email delivery",
+          "It breaks corporate firewall settings"
+        ],
+        correct: 1,
+        hint: "Third-party site breaches expose registered email addresses to attacker mailing lists.",
+        whyCorrect: "Registering work emails on non-work sites exposes corporate email addresses in public breach databases, attracting spam and spear-phishing.",
+        whyWrong: [
+          "Option 1 is wrong because email address text takes negligible storage space.",
+          "Option 3 is wrong because registering does not affect mail server processing speed.",
+          "Option 4 is wrong because email registration has no connection to firewalls."
+        ]
+      },
+      {
+        text: "What is the primary objective of security awareness training for all employees?",
+        options: [
+          "To turn every employee into a security analyst",
+          "To build a resilient security culture where every employee can recognize threats, protect data, and report incidents promptly",
+          "To satisfy legal paperwork only",
+          "To restrict internet access completely"
+        ],
+        correct: 1,
+        hint: "Security is a collective organizational responsibility.",
+        whyCorrect: "Employees are the first line of defense; security awareness empowers team members to protect company assets and act as human sensors.",
+        whyWrong: [
+          "Option 1 is wrong because employees don't need technical analyst skills for daily work.",
+          "Option 3 is wrong because compliance is a secondary benefit, not the primary goal.",
+          "Option 4 is wrong because training enables safe productivity, not total restriction."
+        ]
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      activeQuizEngine = new QuizEngine('general', generalQuestions);
+    });
+  </script>
+</body>
+</html>

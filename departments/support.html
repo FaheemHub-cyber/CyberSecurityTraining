@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSM & Support Engineering Security · SecureHub Training Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="../index.html">Home</a>
+      <a href="#policies">Policies</a>
+      <a href="#theory">Theory</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#quiz">Quiz</a>
+      <a href="../shared/common-policies.html">Common Policies</a>
+      <a href="../shared/glossary.html">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Progress: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Secure Support · Protecting Customers & Systems</h1>
+    <p>Security guidelines for CSM & Support Engineers, Technical Support Specialists, and Helpdesk Teams. Master customer identity verification, secure password resets, remote session security, and social engineering defense.</p>
+  </section>
+
+  <main class="container">
+    <section id="policies">
+      <h2 class="section-title"><i class="fas fa-file-contract"></i> Support Team Security Policies</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-user-gear"></i> 1. Customer Account Access & Impersonation Policy</h3>
+          <p>Accessing customer environments for troubleshooting.</p>
+          <ul>
+            <li>Customer account access permitted strictly on a temporary, need-to-know basis.</li>
+            <li>Use designated, audited admin impersonation portals with active session logging.</li>
+            <li>Never view or ask for customer primary unmasked passwords or full payment card CVVs.</li>
+            <li>Zero local downloading of customer databases or ticket attachments to personal drives.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-headset"></i> 2. Support Channel Security Policy</h3>
+          <p>Securing ticket systems (Zendesk/Jira), live chat, and voice support.</p>
+          <ul>
+            <li>Verify customer identity before sharing account-specific telemetry or system configurations.</li>
+            <li>Sanitize ticket attachments and logs to scrub passwords, tokens, and PII before uploading.</li>
+            <li>Use encrypted secure channels when requesting sensitive diagnostic logs.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-key"></i> 3. Password Reset & Verification Policy</h3>
+          <p>Strict procedures for credential recovery requests.</p>
+          <ul>
+            <li>Never override password resets verbally over the phone without out-of-band verification.</li>
+            <li>Send password reset links exclusively to the registered account email address.</li>
+            <li>MFA resets require secondary verification (government ID / callback to verified phone).</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-desktop"></i> 4. Remote Support Access Policy</h3>
+          <p>Guidelines for screen sharing and remote desktop sessions.</p>
+          <ul>
+            <li>Remote control sessions require explicit, recorded customer consent.</li>
+            <li>Warn customers to close private windows, password managers, and personal files before screen sharing.</li>
+            <li>Automatically terminate remote support sessions upon ticket resolution.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-triangle-exclamation"></i> 5. Security Incident Escalation Policy</h3>
+          <p>Escalating suspected customer breaches or ongoing attacks.</p>
+          <ul>
+            <li>Escalate tickets reporting unusual account activity or unauthorized charges immediately to SOC / Security.</li>
+            <li>Flag repeated failed login alerts or suspected brute-force tickets.</li>
+            <li>Follow the standard Security Incident Response protocol for account compromise isolation.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="theory" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-book-open"></i> Support Security Theory</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-masks-theater"></i> Social Engineering Targeted at Support</h3>
+          <p>Why support engineers are high-value targets for attackers.</p>
+          <ul>
+            <li>Support engineers possess admin access and are naturally helpful and empathetic.</li>
+            <li>Attackers exploit urgency: "I'm locked out of my account and presenting to the CEO in 5 minutes!".</li>
+            <li>Pretexting tactics: Attackers posing as internal executive staff or external VIP customers.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.cisa.gov/resources-tools/resources/preventing-social-engineering-attacks" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> CISA Preventing Social Engineering & Impersonation</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=4561x04_yy1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Vishing Calls Targeting Support - Social-Engineer.org</a></li>
+              <li><a href="https://www.youtube.com/watch?v=7891x04_zz1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Out-of-Band Identity Verification Techniques</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 0)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 1 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-id-card-clip"></i> Robust Customer Authentication</h3>
+          <p>Moving beyond weak knowledge-based questions.</p>
+          <ul>
+            <li>Mother's maiden name or birthdate are easily discoverable on social media (OSINT).</li>
+            <li>Use cryptographic verification methods: Out-of-band authenticator app tokens or PIN codes.</li>
+            <li>Always verify calling numbers against registered billing records.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> NIST SP 800-63B Password Reset & Verification</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=0121x04_ab2" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Preventing Account Takeover (ATO) in Helpdesks</a></li>
+              <li><a href="https://www.youtube.com/watch?v=3451x04_bc2" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Secure Customer Verification Workflows</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 1)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 2 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-shield-virus"></i> Identifying Compromise Signals in Tickets</h3>
+          <p>Spotting early warning signs of breach in customer requests.</p>
+          <ul>
+            <li>Sudden request to change registered account email address combined with immediate password reset.</li>
+            <li>Tickets complaining of missing funds, altered shipping addresses, or unknown API key creation.</li>
+            <li>Batch requests asking to disable MFA security settings.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://support.zendesk.com/hc/en-us/articles/security-best-practices" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> Zendesk Support Security & Data Masking</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=6781x04_cd2" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Role-Based Access Control (RBAC) in Ticketing</a></li>
+              <li><a href="https://www.youtube.com/watch?v=8901x04_de2" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Redacting Secret Keys in Customer Support Threads</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 2)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 3 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-lock"></i> Least Privilege & Support Tool Hardening</h3>
+          <p>Limiting administrative scope in support software.</p>
+          <ul>
+            <li>Tier 1 support reps should not have blanket database edit or refund permissions.</li>
+            <li>Enforce dual-authorization approvals for high-value refund or administrative account transfers.</li>
+            <li>MFA mandatory on all Zendesk, Jira, and internal admin panel accounts.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.cisa.gov/news-events/alerts/2021/securing-remote-desktop" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> CISA Securing Remote Desktop & Support Tools</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=1231x04_ef2" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Remote Screen Sharing Privacy & Masking</a></li>
+              <li><a href="https://www.youtube.com/watch?v=4561x04_fg2" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Session Recording Consent & Retention Policies</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 3)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 4 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-hand-holding-hand"></i> Secure Communication & Log Sanitization</h3>
+          <p>Preventing credential leaks in support tickets.</p>
+          <ul>
+            <li>Customers frequently paste raw API keys or DB connection strings into support tickets.</li>
+            <li>Support reps must immediately redact exposed keys in ticket systems and trigger token revocation.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.sans.org/white-papers/incident-handlers-handbook" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> SANS Incident Handler's Handbook</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=7891x04_gh2" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> How Support Teams Spot Security Incidents First</a></li>
+              <li><a href="https://www.youtube.com/watch?v=0121x04_hi2" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Escalation Paths for Suspected Data Breaches</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 4)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 5 (Required)
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-vial"></i> Real-World Support Scenarios</h2>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 1: Panicked Caller Demanding Email Change & Password Reset</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>A caller claims to be a VIP customer locked out of their account, demanding you change their registered email to `vip-temp@gmail.com` immediately.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> Social engineering account takeover.</p>
+          <p><strong>Action:</strong> Refuse to change registered email without multi-factor verification or official out-of-band identity check. Send reset links only to the primary email on file.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 2: Caller Claiming to be Internal "IT Security Specialist"</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>A caller claiming to be from "Corporate IT Security" instructs you to grant them temporary super-admin access to troubleshoot an urgent server glitch.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> Authority impersonation attack targeting support permissions.</p>
+          <p><strong>Action:</strong> Hang up and call the IT Security desk back using an official internal extension. Never grant admin credentials based on unverified incoming phone calls.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 3: Customer Pastes Raw API Secret in Support Ticket</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>A developer customer opens a ticket asking for help with an API error, but includes their active production API secret key in plain text in the ticket body.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Redact the exposed key immediately using the support ticket redact tool, advise the customer that the key is compromised, and assist them in generating a new token.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 4: Screen Sharing Reveals Private Customer Data</span>
+          <span class="scenario-badge">Medium Severity</span>
+        </div>
+        <p>During a remote support session, the customer opens a tab displaying another client's confidential spreadsheet on their desktop.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Politely ask the customer to pause or stop screen sharing while they close confidential personal/corporate files, ensuring session recordings remain clean.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 5: Multiple Tickets Reporting Unauthorized Account Changes</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>Within 1 hour, 5 different customers open support tickets claiming their passwords were changed without their knowledge.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> Active credential stuffing or database compromise campaign.</p>
+          <p><strong>Action:</strong> Escalate immediately to the Incident Response / SOC team as a P0 Incident. Freeze affected accounts temporarily to prevent further unauthorized access.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="quiz-section" style="position: relative;">
+      <div id="quizOverlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(245,245,247,0.92); z-index:100; backdrop-filter: blur(8px); display:flex; align-items:center; justify-content:center;"></div>
+      <div class="quiz-header">
+        <h2><i class="fas fa-pen-to-square"></i> Support Security Knowledge Check (25 Questions)</h2>
+        <div>
+          <span>Progress: <strong id="answeredCount">0</strong>/25</span>
+          <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
+            <div class="progress-bar-fill" id="quizProgressFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="quiz-actions">
+        <button id="resetBtn" class="btn-secondary"><i class="fas fa-rotate-left"></i> Reset Test</button>
+        <button id="submitBtn" class="btn-primary"><i class="fas fa-paper-plane"></i> Submit & View Score</button>
+      </div>
+    </section>
+
+    <section id="results" class="results-card">
+      <div id="mascotDisplay"></div>
+      <div class="score-circle" id="scoreDisplay">0%</div>
+      <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
+        Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
+        Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
+        Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
+      </p>
+      <div id="certLockMsg" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--danger);"></div>
+      <button id="downloadCertBtn" class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-certificate"></i> Generate Certificate</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>SecureHub Security Training Portal &bull; Support Module &bull; <i class="fas fa-shield-halved"></i> &bull; Property of Hubstream India Pvt Limited</p>
+  </footer>
+
+  <script src="../assets/js/quiz-engine.js"></script>
+  <script>
+    const supportQuestions = [
+      {
+        text: "What is the primary rule when receiving a phone request to change a customer's registered email and password?",
+        options: [
+          "Change it immediately if the caller sounds friendly",
+          "Verify identity using approved multi-factor / out-of-band verification procedures before making changes",
+          "Ask for their credit card CVV",
+          "Tell them to call back next week"
+        ],
+        correct: 1,
+        hint: "Out-of-band multi-factor verification prevents account takeover.",
+        whyCorrect: "Account changes require strict multi-factor verification to prevent social engineering account takeover.",
+        whyWrong: ["Option 0 surrenders account access to caller.", "Option 2 violates PCI-DSS card rules.", "Option 3 ignores customer request."]
+      },
+      {
+        text: "Where should password reset links be sent?",
+        options: [
+          "To any email address requested over the phone",
+          "Exclusively to the verified primary email address on file",
+          "To a public chat room",
+          "To the support agent's personal email"
+        ],
+        correct: 1,
+        hint: "Send reset links only to the account owner's registered email.",
+        whyCorrect: "Sending reset links only to the primary email on file ensures account ownership validation.",
+        whyWrong: ["Option 0 allows callers to hijack accounts.", "Option 2 exposes reset link publicly.", "Option 3 violates privacy rules."]
+      },
+      {
+        text: "What should a support engineer do if a customer pastes a live production API key into a ticket body?",
+        options: [
+          "Ignore it",
+          "Redact the key in the ticket tool immediately and instruct the customer to rotate the token",
+          "Copy it to a personal file",
+          "Share it in Slack"
+        ],
+        correct: 1,
+        hint: "Redact the key and instruct token rotation.",
+        whyCorrect: "Exposed API keys must be redacted immediately to prevent exfiltration, and the token must be revoked.",
+        whyWrong: ["Option 0 leaves secrets visible in ticket history.", "Option 2 exfiltrates customer tokens.", "Option 3 exposes keys across chat logs."]
+      },
+      {
+        text: "What should you do if an incoming caller claims to be from 'IT Security' demanding super-admin credentials?",
+        options: [
+          "Give them admin access immediately",
+          "Verify their identity by hanging up and calling back through verified internal corporate directories",
+          "Give them your personal password",
+          "Post their request on Twitter"
+        ],
+        correct: 1,
+        hint: "Hang up and verify callers via internal directory callback.",
+        whyCorrect: "Authority impersonation is a common social engineering tactic; always verify callers internally out-of-band.",
+        whyWrong: ["Option 0 surrenders admin rights.", "Option 2 exposes personal credentials.", "Option 3 posts internal requests publicly."]
+      },
+      {
+        text: "Why are knowledge-based security questions (e.g. 'What is your mother's maiden name?') considered weak authentication?",
+        options: [
+          "They are hard to type",
+          "Answers are frequently discoverable online through social media and public records (OSINT)",
+          "Computers cannot read them",
+          "They take too long"
+        ],
+        correct: 1,
+        hint: "OSINT research exposes static personal answers.",
+        whyCorrect: "OSINT makes traditional static security questions easily guessable or researchable by attackers.",
+        whyWrong: ["Option 0 is keyboard input.", "Option 2 is text processing.", "Option 3 is prompt speed."]
+      },
+      {
+        text: "What rule applies to downloading customer database dumps or log files to local support laptops?",
+        options: [
+          "Allowed anytime for convenience",
+          "Strictly prohibited; diagnostic data must be inspected within secure, audited internal tools",
+          "Allowed if saved on desktop",
+          "Allowed if renamed"
+        ],
+        correct: 1,
+        hint: "Prohibit downloading customer PII to local drives.",
+        whyCorrect: "Prohibiting local downloads prevents data leaks and maintains compliance control boundaries.",
+        whyWrong: ["Option 0 causes local PII leaks.", "Option 2 stores plaintext PII on laptops.", "Option 3 does not encrypt local data."]
+      },
+      {
+        text: "What action is required when multiple customers report unauthorized password changes simultaneously?",
+        options: [
+          "Treat as routine support tickets",
+          "Escalate immediately as a P0 Security Incident to the SOC / Incident Response team",
+          "Delete the tickets",
+          "Close the support desk"
+        ],
+        correct: 1,
+        hint: "Multiple account breaches indicate an active campaign.",
+        whyCorrect: "Multiple simultaneous account breaches indicate an active security incident or campaign requiring immediate SOC response.",
+        whyWrong: ["Option 0 ignores active attacks.", "Option 2 hides security incidents.", "Option 3 stops customer support."]
+      },
+      {
+        text: "Before starting a remote desktop screen sharing session with a customer, what should you advise them to do?",
+        options: [
+          "Open all personal bank accounts",
+          "Close confidential files, private browser tabs, and password managers",
+          "Turn off antivirus",
+          "Disable firewall"
+        ],
+        correct: 1,
+        hint: "Advise closing private files and password managers.",
+        whyCorrect: "Closing sensitive apps prevents accidental exposure of PII during recorded support sessions.",
+        whyWrong: ["Option 0 exposes financial PII.", "Option 2 removes host security.", "Option 3 removes network filtering."]
+      },
+      {
+        text: "What is 'Account Takeover' (ATO)?",
+        options: [
+          "Upgrading a subscription plan",
+          "An unauthorized actor gaining control of a legitimate customer account via stolen credentials or social engineering",
+          "Deleting an account",
+          "Closing a ticket"
+        ],
+        correct: 1,
+        hint: "Unauthorized actor gaining customer account control.",
+        whyCorrect: "ATO occurs when attackers compromise credentials to usurp customer identity and access privileges.",
+        whyWrong: ["Option 0 is subscription management.", "Option 2 is account deletion.", "Option 3 is ticket workflow."]
+      },
+      {
+        text: "How should support representatives handle requests for customer PII from external third parties?",
+        options: [
+          "Share it freely",
+          "Refuse disclosure unless authorized by strict legal/privacy procedures and verified consent",
+          "Sell the data",
+          "Post on public forums"
+        ],
+        correct: 1,
+        hint: "Refuse third-party PII disclosure without legal authorization.",
+        whyCorrect: "Sharing customer PII without verified authorization violates privacy laws (GDPR/CCPA).",
+        whyWrong: ["Option 0 violates data privacy laws.", "Option 2 is illegal data monetization.", "Option 3 exposes PII publicly."]
+      },
+      {
+        text: "Why should support admin tools enforce dual-authorization for large financial refunds?",
+        options: [
+          "To prevent single-agent fraud, insider threat, or accidental high-value payouts",
+          "To make support slower",
+          "To save server memory",
+          "To eliminate logging"
+        ],
+        correct: 0,
+        hint: "Dual-authorization prevents single-agent fraud.",
+        whyCorrect: "Dual-authorization requires two distinct approvals for high-risk financial operations, preventing single-agent fraud.",
+        whyWrong: ["Option 1 is support speed.", "Option 2 is RAM usage.", "Option 3 removes auditability."]
+      },
+      {
+        text: "What is an indicator that a support ticket attachment might be malicious?",
+        options: [
+          "A .pdf document containing text",
+          "A double extension file like `Invoice.pdf.exe` or macro-enabled `.docm` from an unknown sender",
+          "A PNG screenshot of an error window",
+          "A standard .log file"
+        ],
+        correct: 1,
+        hint: "Double extension files masking executables.",
+        whyCorrect: "Executable files masquerading as documents are classic malware delivery mechanisms.",
+        whyWrong: ["Option 0 is standard document.", "Option 2 is image screenshot.", "Option 3 is plain text log."]
+      },
+      {
+        text: "What is the Principle of Least Privilege for Support Engineer accounts?",
+        options: [
+          "Granting full database root access to all support tiers",
+          "Granting support staff only the minimum administrative permissions required for their specific tier and duties",
+          "Removing all access",
+          "Sharing one admin account"
+        ],
+        correct: 1,
+        hint: "Minimum required administrative permissions.",
+        whyCorrect: "Least privilege restricts support permissions to prevent accidental or malicious misuse.",
+        whyWrong: ["Option 0 creates massive insider risk.", "Option 2 prevents support work.", "Option 3 destroys auditability."]
+      },
+      {
+        text: "What should a support engineer do if they suspect an internal support tool has a security flaw?",
+        options: [
+          "Exploit it for fun",
+          "Report it immediately to the internal Product Security / Vulnerability team",
+          "Ignore it",
+          "Tell customers about it"
+        ],
+        correct: 1,
+        hint: "Report internal software flaws to Product Security.",
+        whyCorrect: "Internal security bugs must be reported promptly for remediation.",
+        whyWrong: ["Option 0 is policy breach.", "Option 2 leaves vulnerability unpatched.", "Option 3 discloses unpatched flaws externally."]
+      },
+      {
+        text: "Why is multi-factor authentication (MFA) mandatory on support software (Zendesk / Jira)?",
+        options: [
+          "To protect customer ticket data and admin capabilities from compromised support credentials",
+          "To increase website traffic",
+          "To format ticket text",
+          "To eliminate passwords"
+        ],
+        correct: 0,
+        hint: "Shields support portals from stolen credentials.",
+        whyCorrect: "MFA shields support portals from credential stuffing and unauthorized access.",
+        whyWrong: ["Option 1 is website traffic.", "Option 2 is ticket typography.", "Option 3 does not remove passwords."]
+      },
+      {
+        text: "How should support teams handle GDPR 'Subject Access Requests' (SAR) from customers requesting all their data?",
+        options: [
+          "Ignore the request",
+          "Route the request immediately to the Privacy / Compliance team following standard SAR procedures",
+          "Manually delete the database",
+          "Email raw system logs"
+        ],
+        correct: 1,
+        hint: "Route SAR requests to Privacy/Compliance teams.",
+        whyCorrect: "Formal data requests must follow compliance workflows to ensure complete and secure data provision.",
+        whyWrong: ["Option 0 violates GDPR compliance.", "Option 2 causes data loss.", "Option 3 leaks raw system logs."]
+      },
+      {
+        text: "What is 'Vishing' in the context of support operations?",
+        options: [
+          "Voice phishing attacks where scammers phone support reps to manipulate account access",
+          "Video calling",
+          "Virus scanning",
+          "Virtual hosting"
+        ],
+        correct: 0,
+        hint: "Voice phone social engineering targeting support.",
+        whyCorrect: "Vishing uses voice phone calls to trick support staff into breaching security protocols.",
+        whyWrong: ["Option 1 is video chat.", "Option 2 is antivirus scan.", "Option 3 is web hosting."]
+      },
+      {
+        text: "What record must be generated when a support engineer impersonates a customer account for debugging?",
+        options: [
+          "An immutable audit log capturing engineer ID, timestamp, ticket ID, and actions taken",
+          "No log is needed",
+          "A paper sticky note",
+          "A social media post"
+        ],
+        correct: 0,
+        hint: "Immutable audit logs capturing impersonation details.",
+        whyCorrect: "Audit logs provide accountability for all customer account impersonation events.",
+        whyWrong: ["Option 1 destroys auditability.", "Option 2 is manual paper note.", "Option 3 exposes customer activity publicly."]
+      },
+      {
+        text: "Why is it dangerous to accept password reset requests originating from unverified live chat widgets?",
+        options: [
+          "Chat sessions can be initiated anonymously by anyone without proving account ownership",
+          "Chat uses too much bandwidth",
+          "Chat widgets break browsers",
+          "Chat is unencrypted"
+        ],
+        correct: 0,
+        hint: "Anonymous chat lacks identity verification.",
+        whyCorrect: "Anonymous chat channels must be verified out-of-band before executing security sensitive changes.",
+        whyWrong: ["Option 1 is network bandwidth.", "Option 2 is browser compatibility.", "Option 3 is encryption."]
+      },
+      {
+        text: "What is the primary goal of Secure Support?",
+        options: [
+          "Closing tickets as fast as possible regardless of safety",
+          "Delivering helpful customer assistance while rigorously protecting customer data and system integrity",
+          "Refusing to help callers",
+          "Maximizing phone call duration"
+        ],
+        correct: 1,
+        hint: "Balancing helpful customer service with data protection.",
+        whyCorrect: "Secure support balances customer empathy and fast resolution with uncompromising security safeguards.",
+        whyWrong: ["Option 0 compromises security for speed.", "Option 2 refuses customer service.", "Option 3 wastes phone time."]
+      },
+      {
+        text: "A caller claims to be a developer needing urgent database access and provides an IP address to add to the firewall whitelist. What should you do?",
+        options: [
+          "Add the IP address to firewall rules immediately",
+          "Verify the request through an authorized change ticket and manager approval before touching firewall rules",
+          "Delete the firewall rules",
+          "Give the caller your password"
+        ],
+        correct: 1,
+        hint: "Firewall changes require formal change management approval.",
+        whyCorrect: "Firewall whitelist modifications require strict change management approvals to prevent unauthorized network entry.",
+        whyWrong: ["Option 0 opens network ports to unauthorized callers.", "Option 2 destroys network security.", "Option 3 exposes personal credentials."]
+      },
+      {
+        text: "Why should support engineers avoid using personal cloud drives (Dropbox/iCloud) to transfer large customer log files?",
+        options: [
+          "Personal cloud drives lack enterprise audit logging, access controls, and compliance archiving",
+          "Personal cloud drives are too fast",
+          "It changes log file text",
+          "It breaks internet cables"
+        ],
+        correct: 0,
+        hint: "Unsanctioned cloud tools (Shadow IT) lack enterprise controls.",
+        whyCorrect: "Personal cloud drives lack corporate DLP controls and create compliance shadow IT risks.",
+        whyWrong: ["Option 1 is transfer speed.", "Option 2 is text encoding.", "Option 3 is physical cable infrastructure."]
+      },
+      {
+        text: "What should you do if you notice an internal support admin user account active at 3:00 AM taking unusual bulk actions?",
+        options: [
+          "Ignore it",
+          "Flag the anomalous activity to SOC / Security immediately for session inspection",
+          "Send them a friendly chat message",
+          "Shut down all office servers"
+        ],
+        correct: 1,
+        hint: "Flag anomalous administrative activity to SOC.",
+        whyCorrect: "Anomalous off-hours bulk administrative actions indicate compromised admin credentials or insider threat.",
+        whyWrong: ["Option 0 allows data exfiltration.", "Option 2 alerts an attacker.", "Option 3 causes uncoordinated downtime."]
+      },
+      {
+        text: "Why must support reps verify that customer screen sharing tools (e.g. Zoom/Teams) use meeting passcodes and waiting rooms?",
+        options: [
+          "To prevent uninvited external participants ('Zoom-bombing') from viewing customer support screens",
+          "To format screen colors",
+          "To compress audio",
+          "To save battery"
+        ],
+        correct: 0,
+        hint: "Prevents unauthorized meeting intrusion.",
+        whyCorrect: "Passcodes and waiting rooms prevent unauthorized participants from intruding on confidential support sessions.",
+        whyWrong: ["Option 1 is display colors.", "Option 2 is audio compression.", "Option 3 is hardware power."]
+      },
+      {
+        text: "What responsibility does a Support Engineer have regarding customer data protection?",
+        options: [
+          "Treating customer data as strictly confidential, using audited tools, and refusing unverified override requests",
+          "Saving customer passwords for testing",
+          "Sharing customer notes with external friends",
+          "Ignoring security policies"
+        ],
+        correct: 0,
+        hint: "Protect customer data confidentiality through audited workflows.",
+        whyCorrect: "Support engineers safeguard customer trust by inspecting data responsibly and refusing unverified overrides.",
+        whyWrong: ["Option 1 violates password safety.", "Option 2 breaches confidentiality.", "Option 3 ignores policy."]
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      activeQuizEngine = new QuizEngine('support', supportQuestions);
+    });
+  </script>
+</body>
+</html>

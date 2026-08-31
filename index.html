@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecureHub · Security Training Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <!-- Header with Progress -->
+  <header class="header">
+    <div class="logo">
+      <a href="index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="shared/common-policies.html">Common Policies</a>
+      <a href="shared/glossary.html">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Completion: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Security is Everyone's Responsibility</h1>
+    <p>Complete your department-specific training to keep our organization secure, compliant, and resilient against modern cyber threats.</p>
+    <div class="hero-stats">
+      <div class="stat-box">
+        <div class="num">7</div>
+        <div class="label">Specialized Teams</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">140</div>
+        <div class="label">Interactive Test Questions</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">100%</div>
+        <div class="label">Compliance Target</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="container">
+    <!-- Department Cards Section -->
+    <section>
+      <h2 class="section-title">
+        <i class="fas fa-building-user"></i> Department Security Modules
+      </h2>
+      <div class="dept-grid">
+        <!-- Engineering Card -->
+        <div class="dept-card">
+          <div>
+            <div class="dept-card-header">
+              <div class="dept-icon"><i class="fas fa-code"></i></div>
+              <h3>Engineering Team</h3>
+            </div>
+            <p>Code to Cloud security: SDLC, Secrets, API & IaC security, OWASP Top 10 (Web, API, LLM), and CI/CD security.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="status-badge status-not-started" id="status-engineering">Required</span>
+            <a href="departments/engineering.html" class="btn-start">Start Training <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- General Card -->
+        <div class="dept-card">
+          <div>
+            <div class="dept-card-header">
+              <div class="dept-icon"><i class="fas fa-users"></i></div>
+              <h3>General / All Employees</h3>
+            </div>
+            <p>Fundamental security awareness: Social engineering, Phishing, MFA, Password management, Physical security & Remote work.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="status-badge status-not-started" id="status-general">Required</span>
+            <a href="departments/general.html" class="btn-start">Start Training <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Sales Card -->
+        <div class="dept-card">
+          <div>
+            <div class="dept-card-header">
+              <div class="dept-icon"><i class="fas fa-chart-line"></i></div>
+              <h3>Sales Team</h3>
+            </div>
+            <p>Protecting customer trust: Secure customer data handling, CRM security, Business Email Compromise (BEC), and Travel security.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="status-badge status-not-started" id="status-sales">Required</span>
+            <a href="departments/sales.html" class="btn-start">Start Training <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Marketing Card -->
+        <div class="dept-card">
+          <div>
+            <div class="dept-card-header">
+              <div class="dept-icon"><i class="fas fa-bullhorn"></i></div>
+              <h3>Marketing Team</h3>
+            </div>
+            <p>Brand protection & data privacy: Social media account security, Campaign security, Email authentication (DMARC/SPF), and GDPR.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="status-badge status-not-started" id="status-marketing">Required</span>
+            <a href="departments/marketing.html" class="btn-start">Start Training <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Design Card -->
+        <div class="dept-card">
+          <div>
+            <div class="dept-card-header">
+              <div class="dept-icon"><i class="fas fa-pen-nib"></i></div>
+              <h3>Design Team</h3>
+            </div>
+            <p>Protecting creative assets & UX security: Figma project security, Prototype access control, avoiding PII in mockups, and plugin safety.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="status-badge status-not-started" id="status-design">Required</span>
+            <a href="departments/design.html" class="btn-start">Start Training <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Product Card -->
+        <div class="dept-card">
+          <div>
+            <div class="dept-card-header">
+              <div class="dept-icon"><i class="fas fa-cubes"></i></div>
+              <h3>Product Managers</h3>
+            </div>
+            <p>Building security into roadmaps: STRIDE Threat Modeling, Privacy by Design, Regulatory compliance, and Security debt management.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="status-badge status-not-started" id="status-product">Required</span>
+            <a href="departments/product.html" class="btn-start">Start Training <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Support Card -->
+        <div class="dept-card">
+          <div>
+            <div class="dept-card-header">
+              <div class="dept-icon"><i class="fas fa-headset"></i></div>
+              <h3>CSM & Support Engineers</h3>
+            </div>
+            <p>Protecting customers & support tools: Customer identity verification, Remote access policy, Social engineering defense, and Incident escalation.</p>
+          </div>
+          <div class="dept-card-footer">
+            <span class="status-badge status-not-started" id="status-support">Required</span>
+            <a href="departments/support.html" class="btn-start">Start Training <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overall Compliance Dashboard -->
+    <section style="margin-top: 3rem;">
+      <h2 class="section-title">
+        <i class="fas fa-chart-pie"></i> Organization Compliance Dashboard
+      </h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-shield-cat"></i> Active Threat Alerts</h3>
+          <p><strong>Alert: Phishing Campaign targeting Sales & Support</strong></p>
+          <p>Be vigilant regarding emails claiming to be urgent invoice updates or customer password reset requests.</p>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-calendar-check"></i> Deadlines & Audits</h3>
+          <p>Annual SOC2 and ISO27001 compliance training cycle is active. All employees must complete department quizzes with &ge; 80% passing score.</p>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-triangle-exclamation"></i> Immediate Incident Reporting</h3>
+          <p>Spotted something suspicious? Contact Security immediately.</p>
+          <ul>
+            <li><strong>Email:</strong> aabdulfaheem@hubstream.net</li>
+            <li><strong>24/7 Hotline:</strong> 8870682288</li>
+            <li><strong>Slack Channel:</strong> #sec-incidents</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Reference Hub -->
+    <section style="margin-top: 3rem;">
+      <h2 class="section-title">
+        <i class="fas fa-bookmark"></i> Quick Reference Hub
+      </h2>
+      <div class="widgets-grid">
+        <div class="widget-card">
+          <h4><i class="fas fa-key"></i> Password & MFA Golden Rules</h4>
+          <ul style="padding-left: 1.2rem; font-size: 0.9rem;">
+            <li>Always use approved password manager.</li>
+            <li>Never reuse passwords across personal/work accounts.</li>
+            <li>MFA is mandatory on every internal & cloud service.</li>
+            <li>Never approve unrequested MFA push notifications.</li>
+          </ul>
+        </div>
+        <div class="widget-card">
+          <h4><i class="fas fa-database"></i> Data Classification</h4>
+          <ul style="padding-left: 1.2rem; font-size: 0.9rem;">
+            <li><strong style="color: green;">Public:</strong> Open marketing materials.</li>
+            <li><strong style="color: blue;">Internal:</strong> Company wiki, team docs.</li>
+            <li><strong style="color: orange;">Confidential:</strong> Financials, customer contracts.</li>
+            <li><strong style="color: red;">Restricted:</strong> PII, API keys, source code.</li>
+          </ul>
+        </div>
+        <div class="widget-card">
+          <h4><i class="fas fa-fish"></i> Phishing Red Flags</h4>
+          <ul style="padding-left: 1.2rem; font-size: 0.9rem;">
+            <li>Artificial urgency or fear tactics.</li>
+            <li>Sender email domain typo-squatting.</li>
+            <li>Mismatched links (hover before click).</li>
+            <li>Requests for gift cards, wire transfers, or credentials.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>SecureHub Security Training Portal &bull; Protecting Our People, Code, and Customers &bull; <i class="fas fa-shield-halved"></i> &bull; Property of Hubstream India Pvt Limited</p>
+  </footer>
+
+  <script src="assets/js/quiz-engine.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = JSON.parse(localStorage.getItem('securehub_progress') || '{}');
+      const deptIds = ['engineering', 'general', 'sales', 'marketing', 'design', 'product', 'support'];
+      deptIds.forEach(id => {
+        const badge = document.getElementById(`status-${id}`);
+        if (badge && data[id] && data[id].completed) {
+          badge.textContent = `Completed (${data[id].score}%)`;
+          badge.className = 'status-badge status-completed';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

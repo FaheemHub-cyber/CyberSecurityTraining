@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Glossary · SecureHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <style>
+    .search-box {
+      width: 100%;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .glossary-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .glossary-term {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--secondary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .glossary-category {
+      font-size: 0.75rem;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="../index.html">Home</a>
+      <a href="common-policies.html">Common Policies</a>
+      <a href="glossary.html" class="active">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Progress: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Cybersecurity Terminology Glossary</h1>
+    <p>A comprehensive reference guide for security acronyms, concepts, vulnerabilities, and compliance standards.</p>
+  </section>
+
+  <main class="container">
+    <input type="text" id="glossarySearchInput" class="search-box" placeholder="🔍 Search security terms, acronyms, or topics (e.g., MFA, STRIDE, IDOR, DMARC)..." />
+
+    <div id="glossaryContainer"></div>
+  </main>
+
+  <footer>
+    <p>SecureHub Security Training Portal &bull; Glossary &bull; <i class="fas fa-shield-halved"></i> &bull; Property of Hubstream India Pvt Limited</p>
+  </footer>
+
+  <script src="../assets/js/quiz-engine.js"></script>
+  <script>
+    const glossaryTerms = [
+      { term: "AUP (Acceptable Use Policy)", cat: "Policy", desc: "A set of rules defined by an organization specifying the restrictions and responsibilities associated with using corporate hardware, network infrastructure, and accounts." },
+      { term: "BEC (Business Email Compromise)", cat: "Threat", desc: "A sophisticated social engineering scam where attackers impersonate executives, suppliers, or buyers to manipulate payment instructions or exfiltrate sensitive data." },
+      { term: "CCPA (California Consumer Privacy Act)", cat: "Compliance", desc: "A state-level data privacy law granting California consumers rights regarding how companies collect, share, and retain their personal information." },
+      { term: "CI/CD (Continuous Integration / Continuous Deployment)", cat: "Engineering", desc: "Automated software development pipeline practices integrating code changes and deploying updates frequently through automated quality and security gates." },
+      { term: "DAST (Dynamic Application Security Testing)", cat: "Engineering", desc: "A black-box testing methodology analyzing running web applications from the outside to identify exploitable security vulnerabilities." },
+      { term: "DKIM (DomainKeys Identified Mail)", cat: "Email Security", desc: "An email authentication technique cryptographic signature attached to email headers, verifying sender authenticity and message integrity." },
+      { term: "DMARC (Domain-based Message Authentication)", cat: "Email Security", desc: "An email authentication protocol enabling domain owners to specify policies for handling emails failing SPF or DKIM checks." },
+      { term: "EPHEMERAL SECRETS", cat: "Engineering", desc: "Short-lived access keys or credentials generated dynamically that automatically expire within brief windows (e.g. 24 hours)." },
+      { term: "GDPR (General Data Protection Regulation)", cat: "Compliance", desc: "A comprehensive European Union regulation governing data privacy, user consent, data minimization, and cross-border transfers." },
+      { term: "IDOR (Insecure Direct Object Reference)", cat: "OWASP Vulnerability", desc: "An access control flaw where an application exposes references to internal objects (e.g., `?userId=100`) without verifying backend user authorization." },
+      { term: "MFA (Multi-Factor Authentication)", cat: "Authentication", desc: "A security process requiring users to supply two or more distinct verification factors before gaining account access." },
+      { term: "OWASP (Open Web Application Security Project)", cat: "Organization", desc: "A global non-profit foundation providing community-driven research, standards, and top-10 security guidelines for software security." },
+      { term: "PII (Personally Identifiable Information)", cat: "Privacy", desc: "Any data that could potentially identify a specific individual (e.g. SSN, full name, email, home address, phone number)." },
+      { term: "PROMPT INJECTION", cat: "AI Security", desc: "An attack technique against LLMs where malicious user prompts bypass system controls to execute unauthorized actions or disclose hidden context." },
+      { term: "SAST (Static Application Security Testing)", cat: "Engineering", desc: "A white-box testing methodology scanning raw application source code for security flaws and vulnerabilities without executing the code." },
+      { term: "SCA (Software Composition Analysis)", cat: "Engineering", desc: "Automated scanning of third-party open-source libraries and package dependencies to detect known CVE security vulnerabilities." },
+      { term: "SOC 2 Type II", cat: "Compliance", desc: "An auditing standard evaluating an organization's security, availability, and confidentiality controls over an extended evaluation period (6-12 months)." },
+      { term: "SPF (Sender Policy Framework)", cat: "Email Security", desc: "A DNS TXT record specifying authorized mail server IP addresses permitted to send emails on behalf of a domain." },
+      { term: "SSRF (Server-Side Request Forgery)", cat: "OWASP Vulnerability", desc: "A vulnerability enabling an attacker to coerce a server into making unauthorized HTTP requests to internal or external systems." },
+      { term: "STRIDE", cat: "Threat Modeling", desc: "A threat modeling framework categorizing threats into Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege." },
+      { term: "ZERO TRUST", cat: "Architecture", desc: "A security model operating on the principle of 'never trust, always verify', requiring continuous identity verification for all internal and external network traffic." }
+    ];
+
+    function renderGlossary(filterText = '') {
+      const container = document.getElementById('glossaryContainer');
+      container.innerHTML = '';
+
+      const filtered = glossaryTerms.filter(item =>
+        item.term.toLowerCase().includes(filterText.toLowerCase()) ||
+        item.desc.toLowerCase().includes(filterText.toLowerCase()) ||
+        item.cat.toLowerCase().includes(filterText.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="glossary-item"><p style="color: var(--text-muted); text-align: center;">No security terms found matching "${filterText}".</p></div>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'glossary-item';
+        div.innerHTML = `
+          <div class="glossary-term">
+            <span>${item.term}</span>
+            <span class="glossary-category">${item.cat}</span>
+          </div>
+          <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.95rem;">${item.desc}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderGlossary();
+      document.getElementById('glossarySearchInput').addEventListener('input', (e) => {
+        renderGlossary(e.target.value);
+      });
+    });
+  </script>
+</body>
+</html>

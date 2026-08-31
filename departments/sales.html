@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Security · SecureHub Training Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="../index.html">Home</a>
+      <a href="#policies">Policies</a>
+      <a href="#theory">Theory</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#quiz">Quiz</a>
+      <a href="../shared/common-policies.html">Common Policies</a>
+      <a href="../shared/glossary.html">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Progress: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Secure Sales · Protecting Customer Trust</h1>
+    <p>Security guidelines for sales representatives, account executives, and business development reps. Protect prospect PII, pipeline data, CRM accounts, and guard against Business Email Compromise.</p>
+  </section>
+
+  <main class="container">
+    <section id="policies">
+      <h2 class="section-title"><i class="fas fa-file-contract"></i> Sales Security Policies</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-address-book"></i> 1. Customer Data Protection Policy</h3>
+          <p>Handling client PII, lead lists, and contact records.</p>
+          <ul>
+            <li>Store prospect & customer data exclusively in the corporate CRM (Salesforce/HubSpot).</li>
+            <li>No exporting lead lists to local unencrypted CSV/Excel spreadsheets on laptops.</li>
+            <li>Enforce Principle of Least Privilege: Access restricted to assigned accounts/territories.</li>
+            <li>Obtain proper opt-in consent before adding prospects to sales communication cadences.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-comments"></i> 2. Secure Sales Communication Policy</h3>
+          <p>Approved communication channels and file sharing practices.</p>
+          <ul>
+            <li>Use corporate email or approved messaging tools (Slack Connect, Teams) for deal chats.</li>
+            <li>Never share internal price lists or discount matrices via unencrypted public links.</li>
+            <li>Obtain explicit client consent before recording sales calls (Gong/Chorus compliance).</li>
+            <li>Encrypt emails containing sensitive contract annexes or security documentation.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-file-signature"></i> 3. Proposal & Contract Security Policy</h3>
+          <p>Protecting commercial terms, SLAs, and signature workflows.</p>
+          <ul>
+            <li>Use standard, approved legal templates for Non-Disclosure Agreements (NDAs) and MSAs.</li>
+            <li>Execute all contracts via enterprise e-signature platforms (DocuSign / Adobe Sign).</li>
+            <li>Never send unsigned contract drafts containing custom security concessions without legal approval.</li>
+            <li>Store executed contracts in the secure central repository.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-mobile-screen"></i> 4. BYOD & Mobile CRM Policy</h3>
+          <p>Securing mobile devices used for field sales operations.</p>
+          <ul>
+            <li>Mobile CRM access requires Mobile Device Management (MDM) enrollment and biometric/passcode lock.</li>
+            <li>Do not download or store customer contact databases locally on personal phones.</li>
+            <li>Immediate reporting required if a sales mobile device or tablet is lost or stolen.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-plane-departure"></i> 5. Sales Travel Security Policy</h3>
+          <p>Protecting company assets and deal info while traveling.</p>
+          <ul>
+            <li>Always enable company VPN when connecting to hotel, airport, or conference Wi-Fi.</li>
+            <li>Use privacy screens on laptops during flights or public transport to block visual eavesdropping.</li>
+            <li>Never leave laptops or sales documents unattended in hotel rooms or rental cars.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="theory" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-book-open"></i> Sales Security Theory</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-handshake-simple"></i> Customer Trust & Security as a Differentiator</h3>
+          <p>Why security assurance wins enterprise deals.</p>
+          <ul>
+            <li>Enterprise prospects evaluate security credentials (SOC 2 Type II, ISO 27001, GDPR compliance).</li>
+            <li>Security transparency builds trust and accelerates sales cycles.</li>
+            <li>A security breach destroys customer trust and leads to contract cancellations.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://hbr.org/2021/05/why-cybersecurity-is-a-competitive-advantage" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> Harvard Business Review: Security as Competitive Advantage</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=9011x04_k12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Security as a Sales Enabler - CSO Online</a></li>
+              <li><a href="https://www.youtube.com/watch?v=2341x04_l12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Customer PII Protection Standards in Deals</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 0)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 1 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-clipboard-question"></i> Responding to Security Questionnaires</h3>
+          <p>Best practices for completing prospect SIG/CAIQ questionnaires.</p>
+          <ul>
+            <li>Never guess or make up answers regarding security controls or encryption protocols.</li>
+            <li>Direct complex technical inquiries to the Security Compliance team.</li>
+            <li>Utilize the official Trust Center portal for sharing SOC 2 reports under NDA.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.aicpa.org/topic/audit-assurance/audit-and-assurance-soc" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> AICPA SOC 2 Compliance Framework Guide</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=5671x04_m12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Demystifying SOC 2 for Sales Reps</a></li>
+              <li><a href="https://www.youtube.com/watch?v=8901x04_n12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> How to Answer Security Questionnaires Fast</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 1)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 2 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-user-ninja"></i> Social Engineering Directed at Sales</h3>
+          <p>Why sales reps are prime targets for impersonation attacks.</p>
+          <ul>
+            <li>Sales Reps are public-facing and naturally eager to engage with new inbound contacts.</li>
+            <li>Attacker tactic: Impersonating high-value prospects to send malicious RFP attachments (.exe / macro-enabled docs).</li>
+            <li>Urgency traps: "Sign this contract today, click this link to verify bank info."</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.ic3.gov/Media/Y2022/PSA220504" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> FBI IC3 Business Email Compromise Advisory</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=1231x04_o12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Business Email Compromise (BEC) - CNBC</a></li>
+              <li><a href="https://www.youtube.com/watch?v=4561x04_p12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Avoiding Wire Transfer & Invoice Scams</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 2)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 3 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-building-circle-exclamation"></i> Business Email Compromise (BEC) in Sales</h3>
+          <p>How BEC fraud disrupts sales transactions.</p>
+          <ul>
+            <li>Attackers compromise vendor or buyer emails to insert fake banking/wire instructions.</li>
+            <li>Invoice Fraud: Sending altered invoices before quarterly deal closing deadlines.</li>
+            <li>Always confirm bank detail changes verbally with the buyer's finance team using known phone numbers.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://help.salesforce.com/s/articleView?id=sf.security_overview.htm" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> Salesforce CRM Security Hardening Guide</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=7891x04_q12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> CRM Security & Least Privilege Access</a></li>
+              <li><a href="https://www.youtube.com/watch?v=0121x04_r12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Preventing Sales Pipeline Exfiltration</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 3)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 4 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-sliders"></i> CRM Access Controls & Data Hygiene</h3>
+          <p>Preventing pipeline data exfiltration.</p>
+          <ul>
+            <li>Export restrictions prevent disgruntled or departing reps from stealing lead lists.</li>
+            <li>Enforce mandatory MFA for all CRM user accounts.</li>
+            <li>Revoke CRM access immediately upon employee departure.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.fcc.gov/cyber-travel-tips" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> FCC Cybersecurity for Business Travelers</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=3451x04_s12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Public Wi-Fi Risks & Evil Twin Hotspots</a></li>
+              <li><a href="https://www.youtube.com/watch?v=6781x04_t12" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Visual Eavesdropping & Screen Privacy</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 4)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 5 (Required)
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-vial"></i> Real-World Sales Scenarios</h2>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 1: Inbound RFP with Suspicious Attachment</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>An inbound lead sends an email: "We want to award a $500k contract. Download our custom requirement specification executable here: RFP_Specs.exe".</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> Malware delivery via executable masquerading as a sales RFP.</p>
+          <p><strong>Action:</strong> Do NOT open or download `.exe` or executable files. Report the email to IT Security for analysis.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 2: Wire Transfer Routing Change Request</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>Before closing a major deal, an email from the client's procurement department requests sending payment to an updated offshore bank account.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> Business Email Compromise (BEC) / Payment Hijacking.</p>
+          <p><strong>Action:</strong> Do NOT update bank details based on email alone. Verbally confirm bank details via phone with the client's verified controller.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 3: Client Demands Internal Architecture Diagrams</span>
+          <span class="scenario-badge">Medium Severity</span>
+        </div>
+        <p>A prospect insists on receiving detailed internal cloud network topology diagrams before signing a contract.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Check if an executed NDA is in place. Engage the Security team to share sanitized architecture overviews rather than raw internal infrastructure diagrams.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 4: Fake Salesforce Login Phishing Page</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>You receive an email claiming "Your Salesforce password expires in 1 hour". The link opens a page looking identical to Salesforce login.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Threat:</strong> Credential harvesting targeting CRM accounts.</p>
+          <p><strong>Action:</strong> Check the browser URL bar (e.g. `login-salesforce-verify.com` vs official domain). Close the tab and report the email to Security.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 5: Laptop Stolen at Conference Hotel</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>While attending a sales conference, your laptop containing cached prospect leads is stolen from the hotel lobby.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Notify IT Security immediately so they can issue a remote wipe command and revoke active CRM tokens.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="quiz-section" style="position: relative;">
+      <div id="quizOverlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(245,245,247,0.92); z-index:100; backdrop-filter: blur(8px); display:flex; align-items:center; justify-content:center;"></div>
+      <div class="quiz-header">
+        <h2><i class="fas fa-pen-to-square"></i> Sales Security Knowledge Check (25 Questions)</h2>
+        <div>
+          <span>Progress: <strong id="answeredCount">0</strong>/25</span>
+          <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
+            <div class="progress-bar-fill" id="quizProgressFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="quiz-actions">
+        <button id="resetBtn" class="btn-secondary"><i class="fas fa-rotate-left"></i> Reset Test</button>
+        <button id="submitBtn" class="btn-primary"><i class="fas fa-paper-plane"></i> Submit & View Score</button>
+      </div>
+    </section>
+
+    <section id="results" class="results-card">
+      <div id="mascotDisplay"></div>
+      <div class="score-circle" id="scoreDisplay">0%</div>
+      <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
+        Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
+        Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
+        Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
+      </p>
+      <div id="certLockMsg" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--danger);"></div>
+      <button id="downloadCertBtn" class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-certificate"></i> Generate Certificate</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>SecureHub Security Training Portal &bull; Sales Module &bull; <i class="fas fa-shield-halved"></i> &bull; Property of Hubstream India Pvt Limited</p>
+  </footer>
+
+  <script src="../assets/js/quiz-engine.js"></script>
+  <script>
+    const salesQuestions = [
+      {
+        text: "What is Business Email Compromise (BEC) targeting sales teams?",
+        options: [
+          "A bug in email formatting software",
+          "Attackers impersonating executives, customers, or vendors to reroute wire payments or exfiltrate pipeline data",
+          "A database query language error",
+          "A social media advertisement policy"
+        ],
+        correct: 1,
+        hint: "BEC impersonates trusted deal partners.",
+        whyCorrect: "BEC relies on social engineering or compromised email accounts to trick sales/finance reps into modifying payment instructions.",
+        whyWrong: ["Option 1 is a minor UI bug.", "Option 3 is a database issue.", "Option 4 is marketing policy."]
+      },
+      {
+        text: "What should a sales representative do if a prospect asks detailed technical questions on SOC 2 controls they don't know?",
+        options: [
+          "Make up plausible answers to close the deal fast",
+          "Refer the prospect to the official Trust Center portal or Security Compliance team",
+          "Send internal raw infrastructure code",
+          "Ignore the questions"
+        ],
+        correct: 1,
+        hint: "Inaccurate security commitments create legal liability.",
+        whyCorrect: "Referring prospects to official security documentation ensures accurate, legally binding security responses.",
+        whyWrong: ["Option 1 creates legal liability.", "Option 3 leaks internal intellectual property.", "Option 4 loses customer trust."]
+      },
+      {
+        text: "Where should customer lead records and contact notes be stored?",
+        options: [
+          "In local Excel files on personal desktop",
+          "Exclusively in the enterprise CRM (Salesforce/HubSpot) with proper access controls",
+          "In public Google Sheets",
+          "In personal notebook apps"
+        ],
+        correct: 1,
+        hint: "Centralized CRM provides audit trails.",
+        whyCorrect: "Centralized CRM storage ensures access controls, encryption, and compliance with data privacy regulations.",
+        whyWrong: ["Option 1 lacks encryption and audit trails.", "Option 3 exposes PII publicly.", "Option 4 prevents central offboarding."]
+      },
+      {
+        text: "How should payment bank detail changes received via email be verified?",
+        options: [
+          "Replying 'Is this correct?' to the same email address",
+          "Verifying via direct phone call to a known, verified controller phone number",
+          "Accepting immediately without checking",
+          "Forwarding to social media"
+        ],
+        correct: 1,
+        hint: "Out-of-band verification prevents wire fraud.",
+        whyCorrect: "Calling a known controller number verifies the request out-of-band, stopping payment hijacking.",
+        whyWrong: ["Option 1 connects back to the attacker.", "Option 3 risks full wire payment loss.", "Option 4 leaks deal info."]
+      },
+      {
+        text: "What should you do if an inbound lead emails a `.exe` file labeled 'RFP_Requirements.exe'?",
+        options: [
+          "Double click to open it",
+          "Do not open executable files; report the email to IT Security",
+          "Rename it to .docx",
+          "Forward to all sales reps"
+        ],
+        correct: 1,
+        hint: "RFPs are never executable program files.",
+        whyCorrect: "Executable attachments sent via email are Trojan malware payloads.",
+        whyWrong: ["Option 1 infects your endpoint.", "Option 3 does not change executable binary code.", "Option 4 spreads malware internally."]
+      },
+      {
+        text: "Why are privacy screens recommended for sales reps working on laptops during travel?",
+        options: [
+          "They increase screen brightness",
+          "They prevent shoulder surfing and visual eavesdropping on sensitive contract details",
+          "They block malware",
+          "They speed up Wi-Fi"
+        ],
+        correct: 1,
+        hint: "Blocks side viewing angles in crowded planes/cafes.",
+        whyCorrect: "Privacy screens narrow viewing angles so travelers next to you cannot read pricing or contract terms.",
+        whyWrong: ["Option 1 is display settings.", "Option 3 is software security.", "Option 4 is network performance."]
+      },
+      {
+        text: "What platform should be used to execute binding customer contracts securely?",
+        options: [
+          "Unencrypted plain email attachments",
+          "Approved enterprise e-signature platforms (DocuSign/Adobe Sign)",
+          "Slack messages",
+          "Public message boards"
+        ],
+        correct: 1,
+        hint: "Provides legal non-repudiation and encryption.",
+        whyCorrect: "Enterprise e-signature tools provide audit trails, encryption, and legally binding non-repudiation.",
+        whyWrong: ["Option 1 lacks signature audit trails.", "Option 3 is informal chat.", "Option 4 exposes contracts publicly."]
+      },
+      {
+        text: "What risk is associated with exporting mass CRM contact lists to local personal devices?",
+        options: [
+          "Data loss, privacy non-compliance (GDPR/CCPA), and credential exfiltration if device is lost",
+          "CRM running faster",
+          "Duplicate emails",
+          "Faster deal closing"
+        ],
+        correct: 0,
+        hint: "Local exports bypass central CRM security boundaries.",
+        whyCorrect: "Unencrypted local exports expose client PII to theft if the personal laptop is lost or infected.",
+        whyWrong: ["Option 2 is CRM backend performance.", "Option 3 is data deduplication.", "Option 4 is sales velocity."]
+      },
+      {
+        text: "What document must typically be signed before sharing confidential product roadmaps with prospects?",
+        options: [
+          "Non-Disclosure Agreement (NDA)",
+          "Purchase Order",
+          "Marketing Consent Form",
+          "Software License"
+        ],
+        correct: 0,
+        hint: "Legal confidentiality agreement.",
+        whyCorrect: "An NDA legally binds both parties to maintain confidentiality regarding unreleased features.",
+        whyWrong: ["Option 2 is financial authorization.", "Option 3 is marketing opt-in.", "Option 4 is software usage rights."]
+      },
+      {
+        text: "Why do attackers target sales representatives specifically?",
+        options: [
+          "Sales reps have public contact info and regularly open external attachments from unknown senders",
+          "Sales reps write source code",
+          "Sales reps manage cloud firewalls",
+          "Sales reps run database servers"
+        ],
+        correct: 0,
+        hint: "Sales reps are external-facing and eager to open new prospect files.",
+        whyCorrect: "Sales reps' open external role makes them attractive targets for spear-phishing and malicious RFP attachments.",
+        whyWrong: ["Option 2 is engineering.", "Option 3 is DevOps/Infra.", "Option 4 is database administration."]
+      },
+      {
+        text: "What should a sales representative do immediately if their laptop is stolen at a trade show?",
+        options: [
+          "Buy a new laptop at a retail store and say nothing",
+          "Report to IT Security immediately to trigger remote wipe and token revocation",
+          "Wait until returning to office next week",
+          "Post on LinkedIn"
+        ],
+        correct: 1,
+        hint: "Remote wipe prevents local data exfiltration.",
+        whyCorrect: "Prompt reporting allows IT to issue a remote wipe command before disk encryption can be bypassed.",
+        whyWrong: ["Option 1 hides device loss.", "Option 3 gives thieves days to extract local data.", "Option 4 is social media notification."]
+      },
+      {
+        text: "What network security measure is mandatory when accessing sales tools over hotel Wi-Fi?",
+        options: ["Corporate VPN", "Disabling firewall", "Using public DNS", "Disabling antivirus"],
+        correct: 0,
+        hint: "Encrypted tunnel over untrusted networks.",
+        whyCorrect: "VPNs encrypt all traffic across untrusted hotel and conference Wi-Fi networks.",
+        whyWrong: ["Option 2 exposes local ports.", "Option 3 does not encrypt traffic.", "Option 4 removes endpoint protection."]
+      },
+      {
+        text: "Which of the following is a sign of a CRM login phishing attempt?",
+        options: [
+          "URL reading `salesforce-security-login-check.biz` instead of `salesforce.com`",
+          "Prompting for valid MFA",
+          "HTTPS lock icon on valid domain",
+          "Official SSO redirect"
+        ],
+        correct: 0,
+        hint: "Lookalike domains attempt credential harvesting.",
+        whyCorrect: "Spoofed domains mimic official CRM login portals to harvest user passwords.",
+        whyWrong: ["Option 2 is legitimate MFA.", "Option 3 is valid TLS.", "Option 4 is official SSO."]
+      },
+      {
+        text: "What is 'Credential Stuffing' in the context of sales accounts?",
+        options: [
+          "Automated attacks testing stolen username/password pairs across CRM logins",
+          "Filling out CRM forms",
+          "Exporting contact lists",
+          "Upgrading software"
+        ],
+        correct: 0,
+        hint: "Testing leaked passwords across CRM portals.",
+        whyCorrect: "Credential stuffing uses automated bots to test leaked credentials against CRM portals.",
+        whyWrong: ["Option 2 is routine data entry.", "Option 3 is list export.", "Option 4 is software maintenance."]
+      },
+      {
+        text: "Why is call recording in sales tools (Gong/Chorus) subject to privacy regulations?",
+        options: [
+          "It captures audio data and potential PII of participants requiring consent under laws like GDPR",
+          "It uses video bandwidth",
+          "It slows down internet",
+          "It increases cloud costs"
+        ],
+        correct: 0,
+        hint: "Wiretapping and privacy laws require participant notification.",
+        whyCorrect: "Recording calls captures participant voice PII, requiring explicit opt-in disclosure.",
+        whyWrong: ["Option 2 is video rendering.", "Option 3 is network speed.", "Option 4 is infrastructure pricing."]
+      },
+      {
+        text: "What is the rule regarding sales discount matrices and internal pricing sheets?",
+        options: [
+          "Publish them on public blogs",
+          "Treat as Internal/Confidential; do not distribute publicly without authorization",
+          "Email to competitors",
+          "Post on Reddit"
+        ],
+        correct: 1,
+        hint: "Internal pricing is proprietary trade secret.",
+        whyCorrect: "Pricing sheets contain confidential commercial terms that damage competitive advantage if leaked.",
+        whyWrong: ["Option 1 leaks trade secrets.", "Option 3 destroys margin advantage.", "Option 4 exposes pricing publicly."]
+      },
+      {
+        text: "How does SOC 2 compliance help the sales team?",
+        options: [
+          "Provides independent third-party verification of security controls to satisfy prospect procurement requirements",
+          "Replaces sales demos",
+          "Eliminates need for contracts",
+          "Automates cold calls"
+        ],
+        correct: 0,
+        hint: "Third-party security audit report.",
+        whyCorrect: "SOC 2 reports demonstrate rigorous operational security to prospect risk assessment teams.",
+        whyWrong: ["Option 2 does not replace product demos.", "Option 3 does not eliminate legal contracts.", "Option 4 is telemarketing."]
+      },
+      {
+        text: "What should a sales representative do if a prospect offers to send sensitive data via unencrypted email?",
+        options: [
+          "Provide a link to the company's secure file upload portal",
+          "Accept the email",
+          "Ask them to post on social media",
+          "Ignore the files"
+        ],
+        correct: 0,
+        hint: "Encrypted upload portals safeguard data in transit.",
+        whyCorrect: "Secure file upload portals enforce TLS encryption and authenticated storage for prospect files.",
+        whyWrong: ["Option 1 transmits data in plaintext.", "Option 3 exposes files publicly.", "Option 4 ignores prospect requests."]
+      },
+      {
+        text: "What is the risk of using unauthorized personal messaging apps (WhatsApp/Telegram) for official deal terms?",
+        options: [
+          "Lack of compliance archiving, audit logs, and security oversight",
+          "Faster message delivery",
+          "Free emojis",
+          "Clearer calls"
+        ],
+        correct: 0,
+        hint: "Shadow IT chat tools lack enterprise archiving.",
+        whyCorrect: "Unsanctioned messaging apps bypass corporate record retention, audit trails, and legal discovery.",
+        whyWrong: ["Option 2 is messaging speed.", "Option 3 is UI features.", "Option 4 is audio quality."]
+      },
+      {
+        text: "Why should sales reps avoid sharing generic login accounts to CRM platforms?",
+        options: [
+          "Shared logins prevent individual accountability and violate audit requirements",
+          "It costs less money",
+          "It speeds up CRM",
+          "It disables MFA"
+        ],
+        correct: 0,
+        hint: "Individual accountability requires unique credentials.",
+        whyCorrect: "Shared logins destroy individual audit trails, making it impossible to attribute unauthorized data exports.",
+        whyWrong: ["Option 2 is license cost.", "Option 3 is software speed.", "Option 4 is authentication configuration."]
+      },
+      {
+        text: "A prospect calls asking you to email them your company's full employee org chart and internal extension directory. What should you do?",
+        options: [
+          "Send it immediately to be helpful",
+          "Refuse the request as internal data and report the reconnaissance attempt to Security",
+          "Post it on LinkedIn",
+          "Ask for $100 first"
+        ],
+        correct: 1,
+        hint: "Org charts are used for social engineering spear-phishing.",
+        whyCorrect: "Internal directories are used by attackers to map targets for spear-phishing and vishing attacks.",
+        whyWrong: ["Option 1 leaks internal organizational structures.", "Option 3 exposes staff to social engineering.", "Option 4 is bribery."]
+      },
+      {
+        text: "While presenting a slide deck to a client over screen share, a popup alert shows a sensitive internal Slack chat message. How could this be prevented?",
+        options: [
+          "Enable 'Do Not Disturb' / Presentation Mode before screen sharing",
+          "Share your entire desktop instead of single window",
+          "Type faster",
+          "Disable antivirus"
+        ],
+        correct: 0,
+        hint: "Presentation mode suppresses notification popups.",
+        whyCorrect: "Enabling Do Not Disturb mode prevents notification popups from leaking internal chats or customer data during presentations.",
+        whyWrong: ["Option 1 exposes more desktop popups.", "Option 3 does not hide popups.", "Option 4 removes security protection."]
+      },
+      {
+        text: "A departing sales rep attempts to download 10,000 lead records from CRM right before their final day. What security control stops this?",
+        options: [
+          "CRM mass export restrictions and DLP alert rules",
+          "Disabling monitor brightness",
+          "Deleting CRM accounts early",
+          "Changing company logo"
+        ],
+        correct: 0,
+        hint: "DLP and rate-limiting rules prevent bulk data theft.",
+        whyCorrect: "CRM export caps and Data Loss Prevention (DLP) rules restrict mass lead exfiltration by departing staff.",
+        whyWrong: ["Option 1 is display settings.", "Option 3 prevents legitimate work before departure.", "Option 4 is branding."]
+      },
+      {
+        text: "What is 'Invoice Fraud' targeting sales transactions?",
+        options: [
+          "Attackers altering payment routing details on invoices to intercept deal funds",
+          "Sending duplicate receipts",
+          "Discounts on contracts",
+          "Calculating tax incorrectly"
+        ],
+        correct: 0,
+        hint: "Interception of wire transfer banking numbers.",
+        whyCorrect: "Invoice fraud intercepts billing communications to swap legitimate account numbers with attacker bank accounts.",
+        whyWrong: ["Option 2 is billing duplicate.", "Option 3 is commercial pricing.", "Option 4 is accounting error."]
+      },
+      {
+        text: "Why must sales reps verify that prospect data collection complies with local privacy regulations (GDPR/CCPA)?",
+        options: [
+          "Fines for non-compliance can reach millions of dollars and damage company reputation",
+          "It makes CRM load slower",
+          "It changes email fonts",
+          "It increases tax rates"
+        ],
+        correct: 0,
+        hint: "Data protection authorities issue massive fines for unauthorized PII processing.",
+        whyCorrect: "Privacy regulations impose strict financial penalties (up to 4% of global turnover) for unlawful PII processing.",
+        whyWrong: ["Option 2 is database performance.", "Option 3 is font formatting.", "Option 4 is corporate taxation."]
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      activeQuizEngine = new QuizEngine('sales', salesQuestions);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Security · SecureHub Training Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="../index.html">Home</a>
+      <a href="#policies">Policies</a>
+      <a href="#theory">Theory</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#quiz">Quiz</a>
+      <a href="../shared/common-policies.html">Common Policies</a>
+      <a href="../shared/glossary.html">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Progress: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Secure Design · Protecting Creative Assets & UX</h1>
+    <p>Security guidelines for UI/UX designers, product designers, and creative leads. Secure Figma projects, protect design system intellectual property, avoid PII in mockups, and practice Secure UX design.</p>
+  </section>
+
+  <main class="container">
+    <section id="policies">
+      <h2 class="section-title"><i class="fas fa-file-contract"></i> Design Team Security Policies</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-figma"></i> 1. Figma & Design Tool Security Policy</h3>
+          <p>Access management for cloud design platforms.</p>
+          <ul>
+            <li>Enforce SSO and mandatory MFA for all Figma and Adobe CC accounts.</li>
+            <li>Default sharing links must be set to "Anyone in Organization with Link" or "Restricted".</li>
+            <li>Set mandatory link expiration dates when sharing design files with external vendors.</li>
+            <li>Zero hardcoded API keys, secrets, or real tokens in design frames or specs.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-palette"></i> 2. Design Asset Management Policy</h3>
+          <p>Protecting proprietary UI kits, icon sets, and brand graphics.</p>
+          <ul>
+            <li>Store design source files (.fig, .ai, .psd) in corporate secure drives.</li>
+            <li>Watermark unreleased product mockups shared externally.</li>
+            <li>Maintain clear version control and deprecate public access to legacy design files.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-shield-halved"></i> 3. Secure UI/UX Design Policy</h3>
+          <p>Designing user interfaces that promote security and privacy.</p>
+          <ul>
+            <li>Mask sensitive fields (passwords, credit cards, SSNs) by default in UI mockups.</li>
+            <li>Error message design rule: Never disclose internal stack traces or user existence.</li>
+            <li>Design clear indicators for security states (HTTPS locks, verified badges, active sessions).</li>
+            <li>Ensure security UI elements (e.g. MFA screens) follow accessible, non-confusing UX patterns.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-cloud-arrow-up"></i> 4. Design File Storage & Retention Policy</h3>
+          <p>Storage guidelines and data cleanup.</p>
+          <ul>
+            <li>Use approved enterprise cloud storage (Google Drive / Box) with encryption at rest.</li>
+            <li>Do not keep local copies of confidential design files on unencrypted personal drives.</li>
+            <li>Conduct quarterly access audits for external contractor permissions.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-vial-circle-check"></i> 5. Prototype & Usability Testing Policy</h3>
+          <p>Securing prototype links and user testing data.</p>
+          <ul>
+            <li>Never use real production customer PII in usability testing prototypes.</li>
+            <li>Use synthetic, generated dummy data for all prototype fields.</li>
+            <li>Password-protect public prototype links shared with external user testers.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="theory" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-book-open"></i> Design Security Theory</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-pen-ruler"></i> Security in the Design Phase (Shift-Left UX)</h3>
+          <p>Embedding security early in user experience design.</p>
+          <ul>
+            <li>Security friction vs usability balance: designing smooth authentication flows.</li>
+            <li>Dark Patterns to avoid: Misleading UX that tricks users into sharing unnecessary data.</li>
+            <li>Privacy by Design in UX: Defaulting privacy settings to maximum protection.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.figma.com/security/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> Figma Official Security & Data Protection</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=7891x04_ee1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Securing Figma Share Links & Access Controls</a></li>
+              <li><a href="https://www.youtube.com/watch?v=0121x04_ff1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Managing Figma Plugin Permissions</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 0)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 1 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-layer-group"></i> Figma Security & Plugin Vetting</h3>
+          <p>Managing third-party extensions in design workflows.</p>
+          <ul>
+            <li>Community plugins can execute arbitrary code or read frame canvas data.</li>
+            <li>Audit third-party Figma plugins for data access permissions before installation.</li>
+            <li>Restricting plugin usage in enterprise Figma organizations.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.nngroup.com/articles/ux-security/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> Nielsen Norman Group: UX for Security & Privacy</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=3451x04_gg1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Designing Anti-Phishing UI Patterns</a></li>
+              <li><a href="https://www.youtube.com/watch?v=6781x04_hh1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Designing Secure Error Messages</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 1)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 2 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-id-card"></i> Synthetic Data vs Real PII in Mockups</h3>
+          <p>Preventing privacy leaks in design handoffs.</p>
+          <ul>
+            <li>Using real customer names, emails, or credit card numbers in designs creates compliance risks.</li>
+            <li>Designers hand off Figma inspect files to developers, exposing mock data to external viewers.</li>
+            <li>Use automated data generators (Faker.js plugins) for realistic placeholder text.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://iapp.org/news/a/privacy-by-design-in-ux-design/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> IAPP Privacy by Design in UX & Product Design</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=8901x04_ii1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Using Synthetic Data Generators in Figma</a></li>
+              <li><a href="https://www.youtube.com/watch?v=1231x04_jj1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Preventing PII Leaks in Public Design Prototypes</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 2)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 3 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-eye-slash"></i> Secure UI Patterns</h3>
+          <p>Best practices for designing security-critical UI components.</p>
+          <ul>
+            <li>Password input masking with 'Show/Hide' toggle functionality.</li>
+            <li>Session timeout warning overlays allowing users to extend or safely logout.</li>
+            <li>Destructive action confirmations (requiring explicit typing of resource name).</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.wipo.int/copyright/en/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> WIPO Digital Asset & Design Protection Guide</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=4561x04_kk1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Protecting Vector Assets & Design Systems</a></li>
+              <li><a href="https://www.youtube.com/watch?v=7891x04_ll1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Digital Watermarking & Asset Tracking</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 3)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 4 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-user-lock"></i> Prototype Access Risks</h3>
+          <p>Preventing unreleased feature leaks.</p>
+          <ul>
+            <li>Interactive Figma prototypes can be scraped or indexed if published publicly.</li>
+            <li>Competitors and media monitor public Figma links for unannounced features.</li>
+            <li>Enforce domain-restricted link sharing.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.sans.org/white-papers/third-party-risk" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> SANS Third-Party Risk Management</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=0121x04_mm1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Figma & Adobe Extension Security Audit</a></li>
+              <li><a href="https://www.youtube.com/watch?v=3451x04_nn1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Auditing API Permissions in Design Plugins</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 4)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 5 (Required)
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-vial"></i> Real-World Design Scenarios</h2>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 1: Public Figma Link Exposes Future UI Redesign</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>A designer generates a "Anyone with link can view" Figma link for a new unannounced product interface and posts it in a public Slack channel.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Impact:</strong> Competitors scrape and publish the confidential upcoming redesign ahead of launch.</p>
+          <p><strong>Action:</strong> Change link permissions immediately to "Restricted to Organization". Audit file access logs and remind team of sharing policies.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 2: Real Customer Credit Card Numbers in Handoff Mockup</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>A designer screenshots a live production database record to test high-fidelity billing page mockups in Figma.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Impact:</strong> Serious PCI-DSS compliance violation and exposure of live customer card data in cloud design tool inspect mode.</p>
+          <p><strong>Action:</strong> Permanently delete the frame and version history in Figma. Report the incident to Privacy Compliance and use synthetic test data.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 3: Malicious Third-Party Figma Plugin Installed</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>A designer installs an unvetted community plugin that promises "AI auto-layout", but the plugin exfiltrates frame text to an unknown remote server.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Uninstall the plugin, revoke plugin API tokens, report the plugin to Figma security, and notify internal IT Security.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 4: Misleading Error UI Exposes User Existence</span>
+          <span class="scenario-badge">Medium Severity</span>
+        </div>
+        <p>A designer creates a login screen mockup returning "Password incorrect for john@example.com", allowing account enumeration.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Fix:</strong> Redesign error text to generic wording: "Invalid email or password" to prevent user existence disclosure.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 5: External Contractor Retains Access After Project End</span>
+          <span class="scenario-badge">Medium Severity</span>
+        </div>
+        <p>A freelance UI designer finished a contract 3 months ago but still has edit permissions on the core design system repository.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Revoke access immediately. Establish automated offboarding checklists for design contractors.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="quiz-section" style="position: relative;">
+      <div id="quizOverlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(245,245,247,0.92); z-index:100; backdrop-filter: blur(8px); display:flex; align-items:center; justify-content:center;"></div>
+      <div class="quiz-header">
+        <h2><i class="fas fa-pen-to-square"></i> Design Security Knowledge Check (25 Questions)</h2>
+        <div>
+          <span>Progress: <strong id="answeredCount">0</strong>/25</span>
+          <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
+            <div class="progress-bar-fill" id="quizProgressFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="quiz-actions">
+        <button id="resetBtn" class="btn-secondary"><i class="fas fa-rotate-left"></i> Reset Test</button>
+        <button id="submitBtn" class="btn-primary"><i class="fas fa-paper-plane"></i> Submit & View Score</button>
+      </div>
+    </section>
+
+    <section id="results" class="results-card">
+      <div id="mascotDisplay"></div>
+      <div class="score-circle" id="scoreDisplay">0%</div>
+      <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
+        Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
+        Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
+        Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
+      </p>
+      <div id="certLockMsg" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--danger);"></div>
+      <button id="downloadCertBtn" class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-certificate"></i> Generate Certificate</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>SecureHub Security Training Portal &bull; Design Module &bull; <i class="fas fa-shield-halved"></i> &bull; Property of Hubstream India Pvt Limited</p>
+  </footer>
+
+  <script src="../assets/js/quiz-engine.js"></script>
+  <script>
+    const designQuestions = [
+      {
+        text: "What should NEVER be included in high-fidelity UI design mockups or Figma frames?",
+        options: [
+          "Real customer PII (credit cards, real passwords, SSNs)",
+          "Placeholder text",
+          "Component variables",
+          "Brand color tokens"
+        ],
+        correct: 0,
+        hint: "Inspect mode in Figma exposes canvas text to all file viewers.",
+        whyCorrect: "Real customer PII in design files causes serious PCI-DSS/GDPR violations when inspect mode is shared.",
+        whyWrong: ["Option 1 is standard placeholder text.", "Option 2 is component architecture.", "Option 3 is design tokens."]
+      },
+      {
+        text: "What is the recommended default link sharing setting for sensitive Figma project files?",
+        options: [
+          "Anyone on internet can edit",
+          "Restricted or 'Anyone in Organization with Link'",
+          "Public web indexable",
+          "No access to anyone"
+        ],
+        correct: 1,
+        hint: "Restrict link sharing to authenticated corporate accounts.",
+        whyCorrect: "Restricting link sharing to corporate accounts prevents unannounced designs from leaking publicly.",
+        whyWrong: ["Option 0 allows public access.", "Option 2 allows web search engines to index mockups.", "Option 3 prevents team collaboration."]
+      },
+      {
+        text: "What is 'Dark Patterns' in UI/UX design?",
+        options: [
+          "Using dark mode themes",
+          "Tricky user interface designs crafted to manipulate users into taking actions they didn't intend (e.g. sharing extra PII or subscribing)",
+          "High contrast design",
+          "CSS grid layouts"
+        ],
+        correct: 1,
+        hint: "Deceptive design patterns that exploit cognitive biases.",
+        whyCorrect: "Dark patterns exploit human psychology to trick users into giving up privacy or making unintended purchases.",
+        whyWrong: ["Option 0 is dark color scheme.", "Option 2 is accessibility contrast.", "Option 3 is CSS layout."]
+      },
+      {
+        text: "Why should third-party Figma community plugins be vetted before installation?",
+        options: [
+          "Plugins can read frame text, canvas content, and potentially exfiltrate design data to external servers",
+          "They increase file size",
+          "They change font styles",
+          "They require vector graphics"
+        ],
+        correct: 0,
+        hint: "Plugins execute code in the design workspace.",
+        whyCorrect: "Third-party plugins run JavaScript code in the canvas context and can exfiltrate confidential design text.",
+        whyWrong: ["Option 1 is cloud storage size.", "Option 2 is typography styling.", "Option 3 is vector path format."]
+      },
+      {
+        text: "What is 'Privacy by Design' in user experience?",
+        options: [
+          "Adding a privacy policy link at launch",
+          "Embedding privacy protections and default restrictive data settings into product designs from the outset",
+          "Hiding user settings",
+          "Using encrypted fonts"
+        ],
+        correct: 1,
+        hint: "Default privacy settings set to maximum protection.",
+        whyCorrect: "Privacy by Design ensures privacy is built into default UX workflows rather than added as an afterthought.",
+        whyWrong: ["Option 0 is reactive policy.", "Option 2 hides user control.", "Option 3 is font encryption."]
+      },
+      {
+        text: "How should login error messages be designed to prevent user enumeration attacks?",
+        options: [
+          "'User john@example.com does not exist'",
+          "'Password incorrect for john@example.com'",
+          "'Invalid email or password'",
+          "'System error at line 42'"
+        ],
+        correct: 2,
+        hint: "Generic error messaging hides account existence.",
+        whyCorrect: "Generic error messages prevent attackers from discovering valid registered user email addresses.",
+        whyWrong: ["Option 0 confirms email is missing.", "Option 1 confirms email exists.", "Option 3 leaks internal code lines."]
+      },
+      {
+        text: "What precaution should be taken when sharing Figma prototype links with external usability testers?",
+        options: [
+          "Use password protection / temporary access links and synthetic dummy data",
+          "Provide full edit access",
+          "Include live production API keys",
+          "Post link on public forums"
+        ],
+        correct: 0,
+        hint: "Use synthetic data and password-protect public links.",
+        whyCorrect: "Password protection and synthetic data shield unreleased feature mockups from public scraping.",
+        whyWrong: ["Option 1 allows external file editing.", "Option 2 leaks live API keys.", "Option 3 exposes prototypes publicly."]
+      },
+      {
+        text: "Why should sensitive form fields (e.g., credit card CVV) be masked in UI mockups?",
+        options: [
+          "To establish secure UI patterns for engineering implementation and prevent visual exposure in handoff",
+          "To make designs look darker",
+          "To save screen space",
+          "To reduce font rendering time"
+        ],
+        correct: 0,
+        hint: "Masking sensitive text sets correct developer expectations.",
+        whyCorrect: "Masking sensitive fields demonstrates correct secure UI behavior for developers building backend components.",
+        whyWrong: ["Option 1 is visual styling.", "Option 2 is layout space.", "Option 3 is rendering speed."]
+      },
+      {
+        text: "What risk occurs if hardcoded API tokens are left in Figma inspect properties or component documentation?",
+        options: [
+          "Developers or external viewers inspecting components can extract active tokens and breach systems",
+          "Figma runs faster",
+          "Component colors change",
+          "Vector paths break"
+        ],
+        correct: 0,
+        hint: "Inspect mode reveals property strings to all file viewers.",
+        whyCorrect: "Inspect mode in Figma displays layer properties, revealing hardcoded tokens to all file viewers.",
+        whyWrong: ["Option 1 is app speed.", "Option 2 is color rendering.", "Option 3 is vector math."]
+      },
+      {
+        text: "What should designers do when offboarding external freelance UI contractors?",
+        options: [
+          "Immediately revoke design workspace access, Figma permissions, and cloud drive access",
+          "Allow them to keep access for future projects",
+          "Ask them to delete files themselves",
+          "Change nothing"
+        ],
+        correct: 0,
+        hint: "Revoke workspace seats upon contract termination.",
+        whyCorrect: "Immediate offboarding prevents former contractors from retaining access to corporate intellectual property.",
+        whyWrong: ["Option 1 leaves persistent unauthorized access.", "Option 2 relies on self-policing.", "Option 3 retains full access."]
+      },
+      {
+        text: "What is synthetic data generation for UI testing?",
+        options: [
+          "Using artificial, generated dummy names/emails instead of real user data",
+          "Copying production databases",
+          "Handwriting test data",
+          "Using AI images"
+        ],
+        correct: 0,
+        hint: "Realistic fake data replacing live customer PII.",
+        whyCorrect: "Synthetic data generators create realistic fake records without exposing real customer PII.",
+        whyWrong: ["Option 1 exposes live PII.", "Option 2 is manual input.", "Option 3 is image generation."]
+      },
+      {
+        text: "Why is MFA required on Adobe Creative Cloud and Figma enterprise accounts?",
+        options: [
+          "To prevent account takeover and unauthorized access to corporate creative assets and prototypes",
+          "To speed up rendering",
+          "To reduce subscription fees",
+          "To sync fonts automatically"
+        ],
+        correct: 0,
+        hint: "Shields design repositories from credential theft.",
+        whyCorrect: "MFA blocks unauthorized account access even if designer passwords are stolen in third-party breaches.",
+        whyWrong: ["Option 1 is rendering performance.", "Option 2 is pricing.", "Option 3 is font management."]
+      },
+      {
+        text: "What design pattern prevents accidental deletion of critical cloud resources?",
+        options: [
+          "A single click button",
+          "A confirmation modal requiring the user to explicitly type the resource name or 'DELETE'",
+          "Hiding the delete option",
+          "An animated spinner"
+        ],
+        correct: 1,
+        hint: "Explicit confirmation patterns prevent destructive accidental actions.",
+        whyCorrect: "Requiring explicit typing of resource names forces intentional user action before destructive deletion.",
+        whyWrong: ["Option 0 allows accidental clicks.", "Option 2 prevents necessary deletion.", "Option 3 is loading indicator."]
+      },
+      {
+        text: "What should be applied to unreleased design mockups shared with external media or partners under NDA?",
+        options: [
+          "Visible watermarks and explicit NDA notice headers",
+          "Public links",
+          "Editable SVG files",
+          "Zip archives without passwords"
+        ],
+        correct: 0,
+        hint: "Watermarks establish provenance and deter leaks.",
+        whyCorrect: "Watermarking unreleased designs deters unauthorized sharing and identifies leak sources.",
+        whyWrong: ["Option 1 exposes mockups publicly.", "Option 2 hands over raw editable vectors.", "Option 3 lacks password protection."]
+      },
+      {
+        text: "How does Secure UX handle session timeout warnings?",
+        options: [
+          "Abruptly terminating sessions without saving",
+          "Displaying a clear overlay giving the user time to extend or safely save & log out",
+          "Ignoring timeouts",
+          "Reloading the page endlessly"
+        ],
+        correct: 1,
+        hint: "Overlay warnings balance security timeouts with user experience.",
+        whyCorrect: "Clear session warning overlays prevent abrupt data loss while enforcing necessary security timeouts.",
+        whyWrong: ["Option 0 destroys user work.", "Option 2 leaves unattended sessions open.", "Option 3 creates infinite loops."]
+      },
+      {
+        text: "What is the danger of uploading corporate logo source vectors (.AI / .SVG) to unvetted free online file converter sites?",
+        options: [
+          "The website can store, index, or distribute proprietary brand assets to third parties",
+          "Vector paths compress",
+          "Fonts change color",
+          "File size increases"
+        ],
+        correct: 0,
+        hint: "Free online conversion sites retain uploaded files.",
+        whyCorrect: "Free online file converters often retain and re-distribute uploaded vector assets without copyright restrictions.",
+        whyWrong: ["Option 1 is vector path math.", "Option 2 is font styling.", "Option 3 is file compression."]
+      },
+      {
+        text: "Which aspect of security UI design helps users recognize genuine security alerts?",
+        options: [
+          "Consistent security iconography, verified domain indicators, and clear plain-language status badges",
+          "Flashing neon banners",
+          "Using technical error codes",
+          "Pop-up ads"
+        ],
+        correct: 0,
+        hint: "Consistent design patterns distinguish real alerts from phishing popups.",
+        whyCorrect: "Clear, consistent security UI indicators help users distinguish genuine system warnings from malicious popups.",
+        whyWrong: ["Option 1 mimics scareware ads.", "Option 2 confuses non-technical users.", "Option 3 is advertising."]
+      },
+      {
+        text: "What is 'Accessibility in Secure Design'?",
+        options: [
+          "Ensuring security controls (like CAPTCHA or MFA) are usable by people with disabilities (WCAG compliant)",
+          "Making passwords public",
+          "Removing authentication",
+          "Using small fonts"
+        ],
+        correct: 0,
+        hint: "WCAG compliance for security mechanisms like CAPTCHA/MFA.",
+        whyCorrect: "Accessible security controls ensure users with visual or physical impairments can authenticate independently.",
+        whyWrong: ["Option 1 destroys password security.", "Option 2 removes authentication entirely.", "Option 3 violates WCAG font size."]
+      },
+      {
+        text: "Why should legacy Figma files and unused design branches be archived or deleted?",
+        options: [
+          "To reduce attack surface and prevent developers from implementing deprecated or insecure UI components",
+          "To save cloud storage space only",
+          "To speed up mouse movement",
+          "To update browser"
+        ],
+        correct: 0,
+        hint: "Prevents deployment of deprecated UI components.",
+        whyCorrect: "Archiving legacy design files prevents engineering teams from mistakenly building outdated or insecure UI patterns.",
+        whyWrong: ["Option 1 is cloud storage.", "Option 2 is hardware input.", "Option 3 is browser maintenance."]
+      },
+      {
+        text: "What is the primary goal of Secure Design?",
+        options: [
+          "Making interfaces look pretty",
+          "Integrating security, privacy, and user safety seamlessly into the user experience from project inception",
+          "Disabling buttons",
+          "Increasing ad clicks"
+        ],
+        correct: 1,
+        hint: "Seamlessly combining safety, privacy, and intuitive usability.",
+        whyCorrect: "Secure design embeds privacy and safety controls seamlessly into user workflows from the start.",
+        whyWrong: ["Option 0 is visual aesthetics.", "Option 2 disables user actions.", "Option 3 is ad monetization."]
+      },
+      {
+        text: "You notice an external public website hotlinking directly to raw design asset SVGs stored in your internal S3 bucket. What should you do?",
+        options: [
+          "Ignore it",
+          "Notify Security to enable S3 bucket policy restrictions and CORS origin blocking",
+          "Delete the SVG files",
+          "Redesign the assets"
+        ],
+        correct: 1,
+        hint: "S3 bucket policy and CORS restrictions block hotlinking.",
+        whyCorrect: "Restricting S3 bucket policies and CORS origins blocks unauthorized external bandwidth theft and asset hotlinking.",
+        whyWrong: ["Option 0 allows bandwidth theft.", "Option 2 breaks internal app references.", "Option 3 is creative redesign."]
+      },
+      {
+        text: "Why should design system UI component libraries include pre-built security components (e.g. verified MFA input boxes, password strength indicators)?",
+        options: [
+          "To standardize secure UX patterns across all product teams and prevent custom insecure UI implementations",
+          "To change brand colors",
+          "To reduce component count",
+          "To speed up CSS compilation"
+        ],
+        correct: 0,
+        hint: "Standardized design system components enforce secure patterns.",
+        whyCorrect: "Pre-built security components in design systems ensure every product squad uses vetted, accessible security UI.",
+        whyWrong: ["Option 1 is color branding.", "Option 2 is library size.", "Option 3 is CSS build time."]
+      },
+      {
+        text: "What is 'Visual Shoulder Surfing' in design workplaces?",
+        options: [
+          "Unauthorized observers reading unreleased UI mockups or customer data directly off a designer's monitor",
+          "A type of computer virus",
+          "A camera lens filter",
+          "A VR headset feature"
+        ],
+        correct: 0,
+        hint: "Physical visual inspection of unreleased mockups.",
+        whyCorrect: "Shoulder surfing allows onlookers to view unreleased product interfaces or mockups on unprotected screens.",
+        whyWrong: ["Option 1 is software malware.", "Option 2 is optical hardware.", "Option 3 is VR technology."]
+      },
+      {
+        text: "A designer receives an email from 'Figma Support' asking them to log into a link to verify an expired license. What should they do?",
+        options: [
+          "Click the link and log in immediately",
+          "Check the domain URL, close the email, and report the phishing attempt to Security",
+          "Forward to all designers",
+          "Reply with their password"
+        ],
+        correct: 1,
+        hint: "Phishing attack targeting design tool credentials.",
+        whyCorrect: "Phishing emails target design credentials; verifying URL domains and reporting protects corporate Figma workspace access.",
+        whyWrong: ["Option 0 surrenders credentials.", "Option 2 spreads phishing internally.", "Option 3 leaks password."]
+      },
+      {
+        text: "What responsibility does a UI/UX Designer hold regarding user data privacy?",
+        options: [
+          "Designing transparent consent mechanisms, avoiding dark patterns, and protecting user privacy by default",
+          "Writing database code",
+          "Managing cloud servers",
+          "Generating sales leads"
+        ],
+        correct: 0,
+        hint: "Designing transparent user consent and privacy controls.",
+        whyCorrect: "Designers shape user touchpoints; crafting clear consent options and respectful UX upholds privacy standards.",
+        whyWrong: ["Option 1 is backend development.", "Option 2 is cloud infrastructure.", "Option 3 is marketing."]
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      activeQuizEngine = new QuizEngine('design', designQuestions);
+    });
+  </script>
+</body>
+</html>

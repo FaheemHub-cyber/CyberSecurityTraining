@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Management Security · SecureHub Training Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="../index.html">
+        <i class="fas fa-shield-halved"></i> SecureHub
+      </a>
+    </div>
+    <div class="nav">
+      <a href="../index.html">Home</a>
+      <a href="#policies">Policies</a>
+      <a href="#theory">Theory</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#quiz">Quiz</a>
+      <a href="../shared/common-policies.html">Common Policies</a>
+      <a href="../shared/glossary.html">Glossary</a>
+    </div>
+    <div class="progress-widget">
+      <span>Org Progress: <strong id="globalProgressText">0%</strong></span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Secure Product · Building Security into Roadmaps</h1>
+    <p>Security guidelines for Product Managers, Technical PMs, and Group Product Leads. Master STRIDE threat modeling, Privacy by Design, feature prioritization balancing security debt, and regulatory compliance.</p>
+  </section>
+
+  <main class="container">
+    <section id="policies">
+      <h2 class="section-title"><i class="fas fa-file-contract"></i> Product Management Security Policies</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-list-check"></i> 1. Product Security Requirements Policy</h3>
+          <p>Security specs integrated into PRDs and feature acceptance criteria.</p>
+          <ul>
+            <li>Every Product Requirement Document (PRD) must contain a mandatory "Security & Privacy Considerations" section.</li>
+            <li>Security features (MFA, RBAC, Encryption) treated as core functional requirements.</li>
+            <li>Define explicit security acceptance criteria in Jira user stories before sprint grooming.</li>
+            <li>Mandatory Security Sign-off required prior to major feature launches.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-arrow-down-up-across-line"></i> 2. Feature & Security Prioritization Policy</h3>
+          <p>Managing security debt alongside feature roadmaps.</p>
+          <ul>
+            <li>High/Critical security vulnerabilities must be prioritized in the immediate sprint cycle (SLA: 7-14 days).</li>
+            <li>Allocate a minimum of 15-20% engineering capacity per sprint for security hardening & refactoring.</li>
+            <li>Risk-based prioritization matrix (Impact x Likelihood) for security roadmap items.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-handshake"></i> 3. Third-Party Integration Policy</h3>
+          <p>Vendor security vetting and API integrations.</p>
+          <ul>
+            <li>Security & Legal review mandatory before integrating new third-party SaaS APIs or SDKs.</li>
+            <li>Ensure vendor DPAs (Data Processing Agreements) restrict secondary usage of user data.</li>
+            <li>Continuous monitoring of third-party vendor security posture.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-gavel"></i> 4. Compliance & Privacy by Design Policy</h3>
+          <p>Adhering to regulatory frameworks in product design.</p>
+          <ul>
+            <li>Incorporate 7 Privacy by Design principles into product architecture.</li>
+            <li>Build automated user data export and deletion workflows (GDPR Right to be Forgotten).</li>
+            <li>Audit trail logging required for all sensitive user data modifications.</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-rocket"></i> 5. Release Security Gate Policy</h3>
+          <p>Pre-deployment validation and incident readiness.</p>
+          <ul>
+            <li>Zero open Critical / High CVEs permitted in production release builds.</li>
+            <li>Incorporate rollback procedures and feature flags for high-risk security updates.</li>
+            <li>Establish vulnerability disclosure programs (Bug Bounty / Security.txt).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="theory" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-book-open"></i> Product Security Theory</h2>
+      <div class="cards-grid">
+        <div class="info-card">
+          <h3><i class="fas fa-sitemap"></i> STRIDE Threat Modeling for PMs</h3>
+          <p>Deconstructing product attack vectors early in design.</p>
+          <ul>
+            <li><strong>Spoofing:</strong> Authenticating user/device identities.</li>
+            <li><strong>Tampering:</strong> Ensuring data integrity in transit and rest.</li>
+            <li><strong>Repudiation:</strong> Maintaining non-repudiable audit logs.</li>
+            <li><strong>Information Disclosure:</strong> Preventing sensitive data leakage.</li>
+            <li><strong>Denial of Service:</strong> Resisting resource exhaustion.</li>
+            <li><strong>Elevation of Privilege:</strong> Enforcing strict RBAC boundaries.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://csrc.nist.gov/Projects/ssdf" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> NIST Secure Software Development Framework (SSDF)</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=6781x04_oo1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Shift Left Security for Product Managers</a></li>
+              <li><a href="https://www.youtube.com/watch?v=8901x04_pp1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Building Security Acceptance Criteria in PRDs</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 0)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 1 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-user-shield"></i> Privacy by Design (PbD) Core Principles</h3>
+          <p>Embedding user privacy into product architecture.</p>
+          <ul>
+            <li>Proactive not Reactive; Preventative not Remedial.</li>
+            <li>Privacy as the Default Setting (no required opt-ins for basic privacy).</li>
+            <li>Full Functionality — Positive-Sum, not Zero-Sum (Security AND Velocity).</li>
+            <li>End-to-End Security — Full Lifecycle Protection.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://owasp.org/www-community/Threat_Modeling" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> OWASP STRIDE Threat Modeling Overview</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=1231x04_qq1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> STRIDE Threat Modeling Explained for PMs</a></li>
+              <li><a href="https://www.youtube.com/watch?v=4561x04_rr1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Risk Matrix: Likelihood vs Impact Assessment</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 1)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 2 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-scale-unbalanced"></i> Balancing Velocity vs Security Debt</h3>
+          <p>Managing the business cost of security neglect.</p>
+          <ul>
+            <li>Security debt compounds interest: Fixing bugs post-launch costs 30x more than during design.</li>
+            <li>A single data breach causes customer churn, legal fines, and severe brand damage.</li>
+            <li>Communicating security value to executive stakeholders in terms of business continuity.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://iapp.org/resources/article/privacy-by-design-the-7-foundational-principles/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> IAPP 7 Principles of Privacy by Design</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=7891x04_ss1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Privacy by Design Framework for Product Leaders</a></li>
+              <li><a href="https://www.youtube.com/watch?v=0121x04_tt1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Data Minimization & User Consent Workflows</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 2)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 3 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-passport"></i> Global Regulatory Compliance Frameworks</h3>
+          <p>Key standards impacting product requirements.</p>
+          <ul>
+            <li><strong>GDPR / CCPA:</strong> User privacy rights, consent management, data portability.</li>
+            <li><strong>SOC 2 Type II / ISO 27001:</strong> Operational security controls and auditability.</li>
+            <li><strong>HIPAA / PCI-DSS:</strong> Health data and payment card handling standards.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://gdpr-info.eu/art-25-gdpr/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> GDPR Article 25: Data Protection by Design</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=3451x04_uu1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> GDPR & HIPAA Compliance Checklist for Products</a></li>
+              <li><a href="https://www.youtube.com/watch?v=6781x04_vv1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> SOC 2 Trust Services Criteria Overview</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 3)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 4 (Required)
+            </button>
+          </div>
+
+        </div>
+        <div class="info-card">
+          <h3><i class="fas fa-vial-virus"></i> Security Agent & Rapid Review Frameworks</h3>
+          <p>Accelerating pre-UAT security validation.</p>
+          <ul>
+            <li>Using rapid security reviews (Security Agent checklists) to inspect business logic changes before release.</li>
+            <li>Injecting negative security test scenarios alongside functional happy paths in user acceptance testing.</li>
+          </ul>
+
+          <div class="theory-resources" style="margin-top: 1rem; padding: 0.8rem; background: var(--surface-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-primary);"><i class="fas fa-bookmark" style="color:var(--accent);"></i> Recommended Reading & Videos</h4>
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; margin-bottom: 0.8rem;">
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.thoughtworks.com/radar" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;"><i class="fas fa-newspaper"></i> ThoughtWorks Tech Radar: Managing Technical & Security Debt</a></li>
+              <li style="margin-bottom: 0.3rem;"><a href="https://www.youtube.com/watch?v=8901x04_ww1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Prioritizing Security Vulnerabilities in Roadmap</a></li>
+              <li><a href="https://www.youtube.com/watch?v=1231x04_xx1" target="_blank" rel="noopener" style="color:#d93025; text-decoration:none;"><i class="fab fa-youtube"></i> Building the Business Case for Cybersecurity</a></li>
+            </ul>
+            <button class="mark-read-btn" onclick="markTheoryRead(this, 4)" style="width:100%; padding: 0.5rem; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:6px; cursor:pointer; font-weight:600; transition:all 0.2s ease;">
+              <i class="far fa-circle"></i> Read Topic 5 (Required)
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios" style="margin-top: 3rem;">
+      <h2 class="section-title"><i class="fas fa-vial"></i> Real-World Product Management Scenarios</h2>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 1: Critical Security Vulnerability vs Quarterly Feature Target</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>A Critical Remote Code Execution bug is discovered in a core product module 3 days before a major marketing product launch.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Pause the launch immediately. Prioritize the security fix as a P0 blocker, release a patched build, and communicate the updated timeline to stakeholders.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 2: Third-Party Analytics SDK Data Leakage</span>
+          <span class="scenario-badge">Critical Severity</span>
+        </div>
+        <p>A PM integrates a free mobile analytics SDK that secretly harvests user contact lists and uploads them to an unverified third-party server.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Remove the SDK immediately, deploy an emergency patch, assess privacy impact under GDPR, and update vendor vetting checklists.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 3: User Demands Account & Data Deletion (GDPR)</span>
+          <span class="scenario-badge">Medium Severity</span>
+        </div>
+        <p>An enterprise client requests complete data erasure, but the application architecture hard-deletes primary records while leaving backups and logs exposed.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Action:</strong> Design automated anonymization scripts to scrub PII from databases and logs while keeping system integrity intact.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 4: High Security Friction Causes User Drop-off</span>
+          <span class="scenario-badge">Medium Severity</span>
+        </div>
+        <p>Requiring complex 20-character passwords and 3 MFA prompts per day causes a 15% conversion drop in user onboarding.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Fix:</strong> Implement Risk-Based / Adaptive Authentication (WebAuthn passkeys, trusted device session persistence) to balance security with frictionless UX.</p>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="scenario-title">Scenario 5: Lack of Audit Logging for Admin Overrides</span>
+          <span class="scenario-badge">High Severity</span>
+        </div>
+        <p>An internal admin panel allows support managers to grant refund overrides, but does not record which manager authorized the refund.</p>
+        <button class="btn-solution" onclick="toggleSolution(this)">Show Solution</button>
+        <div class="solution-box">
+          <p><strong>Fix:</strong> Add immutable audit trail logging capturing user ID, timestamp, IP, and reason for all administrative actions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="quiz-section" style="position: relative;">
+      <div id="quizOverlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(245,245,247,0.92); z-index:100; backdrop-filter: blur(8px); display:flex; align-items:center; justify-content:center;"></div>
+      <div class="quiz-header">
+        <h2><i class="fas fa-pen-to-square"></i> Product Management Security Knowledge Check (25 Questions)</h2>
+        <div>
+          <span>Progress: <strong id="answeredCount">0</strong>/25</span>
+          <div class="progress-bar-wrap" style="width: 150px; display: inline-block; margin-left: 10px;">
+            <div class="progress-bar-fill" id="quizProgressFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="quiz-actions">
+        <button id="resetBtn" class="btn-secondary"><i class="fas fa-rotate-left"></i> Reset Test</button>
+        <button id="submitBtn" class="btn-primary"><i class="fas fa-paper-plane"></i> Submit & View Score</button>
+      </div>
+    </section>
+
+    <section id="results" class="results-card">
+      <div id="mascotDisplay"></div>
+      <div class="score-circle" id="scoreDisplay">0%</div>
+      <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Assessment Complete</h3>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
+        Correct: <strong id="correctCount" style="color: var(--success);">0</strong> |
+        Incorrect: <strong id="wrongCount" style="color: var(--danger);">0</strong> |
+        Unanswered: <strong id="unansweredCount" style="color: var(--warning);">0</strong>
+      </p>
+      <div id="certLockMsg" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--danger);"></div>
+      <button id="downloadCertBtn" class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><i class="fas fa-certificate"></i> Generate Certificate</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>SecureHub Security Training Portal &bull; Product Module &bull; <i class="fas fa-shield-halved"></i> &bull; Property of Hubstream India Pvt Limited</p>
+  </footer>
+
+  <script src="../assets/js/quiz-engine.js"></script>
+  <script>
+    const productQuestions = [
+      {
+        text: "What is 'Privacy by Design' (PbD) in product management?",
+        options: [
+          "Adding a privacy statement at product launch",
+          "Integrating privacy protections and data minimization as default settings throughout the product development lifecycle",
+          "Letting legal handle all compliance",
+          "Hiding user settings"
+        ],
+        correct: 1,
+        hint: "Embedding privacy into architecture by default.",
+        whyCorrect: "Privacy by Design mandates that privacy controls and data minimization are architected into features from inception.",
+        whyWrong: ["Option 0 is reactive policy.", "Option 2 abdicates product responsibility.", "Option 3 hides user control."]
+      },
+      {
+        text: "In the STRIDE threat modeling framework, what threat category corresponds to an attacker modifying data in transit or storage?",
+        options: [
+          "Spoofing",
+          "Tampering",
+          "Repudiation",
+          "Elevation of Privilege"
+        ],
+        correct: 1,
+        hint: "Tampering refers to unauthorized data modification.",
+        whyCorrect: "Tampering involves unauthorized modification of data or system memory.",
+        whyWrong: ["Option 0 is identity impersonation.", "Option 2 is missing audit logs.", "Option 3 is gaining unauthorized permissions."]
+      },
+      {
+        text: "When should a Critical severity security bug be prioritized relative to new feature requests?",
+        options: [
+          "After the quarterly feature release",
+          "Immediately as a P0 blocker in the current sprint",
+          "In next year's roadmap",
+          "Only if customers complain"
+        ],
+        correct: 1,
+        hint: "Critical security flaws take precedence over feature deliverables.",
+        whyCorrect: "Critical vulnerabilities pose active breach risks and must be prioritized immediately as P0 blockers.",
+        whyWrong: ["Option 0 delays fixing active vulnerabilities.", "Option 2 exposes systems for a year.", "Option 3 waits for a breach incident."]
+      },
+      {
+        text: "Why is a Product Requirement Document (PRD) incomplete without a Security & Privacy section?",
+        options: [
+          "Because security requirements affect architecture, compliance, data handling, and acceptance criteria from day one",
+          "To increase document length",
+          "To slow down engineers",
+          "To satisfy marketing"
+        ],
+        correct: 0,
+        hint: "Defines security acceptance criteria early in development.",
+        whyCorrect: "Addressing security in PRDs prevents expensive architecture refactoring late in the release cycle.",
+        whyWrong: ["Option 1 is document formatting.", "Option 2 is operational delay.", "Option 3 is marketing copy."]
+      },
+      {
+        text: "What does the 'Right to be Forgotten' under GDPR require product managers to build?",
+        options: [
+          "A search bar",
+          "Automated mechanisms to permanently erase or anonymize a user's personal data upon request",
+          "Backup restoration tools",
+          "Data export to PDF"
+        ],
+        correct: 1,
+        hint: "GDPR Article 17 user data erasure workflows.",
+        whyCorrect: "GDPR Article 17 grants users the legal right to request complete data erasure or anonymization.",
+        whyWrong: ["Option 0 is search UI.", "Option 2 is data backup.", "Option 3 is data export."]
+      },
+      {
+        text: "What percentage of engineering capacity is typically recommended to allocate for security refactoring and debt reduction?",
+        options: [
+          "0%",
+          "15% - 20%",
+          "75%",
+          "100%"
+        ],
+        correct: 1,
+        hint: "Allocating 15-20% bandwidth maintains continuous security.",
+        whyCorrect: "Allocating 15-20% engineering bandwidth ensures continuous security maintenance and debt reduction.",
+        whyWrong: ["Option 0 leads to massive security debt.", "Option 2 starves feature development.", "Option 3 stops feature delivery."]
+      },
+      {
+        text: "What risk arises when integrating third-party software SDKs or SaaS APIs without security vetting?",
+        options: [
+          "Supply chain vulnerabilities, unauthorized data harvesting, and compliance breaches",
+          "Slower internet speeds",
+          "Higher code coverage",
+          "Easier UI design"
+        ],
+        correct: 0,
+        hint: "Third-party SDKs inherit system permissions.",
+        whyCorrect: "Third-party SDKs inherit system permissions and can introduce severe supply chain risks.",
+        whyWrong: ["Option 1 is network speed.", "Option 2 is unit test metrics.", "Option 3 is visual design."]
+      },
+      {
+        text: "In STRIDE, what threat category addresses an actor denying they performed an action because system logs are missing?",
+        options: [
+          "Spoofing",
+          "Repudiation",
+          "Information Disclosure",
+          "Denial of Service"
+        ],
+        correct: 1,
+        hint: "Lack of non-repudiable audit logs.",
+        whyCorrect: "Repudiation occurs when actions cannot be definitively proven due to lack of non-repudiable audit trails.",
+        whyWrong: ["Option 0 is identity impersonation.", "Option 2 is data leakage.", "Option 3 is resource exhaustion."]
+      },
+      {
+        text: "How should product managers handle feature flags during high-risk security deployments?",
+        options: [
+          "Use feature flags to enable rapid rollout control and immediate kill-switch toggling if issues arise",
+          "Never use feature flags",
+          "Hardcode all flags",
+          "Keep flags open forever"
+        ],
+        correct: 0,
+        hint: "Feature flags provide immediate rollback capability.",
+        whyCorrect: "Feature flags provide operational safety and immediate kill-switch rollback capabilities during risky releases.",
+        whyWrong: ["Option 1 removes rollout control.", "Option 2 hardcodes values.", "Option 3 leaves stale code."]
+      },
+      {
+        text: "What is 'Security Debt'?",
+        options: [
+          "Financial loans for buying firewalls",
+          "The accumulated unaddressed security vulnerabilities and outdated dependencies in a product codebase",
+          "Monthly cloud hosting bills",
+          "Legal fees"
+        ],
+        correct: 1,
+        hint: "Unaddressed vulnerabilities accumulating interest over time.",
+        whyCorrect: "Security debt accumulates interest over time, increasing breach likelihood and remediation cost.",
+        whyWrong: ["Option 0 is commercial loans.", "Option 2 is hosting infrastructure costs.", "Option 3 is legal expenses."]
+      },
+      {
+        text: "Why are audit logs essential for administrative and financial product features?",
+        options: [
+          "They provide non-repudiable records of who performed specific actions, aiding incident investigation and SOC 2 compliance",
+          "They format UI buttons",
+          "They decrease database storage",
+          "They improve SEO"
+        ],
+        correct: 0,
+        hint: "Audit trails establish non-repudiable accountability.",
+        whyCorrect: "Audit logs establish accountability and forensic evidence during security investigations.",
+        whyWrong: ["Option 1 is UI formatting.", "Option 2 increases storage slightly.", "Option 3 is search engine optimization."]
+      },
+      {
+        text: "What is Adaptive / Risk-Based Authentication in product UX?",
+        options: [
+          "Requiring 5 passwords every time",
+          "Adjusting authentication prompts dynamically based on user risk signals (device, location, IP anomaly)",
+          "Disabling passwords entirely",
+          "Using static security questions"
+        ],
+        correct: 1,
+        hint: "Dynamic step-up authentication based on risk signals.",
+        whyCorrect: "Adaptive authentication optimizes security by stepping up verification only when anomalous risk is detected.",
+        whyWrong: ["Option 0 creates massive UX friction.", "Option 2 removes primary authentication.", "Option 3 uses easily cracked questions."]
+      },
+      {
+        text: "What is a Bug Bounty Program?",
+        options: [
+          "A reward program paying crowdsourced ethical hackers for responsibly disclosing undiscovered vulnerabilities in a product",
+          "A software testing tool",
+          "An internal bonus for developers",
+          "A game"
+        ],
+        correct: 0,
+        hint: "Crowdsourced ethical hacker vulnerability reporting.",
+        whyCorrect: "Bug bounty programs leverage external security researchers to identify vulnerabilities prior to malicious exploitation.",
+        whyWrong: ["Option 1 is automated software.", "Option 2 is internal employee bonus.", "Option 3 is video game."]
+      },
+      {
+        text: "What does SOC 2 Type II certification evaluate in a product business?",
+        options: [
+          "Product color schemes",
+          "The operational effectiveness of security, availability, and confidentiality controls over an extended audit period (6-12 months)",
+          "Employee salary levels",
+          "Sales revenue"
+        ],
+        correct: 1,
+        hint: "Evaluates operational effectiveness over 6-12 months.",
+        whyCorrect: "SOC 2 Type II assesses long-term operational adherence to trust services security criteria.",
+        whyWrong: ["Option 0 is brand design.", "Option 2 is HR payroll.", "Option 3 is sales metrics."]
+      },
+      {
+        text: "In STRIDE, what category corresponds to an unauthorized user gaining admin rights?",
+        options: [
+          "Elevation of Privilege",
+          "Information Disclosure",
+          "Spoofing",
+          "Tampering"
+        ],
+        correct: 0,
+        hint: "Gaining permissions beyond assigned role.",
+        whyCorrect: "Elevation of privilege occurs when a user gains permissions beyond their assigned role.",
+        whyWrong: ["Option 1 is data leakage.", "Option 2 is impersonation.", "Option 3 is data modification."]
+      },
+      {
+        text: "What is 'Data Minimization' in product specification?",
+        options: [
+          "Compressing images",
+          "Collecting and retaining only the minimum personal data strictly necessary to fulfill a feature's purpose",
+          "Deleting all database records daily",
+          "Storing data in text files"
+        ],
+        correct: 1,
+        hint: "Collect only what is strictly necessary.",
+        whyCorrect: "Data minimization reduces privacy risk and compliance scope by restricting collected data.",
+        whyWrong: ["Option 0 is image optimization.", "Option 2 destroys required data.", "Option 3 is file formatting."]
+      },
+      {
+        text: "Why should product managers conduct rapid security reviews (Security Agent checklists) before UAT?",
+        options: [
+          "To catch business logic flaws, permission bypasses, and rate limiting gaps before final testing",
+          "To replace developer unit tests",
+          "To bypass QA testing entirely",
+          "To write marketing copy"
+        ],
+        correct: 0,
+        hint: "Pre-UAT checklist evaluating business logic and config.",
+        whyCorrect: "Pre-UAT security reviews catch high-level architectural and configuration flaws early.",
+        whyWrong: ["Option 1 does not replace unit tests.", "Option 2 does not replace QA.", "Option 3 is marketing copy."]
+      },
+      {
+        text: "What is a Vulnerability Disclosure Policy (VDP / security.txt)?",
+        options: [
+          "A public document outlining how security researchers can safely report security flaws to your company",
+          "A marketing brochure",
+          "An internal employee list",
+          "A press release"
+        ],
+        correct: 0,
+        hint: "Public policy guiding safe vulnerability disclosures.",
+        whyCorrect: "VDPs provide a clear, safe channel for external researchers to disclose vulnerabilities.",
+        whyWrong: ["Option 1 is promotional material.", "Option 2 is internal HR document.", "Option 3 is public PR statement."]
+      },
+      {
+        text: "What is the cost ratio of fixing a security vulnerability in production versus during the design phase?",
+        options: [
+          "1:1 (Same cost)",
+          "Fixing in production costs up to 30x more due to emergency patching, re-testing, downtime, and breach liability",
+          "Production is cheaper",
+          "Zero cost"
+        ],
+        correct: 1,
+        hint: "Fixing bugs late costs significantly more.",
+        whyCorrect: "Shifting security left saves significant financial and technical resources compared to post-launch hotfixes.",
+        whyWrong: ["Option 0 ignores breach liabilities.", "Option 2 is factually incorrect.", "Option 3 ignores developer labor."]
+      },
+      {
+        text: "What role does a Product Manager play in Zero Trust implementation?",
+        options: [
+          "PMs ensure product specs enforce strict role-based access control (RBAC), least privilege, and step-up auth boundaries across user journeys",
+          "PMs configure network firewalls",
+          "PMs write encryption code",
+          "PMs inspect server CPUs"
+        ],
+        correct: 0,
+        hint: "PMs define functional access boundaries matching Zero Trust.",
+        whyCorrect: "PMs define functional access boundaries and authorization models matching Zero Trust principles.",
+        whyWrong: ["Option 1 is network engineering.", "Option 2 is software engineering.", "Option 3 is hardware ops."]
+      },
+      {
+        text: "A new feature requirement asks to store credit card CVV codes permanently in the database to speed up re-ordering. What should the PM do?",
+        options: [
+          "Reject storing CVV permanently; PCI-DSS strictly prohibits storing CVV post-authorization",
+          "Approve the requirement for faster checkout",
+          "Store CVVs in plaintext",
+          "Email CVVs to sales"
+        ],
+        correct: 0,
+        hint: "PCI-DSS strictly forbids permanent CVV storage.",
+        whyCorrect: "PCI-DSS strictly prohibits storing CVV sensitive authentication data after transaction authorization.",
+        whyWrong: ["Option 1 violates PCI-DSS compliance.", "Option 2 exposes unencrypted card data.", "Option 3 leaks financial PII."]
+      },
+      {
+        text: "What is 'Threat Modeling' in product design?",
+        options: [
+          "Structured analysis identifying security risks, threat actors, and attack vectors before code is written",
+          "3D graphic design",
+          "Financial forecasting",
+          "A marketing presentation"
+        ],
+        correct: 0,
+        hint: "Analyzing attack vectors during product specification.",
+        whyCorrect: "Threat modeling identifies architectural attack surfaces and mitigations early in product design.",
+        whyWrong: ["Option 1 is visual art.", "Option 2 is finance.", "Option 3 is promotional sales."]
+      },
+      {
+        text: "Why should PMs mandate rate limiting on public registration and password reset API endpoints?",
+        options: [
+          "To prevent bot automated account creation, spam, and brute-force enumeration",
+          "To slow down user growth",
+          "To reduce font size",
+          "To save CSS memory"
+        ],
+        correct: 0,
+        hint: "Prevents automated bot spam and enumeration.",
+        whyCorrect: "Rate limiting prevents automated bots from creating fake accounts or spamming password resets.",
+        whyWrong: ["Option 1 is growth metrics.", "Option 2 is typography.", "Option 3 is CSS rendering."]
+      },
+      {
+        text: "What is a 'Data Processing Agreement' (DPA) with SaaS vendors?",
+        options: [
+          "A legal contract regulating how third-party vendors process, store, and protect customer personal data",
+          "A software license key",
+          "A hardware warranty",
+          "A marketing brochure"
+        ],
+        correct: 0,
+        hint: "Legally binding agreement governing vendor data handling.",
+        whyCorrect: "DPAs mandate that third-party vendors comply with privacy regulations when handling corporate customer PII.",
+        whyWrong: ["Option 1 is license entitlement.", "Option 2 is physical warranty.", "Option 3 is promotional copy."]
+      },
+      {
+        text: "What is the primary benefit of shifting security left in the product roadmap?",
+        options: [
+          "Lower remediation costs, faster secure releases, and built-in customer trust",
+          "Adding extra sprint meetings",
+          "Increasing code complexity",
+          "Disabling QA testing"
+        ],
+        correct: 0,
+        hint: "Catching security flaws early saves time and money.",
+        whyCorrect: "Shifting security left addresses vulnerabilities early, building resilient products while saving engineering effort.",
+        whyWrong: ["Option 1 is meeting overhead.", "Option 2 is technical bloat.", "Option 3 removes quality control."]
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      activeQuizEngine = new QuizEngine('product', productQuestions);
+    });
+  </script>
+</body>
+</html>
