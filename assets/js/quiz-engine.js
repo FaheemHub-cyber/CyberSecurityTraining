@@ -1,27 +1,19 @@
-/**
- * SecureHub Interactive Quiz Engine & Training Portal JS
- * Updated to support:
- * 1. 80% score threshold for certificate download.
- * 2. Hints toggleable per question.
- * 3. Detailed post-submit feedback (Why correct answer is right & Why wrong options are incorrect).
- */
+// assets/js/quiz-engine.js
 
 class QuizEngine {
-  constructor(departmentId, questionsData) {
+  constructor(departmentId, questions) {
     this.departmentId = departmentId;
-    this.questions = questionsData;
-    this.userAnswers = new Array(this.questions.length).fill(null);
+    this.questions = questions;
+    this.userAnswers = new Array(questions.length).fill(null);
     this.submitted = false;
     this.score = 0;
 
-    this.initDOM();
-    this.loadSavedProgress();
-  }
+    // Theory locking state
+    this.readTheoryTopics = new Set();
+    this.requiredTheoryCount = 5;
 
-  initDOM() {
+    // DOM Elements
     this.container = document.getElementById('questionsContainer');
-    this.submitBtn = document.getElementById('submitBtn');
-    this.resetBtn = document.getElementById('resetBtn');
     this.answeredCountEl = document.getElementById('answeredCount');
     this.quizProgressFill = document.getElementById('quizProgressFill');
     this.resultsSection = document.getElementById('results');
@@ -31,19 +23,49 @@ class QuizEngine {
     this.unansweredCountEl = document.getElementById('unansweredCount');
     this.certBtn = document.getElementById('downloadCertBtn');
     this.certLockMsg = document.getElementById('certLockMsg');
+    this.quizOverlay = document.getElementById('quizOverlay');
 
-    if (this.submitBtn) {
-      this.submitBtn.addEventListener('click', () => this.submit());
-    }
-    if (this.resetBtn) {
-      this.resetBtn.addEventListener('click', () => this.reset());
-    }
-    if (this.certBtn) {
-      this.certBtn.addEventListener('click', () => this.generateCertificate());
-    }
+    this.init();
+  }
 
+  init() {
     this.renderQuestions();
     this.updateProgress();
+    this.checkTheoryLock();
+
+    // Attach button listeners
+    const submitBtn = document.getElementById('submitBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    if (submitBtn) submitBtn.addEventListener('click', () => this.submit());
+    if (resetBtn) resetBtn.addEventListener('click', () => this.reset());
+    if (this.certBtn) this.certBtn.addEventListener('click', () => this.generateCertificate());
+  }
+
+  checkTheoryLock() {
+    if (!this.quizOverlay) return;
+    if (this.readTheoryTopics.size >= this.requiredTheoryCount) {
+      this.quizOverlay.style.display = 'none';
+    } else {
+      this.quizOverlay.style.display = 'flex';
+      this.quizOverlay.innerHTML = `
+        <div style="text-align: center; background: rgba(255,255,255,0.95); padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 450px;">
+          <i class="fas fa-lock" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+          <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem;">Theory Topics Locked</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem;">Please read and mark all <strong>5 Theory Topics</strong> as completed above before taking the test.</p>
+          <div style="font-weight: 700; color: var(--accent); font-size: 1.1rem;">
+            Completed: <span id="theoryReadCount">${this.readTheoryTopics.size}</span> / 5 Topics
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  markTopicRead(topicIdx) {
+    this.readTheoryTopics.add(topicIdx);
+    const countSpan = document.getElementById('theoryReadCount');
+    if (countSpan) countSpan.textContent = this.readTheoryTopics.size;
+    this.checkTheoryLock();
   }
 
   renderQuestions() {
@@ -52,71 +74,52 @@ class QuizEngine {
 
     this.questions.forEach((q, idx) => {
       const qDiv = document.createElement('div');
-      qDiv.className = 'question-item';
-      qDiv.id = `q-item-${idx}`;
+      qDiv.className = 'question-card';
+      qDiv.id = `q-card-${idx}`;
 
-      // Question header with text and Hint button
-      const qHeader = document.createElement('div');
-      qHeader.style.display = 'flex';
-      qHeader.style.justifySpaceBetween = 'space-between';
-      qHeader.style.alignItems = 'flex-start';
-      qHeader.style.gap = '1rem';
-      qHeader.style.marginBottom = '0.75rem';
+      const qText = document.createElement('div');
+      qText.className = 'question-text';
+      qText.innerHTML = `<span style="color: var(--accent); font-weight: 800;">Q${idx + 1}.</span> ${q.text}`;
+      qDiv.appendChild(qText);
 
-      const text = document.createElement('div');
-      text.className = 'question-text';
-      text.style.marginBottom = '0';
-      text.innerHTML = `<strong>Q${idx + 1}.</strong> ${q.text}`;
-      qHeader.appendChild(text);
-
+      // Add Hint Toggle if available
       if (q.hint) {
         const hintBtn = document.createElement('button');
-        hintBtn.className = 'btn-solution';
-        hintBtn.style.marginTop = '0';
-        hintBtn.style.whiteSpace = 'nowrap';
-        hintBtn.style.fontSize = '0.8rem';
-        hintBtn.style.padding = '0.25rem 0.6rem';
-        hintBtn.innerHTML = `<i class="fas fa-lightbulb"></i> Hint`;
+        hintBtn.className = 'btn-hint';
+        hintBtn.style.cssText = 'background: transparent; border: 1px dashed var(--accent); color: var(--accent); padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer; margin-bottom: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;';
+        hintBtn.innerHTML = `<i class="far fa-lightbulb"></i> Need a Hint?`;
+
+        const hintBox = document.createElement('div');
+        hintBox.style.cssText = 'display: none; background: #fff8e6; border: 1px solid #ff9500; color: #8a5300; padding: 0.6rem 0.8rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.8rem; font-weight: 500;';
+        hintBox.innerHTML = `<strong>💡 Hint:</strong> ${q.hint}`;
+
         hintBtn.onclick = () => {
-          const hintBox = document.getElementById(`hint-box-${idx}`);
-          if (hintBox) {
-            hintBox.style.display = hintBox.style.display === 'block' ? 'none' : 'block';
+          if (hintBox.style.display === 'none') {
+            hintBox.style.display = 'block';
+            hintBtn.innerHTML = `<i class="fas fa-lightbulb"></i> Hide Hint`;
+          } else {
+            hintBox.style.display = 'none';
+            hintBtn.innerHTML = `<i class="far fa-lightbulb"></i> Need a Hint?`;
           }
         };
-        qHeader.appendChild(hintBtn);
-      }
 
-      qDiv.appendChild(qHeader);
-
-      // Hint box element
-      if (q.hint) {
-        const hintBox = document.createElement('div');
-        hintBox.id = `hint-box-${idx}`;
-        hintBox.style.display = 'none';
-        hintBox.style.background = '#fff8e6';
-        hintBox.style.border = '1px solid #ffe58f';
-        hintBox.style.borderRadius = '8px';
-        hintBox.style.padding = '0.6rem 1rem';
-        hintBox.style.fontSize = '0.88rem';
-        hintBox.style.color = '#873800';
-        hintBox.style.marginBottom = '0.85rem';
-        hintBox.innerHTML = `<strong>💡 Hint:</strong> ${q.hint}`;
+        qDiv.appendChild(hintBtn);
         qDiv.appendChild(hintBox);
       }
 
-      // Options
       const optionsList = document.createElement('div');
       optionsList.className = 'options-list';
 
       q.options.forEach((opt, optIdx) => {
         const label = document.createElement('label');
-        label.className = 'option-label';
+        label.className = 'option-item';
         label.id = `opt-label-${idx}-${optIdx}`;
 
         const radio = document.createElement('input');
         radio.type = 'radio';
-        radio.name = `question_${idx}`;
+        radio.name = `question-${idx}`;
         radio.value = optIdx;
+
         if (this.userAnswers[idx] === optIdx) {
           radio.checked = true;
         }
@@ -169,7 +172,6 @@ class QuizEngine {
       const userAns = this.userAnswers[idx];
       const expBox = document.getElementById(`exp-box-${idx}`);
 
-      // Format why-correct and why-wrong explanations
       let explanationHTML = '';
       if (q.whyCorrect) {
         explanationHTML += `<div style="margin-top: 0.5rem;"><strong>✅ Why Correct:</strong> ${q.whyCorrect}</div>`;
@@ -227,6 +229,46 @@ class QuizEngine {
       if (this.wrongCountEl) this.wrongCountEl.textContent = wrongCount;
       if (this.unansweredCountEl) this.unansweredCountEl.textContent = unansweredCount;
 
+      // Render Animated Mascot (Animated Goat vs Broken Boat)
+      const mascotBox = document.getElementById('mascotDisplay');
+      if (mascotBox) {
+        if (this.score >= 80) {
+          mascotBox.className = 'mascot-container success';
+          mascotBox.innerHTML = `
+            <svg class="mascot-svg" viewBox="0 0 100 100">
+              <!-- Animated Goat Mascot SVG -->
+              <circle cx="50" cy="50" r="45" fill="#eafbe8" stroke="#34c759" stroke-width="4"/>
+              <path d="M 30 35 L 20 15 L 35 25 Z" fill="#8d6e63"/>
+              <path d="M 70 35 L 80 15 L 65 25 Z" fill="#8d6e63"/>
+              <circle cx="50" cy="50" r="25" fill="#d7ccc8"/>
+              <circle cx="42" cy="45" r="4" fill="#1d1d1f"/>
+              <circle cx="58" cy="45" r="4" fill="#1d1d1f"/>
+              <ellipse cx="50" cy="56" rx="6" ry="4" fill="#5d4037"/>
+              <path d="M 45 65 Q 50 72 55 65" fill="none" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+              <polygon points="45,72 55,72 50,82" fill="#fff" stroke="#8d6e63" stroke-width="2"/>
+            </svg>
+            <div class="mascot-title">Great Job! 🐐</div>
+            <div class="mascot-desc">You passed with ${this.score}%! You are a Security Champion!</div>
+          `;
+        } else {
+          mascotBox.className = 'mascot-container failure';
+          mascotBox.innerHTML = `
+            <svg class="mascot-svg" viewBox="0 0 100 100">
+              <!-- Broken Sinking Boat Mascot SVG -->
+              <path d="M 15 60 L 45 60 L 48 78 L 22 78 Z" fill="#8d6e63" transform="rotate(15 30 70)"/>
+              <path d="M 52 62 L 85 62 L 78 80 L 50 80 Z" fill="#5d4037" transform="rotate(-20 65 70)"/>
+              <line x1="45" y1="60" x2="40" y2="25" stroke="#3e2723" stroke-width="3"/>
+              <polygon points="40,25 20,40 40,42" fill="#ff3b30" opacity="0.8"/>
+              <!-- Water Waves & Water Splashes -->
+              <path d="M 5 70 Q 25 60 45 70 T 85 70 T 95 70" fill="none" stroke="#0071e3" stroke-width="4"/>
+              <text x="32" y="48" font-size="16" fill="#ff3b30" font-weight="bold">💥</text>
+            </svg>
+            <div class="mascot-title">You Failed, Please Retry ⛵💥</div>
+            <div class="mascot-desc">Score: ${this.score}% (Requires 80%+ to Pass). Review the explanations above and retry!</div>
+          `;
+        }
+      }
+
       // Handle 80% Score Threshold for Certificate Download
       if (this.score >= 80) {
         if (this.certBtn) {
@@ -277,14 +319,6 @@ class QuizEngine {
       date: new Date().toISOString().split('T')[0]
     };
     localStorage.setItem('securehub_progress', JSON.stringify(data));
-  }
-
-  loadSavedProgress() {
-    const data = JSON.parse(localStorage.getItem('securehub_progress') || '{}');
-    if (data[this.departmentId]) {
-      const record = data[this.departmentId];
-      // Optional pre-fill
-    }
   }
 
   updateGlobalHeaderProgress() {
@@ -352,6 +386,20 @@ class QuizEngine {
       </html>
     `);
     certWindow.document.close();
+  }
+}
+
+let activeQuizEngine = null;
+
+function markTheoryRead(btn, idx) {
+  btn.style.background = 'var(--success)';
+  btn.style.color = '#ffffff';
+  btn.style.borderColor = 'var(--success)';
+  btn.innerHTML = '<i class="fas fa-check-circle"></i> Topic Completed!';
+  btn.disabled = true;
+
+  if (activeQuizEngine) {
+    activeQuizEngine.markTopicRead(idx);
   }
 }
 
