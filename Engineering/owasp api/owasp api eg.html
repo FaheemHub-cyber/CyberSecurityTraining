@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWASP API Security Top 10 2023 · Global Heritage Theme</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e6f0fa;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            color: #1a2a3a;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(135, 206, 235, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(100, 149, 237, 0.12) 0%, transparent 50%);
+        }
+
+        .app-wrapper {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 1.8rem 2rem 2rem 2rem;
+            box-shadow: 0 25px 60px rgba(70, 130, 180, 0.25), 
+                        0 8px 20px rgba(0, 20, 40, 0.06);
+            border: 1px solid rgba(135, 206, 235, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* header with cultural pattern accents */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(70, 130, 180, 0.2);
+            position: relative;
+        }
+
+        .app-header::after {
+            content: "✦ ✦ ✦";
+            position: absolute;
+            bottom: -8px;
+            right: 20px;
+            font-size: 0.7rem;
+            color: rgba(70, 130, 180, 0.25);
+            letter-spacing: 8px;
+        }
+
+        .app-header h1 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #0a2a44;
+        }
+
+        .app-header h1 i {
+            color: #1e6fa0;
+            background: rgba(135, 206, 235, 0.3);
+            padding: 8px 12px;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            border: 1px solid rgba(70, 130, 180, 0.2);
+        }
+
+        .app-header .badge {
+            background: rgba(135, 206, 235, 0.25);
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            color: #1a4a6a;
+            border: 1px solid rgba(70, 130, 180, 0.2);
+            font-weight: 500;
+        }
+
+        /* TABS - sky blue theme with cultural touches */
+        .tabs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.8rem;
+            background: rgba(240, 248, 255, 0.6);
+            padding: 0.6rem 0.9rem;
+            border-radius: 60px;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            backdrop-filter: blur(4px);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.78rem;
+            color: #2a4a6a;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+
+        .tab-btn i {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            color: #3a7aaa;
+        }
+
+        .tab-btn:hover {
+            background: rgba(135, 206, 235, 0.3);
+            color: #0a2a44;
+            transform: translateY(-1px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #6bb3e0, #4a90c4);
+            color: white;
+            box-shadow: 0 4px 15px rgba(70, 130, 180, 0.3);
+        }
+
+        .tab-btn.active i {
+            color: white;
+            opacity: 1;
+        }
+
+        .tab-btn .full-name {
+            font-weight: 400;
+            font-size: 0.65rem;
+            color: #4a7a9a;
+            margin-left: 2px;
+        }
+
+        .tab-btn.active .full-name {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* PANEL - cultural card design */
+        .panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 32px;
+            padding: 1.8rem 2rem 2rem 2rem;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            min-height: 400px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .attack-example-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.9fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 780px) {
+            .attack-example-grid {
+                grid-template-columns: 1fr;
+            }
+            .app-wrapper {
+                padding: 1rem;
+                border-radius: 32px;
+            }
+            .panel {
+                padding: 1.2rem;
+            }
+            .tab-btn {
+                font-size: 0.65rem;
+                padding: 0.4rem 0.8rem;
+            }
+            .tab-btn .full-name {
+                display: none;
+            }
+            .app-header::after {
+                display: none;
+            }
+        }
+
+        /* Example visual - cultural card */
+        .example-visual {
+            background: rgba(240, 248, 255, 0.5);
+            border-radius: 24px;
+            padding: 1.3rem;
+            border: 1px solid rgba(135, 206, 235, 0.25);
+            box-shadow: 0 4px 20px rgba(70, 130, 180, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .example-visual::before {
+            content: "☯ ✿ ☸";
+            position: absolute;
+            top: -8px;
+            right: 12px;
+            font-size: 0.6rem;
+            color: rgba(70, 130, 180, 0.12);
+            letter-spacing: 6px;
+            opacity: 0.6;
+        }
+
+        .example-visual .preview-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #3a7aaa;
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        /* API flow - sky blue code style */
+        .api-flow {
+            background: #f0f8fe;
+            border-radius: 18px;
+            padding: 0.9rem;
+            border: 1px solid rgba(135, 206, 235, 0.2);
+            font-size: 0.8rem;
+            line-height: 1.7;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        .api-flow .line {
+            padding: 0.2rem 0;
+            border-bottom: 1px solid rgba(135, 206, 235, 0.1);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+
+        .api-flow .line:last-child {
+            border-bottom: none;
+        }
+
+        .api-flow .method {
+            color: #1a7a5a;
+            font-weight: 600;
+            min-width: 50px;
+        }
+
+        .api-flow .path {
+            color: #2a5a8a;
+        }
+
+        .api-flow .response {
+            color: #3a6a7a;
+        }
+
+        .api-flow .highlight-danger {
+            background: rgba(200, 60, 60, 0.12);
+            color: #b53a3a;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .api-flow .highlight-inject {
+            background: rgba(70, 130, 180, 0.1);
+            color: #1a5a8a;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+
+        .attack-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #4a8ab5, #3a7aaa);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 0.15rem 0.8rem;
+            border-radius: 40px;
+            margin-top: 0.4rem;
+            box-shadow: 0 2px 8px rgba(70, 130, 180, 0.2);
+        }
+
+        /* Explanation box - cultural card */
+        .explanation-box {
+            background: rgba(240, 248, 255, 0.5);
+            border-radius: 24px;
+            padding: 1.3rem 1.3rem 1.5rem 1.3rem;
+            border: 1px solid rgba(135, 206, 235, 0.2);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            box-shadow: 0 4px 16px rgba(70, 130, 180, 0.04);
+            position: relative;
+        }
+
+        .explanation-box::after {
+            content: "❦";
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            font-size: 1.2rem;
+            color: rgba(70, 130, 180, 0.08);
+        }
+
+        .explanation-box h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0a2a44;
+        }
+
+        .explanation-box h3 i {
+            color: #3a8aba;
+        }
+
+        .explanation-box p {
+            color: #1a3a5a;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .popup-trigger {
+            background: linear-gradient(135deg, #6bb3e0, #4a90c4);
+            border: none;
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            width: fit-content;
+            box-shadow: 0 4px 15px rgba(70, 130, 180, 0.25);
+            font-family: inherit;
+        }
+
+        .popup-trigger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(70, 130, 180, 0.35);
+        }
+
+        .popup-trigger i {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* POPUP - cultural sky theme */
+        .popup-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(10, 30, 50, 0.5);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1.5rem;
+        }
+
+        .popup-overlay.open {
+            display: flex;
+        }
+
+        .popup-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            max-width: 600px;
+            width: 100%;
+            border-radius: 40px;
+            padding: 2rem 2rem 1.8rem 2rem;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            box-shadow: 0 30px 80px rgba(70, 130, 180, 0.2);
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(12px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .popup-card .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(135, 206, 235, 0.15);
+            padding-bottom: 0.8rem;
+        }
+
+        .popup-card .popup-header h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0a2a44;
+        }
+
+        .popup-card .popup-header h2 i {
+            color: #3a8aba;
+            margin-right: 10px;
+        }
+
+        .popup-card .close-btn {
+            background: rgba(135, 206, 235, 0.15);
+            border: none;
+            color: #3a6a8a;
+            width: 36px;
+            height: 36px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-card .close-btn:hover {
+            background: rgba(200, 60, 60, 0.12);
+            color: #b53a3a;
+        }
+
+        .popup-card .popup-body {
+            color: #1a3a5a;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .popup-card .popup-body strong {
+            color: #0a2a44;
+        }
+
+        .popup-card .popup-body ul {
+            margin: 0.8rem 0 0.5rem 1.2rem;
+        }
+
+        .popup-card .popup-body ul li {
+            margin-bottom: 0.3rem;
+            color: #1a4a6a;
+        }
+
+        .popup-card .popup-footer {
+            margin-top: 1.2rem;
+            border-top: 1px solid rgba(135, 206, 235, 0.15);
+            padding-top: 1rem;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .popup-tag {
+            background: rgba(135, 206, 235, 0.15);
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            color: #1a4a6a;
+            font-weight: 500;
+        }
+
+        .popup-tag.mitigation {
+            background: rgba(70, 180, 140, 0.15);
+            color: #1a6a5a;
+        }
+
+        .text-muted {
+            color: #5a7a8a;
+            font-size: 0.7rem;
+        }
+
+        /* cultural decorative elements */
+        .cultural-ornament {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            color: rgba(70, 130, 180, 0.15);
+            font-size: 0.6rem;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .app-header h1 {
+                font-size: 1.2rem;
+            }
+            .popup-card {
+                padding: 1.5rem;
+                border-radius: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <!-- header with cultural motif -->
+    <div class="app-header">
+        <h1>
+            <i class="fas fa-globe-asia"></i>
+            OWASP API Security Top 10
+            <span style="font-weight:400; font-size:0.9rem; color:#3a7aaa;">· 2023</span>
+        </h1>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="badge"><i class="fas fa-code"></i> attack examples</span>
+            <span class="cultural-ornament">✧ ✿ ✧</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-container" id="tabContainer"></div>
+
+    <!-- Main panel -->
+    <div class="panel" id="mainPanel"></div>
+
+    <!-- POPUP -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-card">
+            <div class="popup-header">
+                <h2 id="popupTitle"><i class="fas fa-info-circle"></i> Attack explained</h2>
+                <button class="close-btn" id="closePopupBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="popup-body" id="popupBody"></div>
+            <div class="popup-footer" id="popupFooter"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---- API SECURITY TOP 10 2023 DATA ----
+        const risks = [
+            {
+                id: 'API1',
+                fullName: 'Broken Object Level Authorization',
+                icon: 'fa-key',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/users/1234' },
+                        { type: 'request', text: 'Authorization: Bearer token_user_5678' },
+                        { type: 'response', text: '200 OK — { "id": 1234, "name": "John Doe", "ssn": "***-12-3456" }' },
+                        { type: 'attack', text: 'Attacker changes ID: GET /api/users/5678' },
+                        { type: 'response', text: '<span class="highlight-danger">200 OK — returns another user\'s PII</span> (no object-level check)' }
+                    ],
+                    tag: 'IDOR · horizontal privilege escalation'
+                },
+                explanation: 'APIs often expose object identifiers in endpoints. Without proper authorization checks, an attacker can access or modify objects they don\'t own by simply changing the ID. This is the most common API vulnerability.',
+                popup: {
+                    title: 'API1: Broken Object Level Authorization',
+                    body: `<p><strong>How it works:</strong> The API trusts the client to provide the correct object ID, but fails to verify that the authenticated user actually owns or has permission to access that object.</p>
+                           <ul>
+                               <li><strong>Impact:</strong> Data breach, unauthorized modification, account takeover.</li>
+                               <li><strong>Example:</strong> Changing user ID in URL from 1234 to 5678 to see another user's data.</li>
+                               <li><strong>Root cause:</strong> Authorization checks missing or incomplete.</li>
+                           </ul>
+                           <p><strong>Mitigation:</strong> Implement proper object-level authorization in every function that accesses a data source using an ID from the user. Use random UUIDs instead of sequential IDs.</p>`,
+                    tags: ['CWE-285', 'OWASP API1', 'IDOR', 'mitigation: server-side auth']
+                }
+            },
+            {
+                id: 'API2',
+                fullName: 'Broken Authentication',
+                icon: 'fa-lock',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'POST /api/auth/login' },
+                        { type: 'request', text: 'Body: { "username": "admin", "password": "admin123" }' },
+                        { type: 'response', text: '200 OK — { "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }' },
+                        { type: 'attack', text: 'Attacker reuses expired token or brute-forces weak passwords' },
+                        { type: 'response', text: '<span class="highlight-danger">[COMPROMISED]</span> Access to admin endpoints with stolen token' }
+                    ],
+                    tag: 'Token theft · weak credentials'
+                },
+                explanation: 'Authentication mechanisms are often implemented incorrectly, allowing attackers to compromise tokens or exploit flaws to assume other users\' identities. This compromises API security overall.',
+                popup: {
+                    title: 'API2: Broken Authentication',
+                    body: `<p><strong>Common issues:</strong> Weak passwords, token leakage, missing expiration, improper JWT validation, lack of MFA.</p>
+                           <ul>
+                               <li><strong>Token theft:</strong> Tokens leaked in logs or URLs.</li>
+                               <li><strong>Brute force:</strong> No rate limiting on login endpoints.</li>
+                               <li><strong>JWT issues:</strong> None or weak signing algorithms.</li>
+                           </ul>
+                           <p><strong>Mitigation:</strong> Enforce strong password policies, implement MFA, use short-lived tokens, secure token storage, rate-limit authentication endpoints.</p>`,
+                    tags: ['CWE-287', 'OWASP API2', 'JWT', 'mitigation: MFA']
+                }
+            },
+            {
+                id: 'API3',
+                fullName: 'Broken Object Property Level Authorization',
+                icon: 'fa-edit',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'PUT /api/users/1234' },
+                        { type: 'request', text: 'Body: { "name": "John", "email": "john@co.com", "role": "admin" }' },
+                        { type: 'response', text: '200 OK — user updated' },
+                        { type: 'attack', text: 'Attacker adds "role": "admin" to their own update request' },
+                        { type: 'response', text: '<span class="highlight-danger">[PRIVILEGE ESCALATION]</span> Role changed to admin via mass assignment' }
+                    ],
+                    tag: 'Mass assignment · property injection'
+                },
+                explanation: 'This combines excessive data exposure and mass assignment. APIs may expose or accept too many object properties, allowing attackers to view or modify sensitive fields they shouldn\'t have access to.',
+                popup: {
+                    title: 'API3: Broken Object Property Level Authorization',
+                    body: `<p><strong>Two sides:</strong></p>
+                           <ul>
+                               <li><strong>Excessive data exposure:</strong> API returns more fields than needed (e.g., includes internal flags).</li>
+                               <li><strong>Mass assignment:</strong> API accepts fields that shouldn't be writeable (e.g., "role", "is_admin").</li>
+                           </ul>
+                           <p><strong>Prevention:</strong> Explicitly define allowed fields for each request/response. Use view models or DTOs. Validate and sanitize all input properties.</p>`,
+                    tags: ['CWE-915', 'OWASP API3', 'mass assignment', 'mitigation: DTO']
+                }
+            },
+            {
+                id: 'API4',
+                fullName: 'Unrestricted Resource Consumption',
+                icon: 'fa-fire',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'POST /api/search' },
+                        { type: 'request', text: 'Body: { "query": "a".repeat(1000000), "limit": 999999 }' },
+                        { type: 'response', text: '<span class="highlight-danger">503 Service Unavailable — CPU/memory exhausted</span>' },
+                        { type: 'attack', text: 'Attacker floods with expensive queries, causing Denial of Service' },
+                        { type: 'response', text: '<span class="highlight-inject">[COST SPIKE]</span> Cloud bill increases dramatically (Denial of Wallet)' }
+                    ],
+                    tag: 'DoW · resource exhaustion'
+                },
+                explanation: 'API requests consume resources like CPU, memory, bandwidth, and external services. Without limits, attackers can exhaust resources, causing denial of service or financial loss.',
+                popup: {
+                    title: 'API4: Unrestricted Resource Consumption',
+                    body: `<p><strong>Attack vectors:</strong> Large payloads, complex queries, unbounded pagination, expensive operations, excessive file uploads.</p>
+                           <ul>
+                               <li><strong>Denial of Service:</strong> Service becomes unavailable.</li>
+                               <li><strong>Denial of Wallet:</strong> Cloud costs spike due to auto-scaling or paid APIs.</li>
+                               <li><strong>Rate limiting bypass:</strong> Distributed attacks.</li>
+                           </ul>
+                           <p><strong>Mitigations:</strong> Rate limiting, request size limits, timeouts, pagination, cost monitoring, circuit breakers.</p>`,
+                    tags: ['CWE-400', 'OWASP API4', 'DoS', 'mitigation: rate limiting']
+                }
+            },
+            {
+                id: 'API5',
+                fullName: 'Broken Function Level Authorization',
+                icon: 'fa-user-lock',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/admin/users' },
+                        { type: 'request', text: 'Authorization: Bearer token_user_1234' },
+                        { type: 'response', text: '<span class="highlight-danger">200 OK — returns admin panel despite user not being admin</span>' },
+                        { type: 'attack', text: 'Attacker discovers hidden admin endpoints via fuzzing' },
+                        { type: 'response', text: 'Access to /api/admin/delete, /api/admin/config' }
+                    ],
+                    tag: 'Vertical privilege escalation'
+                },
+                explanation: 'Complex access control policies with different hierarchies can lead to authorization flaws. Attackers can access administrative functions or other users\' resources by exploiting missing or misconfigured role checks.',
+                popup: {
+                    title: 'API5: Broken Function Level Authorization',
+                    body: `<p><strong>Common issues:</strong> Admin endpoints not properly protected, role checks missing in controller, default permissions too permissive.</p>
+                           <ul>
+                               <li><strong>Exploitation:</strong> Direct navigation to admin endpoints, fuzzing for hidden functions.</li>
+                               <li><strong>Impact:</strong> Full system compromise, data deletion, user management.</li>
+                           </ul>
+                           <p><strong>Prevention:</strong> Implement role-based access control (RBAC) at every endpoint. Use a centralized authorization middleware. Regularly audit permissions.</p>`,
+                    tags: ['CWE-285', 'OWASP API5', 'RBAC', 'mitigation: authorization middleware']
+                }
+            },
+            {
+                id: 'API6',
+                fullName: 'Unrestricted Access to Sensitive Business Flows',
+                icon: 'fa-bolt',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'POST /api/tickets/buy' },
+                        { type: 'request', text: 'Body: { "eventId": 123, "quantity": 1 }' },
+                        { type: 'response', text: '200 OK — ticket purchased' },
+                        { type: 'attack', text: 'Attacker scripts 1000 requests to buy tickets for a popular event' },
+                        { type: 'response', text: '<span class="highlight-danger">[BUSINESS IMPACT]</span> All tickets bought by bots, legitimate users locked out' }
+                    ],
+                    tag: 'Business logic abuse · scalping'
+                },
+                explanation: 'APIs expose business flows that, if used excessively or in an automated manner, can harm the business—even without implementation bugs. This includes ticket scalping, spam, inventory hoarding, and financial fraud.',
+                popup: {
+                    title: 'API6: Unrestricted Access to Sensitive Business Flows',
+                    body: `<p><strong>Examples:</strong> Ticket buying, commenting, voting, coupon redemption, inventory reservations, financial transactions.</p>
+                           <ul>
+                               <li><strong>Scalping:</strong> Bots buy all tickets for resale.</li>
+                               <li><strong>Spam:</strong> Automated comments, reviews, or messages.</li>
+                               <li><strong>Gaming:</strong> Exploiting promotional offers or loyalty points.</li>
+                           </ul>
+                           <p><strong>Mitigations:</strong> Rate limiting per user/session, CAPTCHA, device fingerprinting, behavioral analysis, business logic validation, human-in-the-loop for sensitive flows.</p>`,
+                    tags: ['CWE-770', 'OWASP API6', 'business logic', 'mitigation: CAPTCHA']
+                }
+            },
+            {
+                id: 'API7',
+                fullName: 'Server Side Request Forgery',
+                icon: 'fa-globe',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'POST /api/fetch' },
+                        { type: 'request', text: 'Body: { "url": "https://api.example.com/data" }' },
+                        { type: 'response', text: '200 OK — returns external data' },
+                        { type: 'attack', text: 'Attacker changes URL to: http://169.254.169.254/latest/meta-data/' },
+                        { type: 'response', text: '<span class="highlight-danger">[SSRF]</span> AWS metadata exposed — IAM credentials leaked' }
+                    ],
+                    tag: 'Internal network scan · cloud metadata'
+                },
+                explanation: 'SSRF occurs when an API fetches a remote resource without validating the user-supplied URL. Attackers can force the server to make requests to internal systems, cloud metadata endpoints, or other restricted resources.',
+                popup: {
+                    title: 'API7: Server Side Request Forgery',
+                    body: `<p><strong>Attack targets:</strong></p>
+                           <ul>
+                               <li><strong>Internal services:</strong> Access internal APIs, databases, or admin panels.</li>
+                               <li><strong>Cloud metadata:</strong> Steal IAM credentials from AWS, GCP, Azure.</li>
+                               <li><strong>Local files:</strong> Use file:// protocol to read server files.</li>
+                               <li><strong>Port scanning:</strong> Map internal network topology.</li>
+                           </ul>
+                           <p><strong>Defense:</strong> Validate and whitelist allowed URLs, block private IP ranges, use URL allowlists, disable unnecessary protocols (file://, gopher://).</p>`,
+                    tags: ['CWE-918', 'OWASP API7', 'SSRF', 'mitigation: URL whitelist']
+                }
+            },
+            {
+                id: 'API8',
+                fullName: 'Security Misconfiguration',
+                icon: 'fa-cog',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/debug/env' },
+                        { type: 'response', text: '200 OK — <span class="highlight-danger">DEBUG MODE ENABLED</span>: DATABASE_URL, SECRET_KEY exposed' },
+                        { type: 'attack', text: 'Attacker finds exposed Swagger UI, debug endpoints, or default credentials' },
+                        { type: 'response', text: '<span class="highlight-inject">[CONFIG LEAK]</span> Full infrastructure details exposed' }
+                    ],
+                    tag: 'Debug endpoints · default configs'
+                },
+                explanation: 'APIs and supporting systems contain complex configurations. Missing security hardening, default settings, exposed debug endpoints, and misconfigured CORS can all be exploited.',
+                popup: {
+                    title: 'API8: Security Misconfiguration',
+                    body: `<p><strong>Common misconfigurations:</strong></p>
+                           <ul>
+                               <li><strong>Debug endpoints:</strong> /api/debug, /api/swagger, /api/docs exposed in production.</li>
+                               <li><strong>Default credentials:</strong> Admin:admin, root:root.</li>
+                               <li><strong>CORS:</strong> Wildcard (*) origins, exposing APIs to any site.</li>
+                               <li><strong>Error messages:</strong> Stack traces returned to clients.</li>
+                               <li><strong>HTTP headers:</strong> Missing security headers (HSTS, CSP).</li>
+                           </ul>
+                           <p><strong>Mitigation:</strong> Harden production configurations, disable debug, regular security audits, automated configuration scanning.</p>`,
+                    tags: ['CWE-16', 'OWASP API8', 'CORS', 'mitigation: configuration hardening']
+                }
+            },
+            {
+                id: 'API9',
+                fullName: 'Improper Inventory Management',
+                icon: 'fa-list',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/v1/users' },
+                        { type: 'response', text: '200 OK — modern endpoint' },
+                        { type: 'attack', text: 'Attacker discovers /api/v1/users (deprecated) still active' },
+                        { type: 'response', text: '<span class="highlight-danger">[DEPRECATED VERSION]</span> /api/v1/users returns sensitive fields (ssn, credit_card) — newer version redacts them' }
+                    ],
+                    tag: 'Deprecated APIs · shadow endpoints'
+                },
+                explanation: 'APIs expose many endpoints, making proper documentation and inventory critical. Deprecated versions, unpatched hosts, and exposed debug endpoints increase attack surface.',
+                popup: {
+                    title: 'API9: Improper Inventory Management',
+                    body: `<p><strong>Key issues:</strong></p>
+                           <ul>
+                               <li><strong>Deprecated APIs:</strong> Old versions still running with known vulnerabilities.</li>
+                               <li><strong>Shadow APIs:</strong> Undocumented endpoints from development.</li>
+                               <li><strong>Unpatched hosts:</strong> Servers with outdated software.</li>
+                               <li><strong>Missing documentation:</strong> Security teams don't know what needs protection.</li>
+                           </ul>
+                           <p><strong>Defense:</strong> Maintain up-to-date API inventory, versioning strategy, sunset old versions, regular endpoint discovery scans, enforce documentation.</p>`,
+                    tags: ['CWE-1050', 'OWASP API9', 'shadow API', 'mitigation: inventory']
+                }
+            },
+            {
+                id: 'API10',
+                fullName: 'Unsafe Consumption of APIs',
+                icon: 'fa-arrow-right',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/thirdparty/user-data' },
+                        { type: 'request', text: 'Trusting third-party response without validation' },
+                        { type: 'response', text: '<span class="highlight-danger">[MALICIOUS]</span> Third-party API returns injected SQL payload' },
+                        { type: 'attack', text: 'Attacker compromises third-party service, then attacks the main API via trusted integration' },
+                        { type: 'response', text: '<span class="highlight-inject">[CHAINED ATTACK]</span> SQL injection executed in main DB via consumed data' }
+                    ],
+                    tag: 'Third-party compromise · blind trust'
+                },
+                explanation: 'Developers often trust data from third-party APIs more than user input, adopting weaker security standards. Attackers can compromise the target API by going after integrated third-party services.',
+                popup: {
+                    title: 'API10: Unsafe Consumption of APIs',
+                    body: `<p><strong>Risk:</strong> APIs trust data received from external services, which can be malicious or compromised.</p>
+                           <ul>
+                               <li><strong>Injection:</strong> Third-party data contains SQL/NoSQL or command injection.</li>
+                               <li><strong>Data poisoning:</strong> Malicious content processed and stored.</li>
+                               <li><strong>SSRF via third-party:</strong> Third-party redirects to internal endpoints.</li>
+                               <li><strong>Supply chain:</strong> Compromised vendor delivers malicious payloads.</li>
+                           </ul>
+                           <p><strong>Mitigations:</strong> Validate and sanitize all third-party data, treat it as untrusted input, use allowlists, monitor third-party behaviors, have incident response for vendor compromise.</p>`,
+                    tags: ['CWE-345', 'OWASP API10', 'supply chain', 'mitigation: validate external data']
+                }
+            }
+        ];
+
+        // ---- DOM refs ----
+        const tabContainer = document.getElementById('tabContainer');
+        const mainPanel = document.getElementById('mainPanel');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupTitle = document.getElementById('popupTitle');
+        const popupBody = document.getElementById('popupBody');
+        const popupFooter = document.getElementById('popupFooter');
+        const closePopupBtn = document.getElementById('closePopupBtn');
+
+        let activeIndex = 0;
+
+        // ---- render tabs ----
+        function renderTabs() {
+            tabContainer.innerHTML = '';
+            risks.forEach((risk, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn ${idx === activeIndex ? 'active' : ''}`;
+                btn.setAttribute('data-index', idx);
+                btn.innerHTML = `<i class="fas ${risk.icon}"></i> ${risk.id} <span class="full-name">${risk.fullName}</span>`;
+                btn.addEventListener('click', () => {
+                    activeIndex = idx;
+                    renderTabs();
+                    renderPanel(idx);
+                });
+                tabContainer.appendChild(btn);
+            });
+        }
+
+        // ---- render panel ----
+        function renderPanel(index) {
+            const risk = risks[index];
+            if (!risk) return;
+
+            const { id, fullName, example, explanation, popup } = risk;
+
+            let linesHtml = '';
+            example.lines.forEach(line => {
+                let className = '';
+                if (line.type === 'request') className = 'method';
+                else if (line.type === 'response') className = 'response';
+                else if (line.type === 'attack') className = 'highlight-inject';
+                linesHtml += `
+                    <div class="line">
+                        <span class="${className}">${line.text}</span>
+                    </div>
+                `;
+            });
+
+            const panelHtml = `
+                <div class="attack-example-grid">
+                    <div>
+                        <div class="example-visual">
+                            <div class="preview-title"><i class="fas fa-code"></i> ${id} · ${fullName}</div>
+                            <div class="api-flow">
+                                ${linesHtml}
+                            </div>
+                            <div style="margin-top:0.6rem; display:flex; gap:6px; flex-wrap:wrap;">
+                                <span class="attack-tag"><i class="fas fa-skull"></i> ${example.tag}</span>
+                                <span class="attack-tag" style="background:rgba(70,180,140,0.2); color:#1a6a5a; box-shadow:none;"><i class="fas fa-shield"></i> ${id}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="explanation-box">
+                            <h3><i class="fas fa-circle-exclamation" style="color:#3a8aba;"></i> ${fullName}</h3>
+                            <p>${explanation}</p>
+                            <button class="popup-trigger" id="popupTriggerBtn"><i class="fas fa-info-circle"></i> View full explanation</button>
+                            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:0.2rem;">
+                                ${popup.tags.map(t => `<span class="popup-tag ${t.includes('mitigation') ? 'mitigation' : ''}">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            mainPanel.innerHTML = panelHtml;
+
+            const trigger = document.getElementById('popupTriggerBtn');
+            if (trigger) {
+                trigger.addEventListener('click', () => openPopup(index));
+            }
+        }
+
+        // ---- POPUP ----
+        function openPopup(index) {
+            const risk = risks[index];
+            if (!risk) return;
+            const pop = risk.popup;
+            popupTitle.innerHTML = `<i class="fas fa-info-circle"></i> ${pop.title}`;
+            popupBody.innerHTML = pop.body;
+            popupFooter.innerHTML = pop.tags.map(t =>
+                `<span class="popup-tag ${t.includes('mitigation') ? 'mitigation' : ''}">${t}</span>`
+            ).join('');
+            popupOverlay.classList.add('open');
+        }
+
+        function closePopup() {
+            popupOverlay.classList.remove('open');
+        }
+
+        closePopupBtn.addEventListener('click', closePopup);
+        popupOverlay.addEventListener('click', (e) => {
+            if (e.target === popupOverlay) closePopup();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePopup();
+        });
+
+        // ---- init ----
+        renderTabs();
+        renderPanel(activeIndex);
+    })();
+</script>
+</body>
+</html>

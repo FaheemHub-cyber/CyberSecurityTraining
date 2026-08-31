@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Security Awareness · Non-Tech Team Training + Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ─── Reset & Base ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f4fa;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: #0b1a2a;
+            padding: 1.5rem;
+        }
+
+        .app {
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        /* ─── Header ─── */
+        .header {
+            background: #0b1a2a;
+            border-radius: 28px;
+            padding: 1.6rem 2rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 8px 30px rgba(0, 20, 40, 0.2);
+        }
+        .header h1 {
+            color: #eaf2fc;
+            font-weight: 600;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header h1 i {
+            color: #6fc3ff;
+            background: #1a3348;
+            padding: 8px 12px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+        }
+        .header .badge {
+            background: #1a3348;
+            color: #b0cfe0;
+            padding: 0.3rem 1.4rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            border: 1px solid #2a4a62;
+        }
+        .header .badge i {
+            margin-right: 6px;
+            color: #6fc3ff;
+        }
+
+        /* ─── Tabs ─── */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 1rem;
+            border-radius: 60px;
+            border: 1px solid #d9e2ef;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        }
+        .tab-btn {
+            border: none;
+            background: transparent;
+            padding: 0.5rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #2a4a6a;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn i {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+        .tab-btn:hover {
+            background: #e6eefa;
+            color: #0b2a4a;
+        }
+        .tab-btn.active {
+            background: #0b1a2a;
+            color: white;
+            box-shadow: 0 4px 16px rgba(11, 26, 42, 0.2);
+        }
+        .tab-btn.active i {
+            opacity: 1;
+            color: #6fc3ff;
+        }
+
+        /* ─── Panels ─── */
+        .panel {
+            display: none;
+            animation: fadeUp 0.35s ease;
+        }
+        .panel.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── Theory / Slides ─── */
+        .theory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+        @media (max-width: 780px) {
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .theory-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.6rem 1.8rem;
+            border: 1px solid #e2eaf5;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            transition: 0.2s;
+        }
+        .theory-card:hover {
+            border-color: #b8cce0;
+            box-shadow: 0 8px 30px rgba(0, 20, 40, 0.06);
+        }
+        .theory-card .icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+        .theory-card .icon-circle.blue {
+            background: #dcecff;
+            color: #1a6baa;
+        }
+        .theory-card .icon-circle.gold {
+            background: #fff4d6;
+            color: #b8860b;
+        }
+        .theory-card .icon-circle.red {
+            background: #ffe6e6;
+            color: #b33;
+        }
+        .theory-card .icon-circle.green {
+            background: #e0f5e8;
+            color: #1a7a4a;
+        }
+        .theory-card .icon-circle.purple {
+            background: #ede0ff;
+            color: #6a3a9a;
+        }
+        .theory-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #0b1a2a;
+        }
+        .theory-card p {
+            color: #2a4a6a;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .theory-card .tag {
+            display: inline-block;
+            margin-top: 0.6rem;
+            font-size: 0.65rem;
+            background: #eef4fa;
+            padding: 0.1rem 0.9rem;
+            border-radius: 30px;
+            color: #3a5a7a;
+        }
+
+        /* Special callout */
+        .callout-box {
+            background: #0b1a2a;
+            border-radius: 24px;
+            padding: 1.8rem 2rem;
+            color: #eaf2fc;
+            margin: 1.2rem 0;
+            border-left: 6px solid #6fc3ff;
+        }
+        .callout-box h2 {
+            font-weight: 500;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .callout-box h2 i {
+            color: #6fc3ff;
+        }
+        .callout-box p {
+            margin-top: 0.4rem;
+            color: #b0cfe0;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .callout-box .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+        .callout-box .badge-list span {
+            background: #1a3348;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            border: 1px solid #2a4a62;
+        }
+
+        .scenario-box {
+            background: #f6faff;
+            border-radius: 20px;
+            padding: 1.2rem 1.6rem;
+            border: 1px solid #dce8f5;
+            margin-top: 0.8rem;
+        }
+        .scenario-box .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #3a6a8a;
+            font-weight: 600;
+        }
+        .scenario-box .content {
+            font-size: 0.9rem;
+            color: #1a3a5a;
+            margin-top: 0.2rem;
+            line-height: 1.6;
+        }
+        .scenario-box .content i {
+            color: #b8860b;
+            margin-right: 6px;
+        }
+
+        /* ─── QUIZ ─── */
+        .quiz-container {
+            background: white;
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            border: 1px solid #e2eaf5;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e8eefa;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .quiz-header h2 {
+            font-weight: 600;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quiz-header h2 i {
+            color: #1a6baa;
+        }
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            font-size: 0.85rem;
+            color: #3a5a7a;
+        }
+        .quiz-progress .bar {
+            width: 140px;
+            height: 6px;
+            background: #e2eaf5;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .quiz-progress .bar .fill {
+            height: 100%;
+            background: #1a6baa;
+            border-radius: 10px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+
+        .question-item {
+            background: #f8fbfe;
+            border-radius: 20px;
+            padding: 1.4rem 1.6rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #e8eefa;
+            transition: 0.15s;
+        }
+        .question-item:hover {
+            border-color: #c8d8ea;
+        }
+        .question-item .q-head {
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+            margin-bottom: 0.6rem;
+        }
+        .question-item .q-num {
+            font-weight: 700;
+            color: #1a6baa;
+            font-size: 0.85rem;
+            min-width: 32px;
+        }
+        .question-item .q-text {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #0b1a2a;
+        }
+        .question-item .q-tags {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.6rem;
+        }
+        .question-item .q-tags .tag {
+            font-size: 0.6rem;
+            padding: 0.05rem 0.7rem;
+            border-radius: 30px;
+            background: #e2eaf5;
+            color: #3a5a7a;
+        }
+        .question-item .q-tags .tag.hard {
+            background: #ffe6e6;
+            color: #b33;
+        }
+        .question-item .q-tags .tag.easy {
+            background: #e0f5e8;
+            color: #1a7a4a;
+        }
+        .question-item .q-tags .tag.scenario {
+            background: #fff4d6;
+            color: #b8860b;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem 1.2rem;
+            margin-top: 0.3rem;
+        }
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+        .opt-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 0.3rem 0.4rem;
+            border-radius: 8px;
+            transition: 0.1s;
+        }
+        .opt-label:hover {
+            background: #eef4fa;
+        }
+        .opt-label input[type="radio"] {
+            accent-color: #1a6baa;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.6rem;
+            border-top: 1px solid #e8eefa;
+            padding-top: 1.4rem;
+        }
+        .btn {
+            border: none;
+            background: #0b1a2a;
+            color: white;
+            padding: 0.7rem 2.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(11, 26, 42, 0.15);
+        }
+        .btn:hover {
+            background: #1a3348;
+            transform: scale(1.01);
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .btn-secondary {
+            background: #e2eaf5;
+            color: #0b1a2a;
+            box-shadow: none;
+        }
+        .btn-secondary:hover {
+            background: #d0dcec;
+        }
+        .btn-success {
+            background: #1a7a4a;
+        }
+        .btn-success:hover {
+            background: #2a8a5a;
+        }
+
+        /* ─── RESULTS ─── */
+        .results-panel {
+            display: none;
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            border: 1px solid #e2eaf5;
+            margin-top: 1.5rem;
+            animation: fadeUp 0.4s ease;
+        }
+        .results-panel.show {
+            display: block;
+        }
+        .results-panel .score-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #0b1a2a;
+            color: #6fc3ff;
+            font-size: 2.2rem;
+            font-weight: 700;
+            border: 3px solid #6fc3ff;
+        }
+        .results-panel .score-detail {
+            font-size: 0.95rem;
+            color: #2a4a6a;
+        }
+        .result-item {
+            background: #f8fbfe;
+            border-radius: 16px;
+            padding: 1rem 1.4rem;
+            margin-top: 0.8rem;
+            border-left: 5px solid #1a6baa;
+        }
+        .result-item.correct {
+            border-left-color: #1a7a4a;
+        }
+        .result-item.wrong {
+            border-left-color: #b33;
+        }
+        .result-item .r-q {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .result-item .r-answer {
+            font-size: 0.85rem;
+            color: #3a5a7a;
+            margin-top: 0.2rem;
+        }
+        .result-item .r-answer strong {
+            color: #0b1a2a;
+        }
+        .result-item .r-explanation {
+            font-size: 0.8rem;
+            color: #4a6a8a;
+            margin-top: 0.3rem;
+            background: #eef4fa;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+        }
+        .result-item .r-tag {
+            font-size: 0.6rem;
+            padding: 0.05rem 0.7rem;
+            border-radius: 30px;
+            background: #e2eaf5;
+            color: #3a5a7a;
+            display: inline-block;
+            margin-top: 0.2rem;
+        }
+
+        /* ─── Footer ─── */
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #5a7a8a;
+            border-top: 1px solid #d9e2ef;
+            padding-top: 1.2rem;
+        }
+        .footer i {
+            color: #b8860b;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 640px) {
+            body {
+                padding: 0.8rem;
+            }
+            .header {
+                padding: 1.2rem;
+            }
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            .tabs {
+                border-radius: 30px;
+                padding: 0.4rem 0.7rem;
+            }
+            .tab-btn {
+                font-size: 0.7rem;
+                padding: 0.3rem 1rem;
+            }
+            .theory-card {
+                padding: 1.2rem;
+            }
+            .quiz-container {
+                padding: 1.2rem;
+            }
+            .question-item {
+                padding: 1rem;
+            }
+            .results-panel {
+                padding: 1.2rem;
+            }
+            .callout-box {
+                padding: 1.2rem;
+            }
+            .quiz-progress .bar {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app" id="app">
+
+        <!-- ─── HEADER ─── -->
+        <header class="header">
+            <h1><i class="fas fa-shield-halved"></i> Security Awareness · Non-Tech Team</h1>
+            <div class="badge"><i class="fas fa-users"></i> Designers · PMs · Everyone</div>
+        </header>
+
+        <!-- ─── TABS ─── -->
+        <div class="tabs" id="tabContainer">
+            <button class="tab-btn active" data-tab="theory"><i class="fas fa-book-open"></i> Learn</button>
+            <button class="tab-btn" data-tab="quiz"><i class="fas fa-question-circle"></i> 20‑Question Quiz</button>
+            <button class="tab-btn" data-tab="results" id="resultsTabBtn" style="display:none;"><i class="fas fa-chart-simple"></i> Results</button>
+        </div>
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- ─── PANEL: THEORY ─── -->
+        <!-- ════════════════════════════════════════════════════ -->
+        <div class="panel active" id="panelTheory">
+
+            <!-- Callout -->
+            <div class="callout-box">
+                <h2><i class="fas fa-bullseye"></i> You don’t need to be a coder to stay safe</h2>
+                <p>
+                    Security is <strong>everyone’s</strong> job. Designers, product managers, marketers, and
+                    executives all handle sensitive data, third‑party tools, and company credentials.
+                    This guide covers the <strong>real‑world risks</strong> you face every day — and what to do about them.
+                </p>
+                <div class="badge-list">
+                    <span><i class="fas fa-figma"></i> Figma files</span>
+                    <span><i class="fas fa-apple"></i> Mac security</span>
+                    <span><i class="fas fa-puzzle-piece"></i> Third‑party apps</span>
+                    <span><i class="fas fa-envelope"></i> Phishing</span>
+                    <span><i class="fas fa-phone"></i> Vishing</span>
+                    <span><i class="fas fa-usb"></i> USB baiting</span>
+                </div>
+            </div>
+
+            <!-- Theory Grid -->
+            <div class="theory-grid">
+
+                <!-- 1 -->
+                <div class="theory-card">
+                    <div class="icon-circle blue"><i class="fas fa-user-astronaut"></i></div>
+                    <h3>Social Engineering</h3>
+                    <p>
+                        Attackers manipulate <strong>people</strong>, not code. They use urgency, fear, authority,
+                        or curiosity to make you click, share, or approve something you shouldn’t.
+                    </p>
+                    <span class="tag">#1 threat vector</span>
+                </div>
+
+                <!-- 2 -->
+                <div class="theory-card">
+                    <div class="icon-circle gold"><i class="fas fa-figma"></i></div>
+                    <h3>Figma & Design Files</h3>
+                    <p>
+                        Design files often contain <strong>brand assets, user flows, and even API mock data</strong>.
+                        Never share Figma links publicly. Use <strong>view‑only</strong> links with expiry dates.
+                    </p>
+                    <span class="tag">protect your work</span>
+                </div>
+
+                <!-- 3 -->
+                <div class="theory-card">
+                    <div class="icon-circle red"><i class="fas fa-envelope"></i></div>
+                    <h3>Phishing Emails</h3>
+                    <p>
+                        Look for <strong>urgency, bad grammar, mismatched sender addresses, and unexpected attachments</strong>.
+                        Hover over links before clicking. When in doubt, verify via a separate channel.
+                    </p>
+                    <span class="tag">90% of breaches start here</span>
+                </div>
+
+                <!-- 4 -->
+                <div class="theory-card">
+                    <div class="icon-circle green"><i class="fas fa-mobile-screen"></i></div>
+                    <h3>MFA Push Bombing</h3>
+                    <p>
+                        Attackers spam you with MFA requests until you accidentally approve one.
+                        <strong>Never approve a push you didn’t trigger.</strong> Use number‑matching or hardware keys.
+                    </p>
+                    <span class="tag">Uber 2022 breach</span>
+                </div>
+
+                <!-- 5 -->
+                <div class="theory-card">
+                    <div class="icon-circle purple"><i class="fas fa-puzzle-piece"></i></div>
+                    <h3>Third‑Party Apps (Slack, Notion, Miro…)</h3>
+                    <p>
+                        Every connected app is a potential backdoor. <strong>Audit</strong> which apps have access to your data.
+                        Remove unused apps. Use <strong>SSO</strong> where possible and enforce MFA.
+                    </p>
+                    <span class="tag">supply chain risk</span>
+                </div>
+
+                <!-- 6 -->
+                <div class="theory-card">
+                    <div class="icon-circle blue"><i class="fas fa-apple"></i></div>
+                    <h3>Mac & Device Security</h3>
+                    <p>
+                        Keep your OS and apps updated. Enable <strong>FileVault</strong> (disk encryption).
+                        Use a <strong>strong passcode</strong> and never leave your device unlocked in public.
+                    </p>
+                    <span class="tag">physical security matters</span>
+                </div>
+
+                <!-- 7 -->
+                <div class="theory-card">
+                    <div class="icon-circle gold"><i class="fas fa-phone"></i></div>
+                    <h3>Vishing (Voice Phishing)</h3>
+                    <p>
+                        Attackers call pretending to be IT, vendors, or executives.
+                        <strong>Hang up and call back</strong> using a known, verified number. Never give out MFA codes.
+                    </p>
+                    <span class="tag">MGM Resorts $100M loss</span>
+                </div>
+
+                <!-- 8 -->
+                <div class="theory-card">
+                    <div class="icon-circle red"><i class="fas fa-usb"></i></div>
+                    <h3>USB Baiting</h3>
+                    <p>
+                        Never plug in a USB drive you found. It could contain malware that
+                        <strong>compromises your machine</strong> and spreads across the network.
+                    </p>
+                    <span class="tag">Stuxnet classic</span>
+                </div>
+
+                <!-- 9 -->
+                <div class="theory-card">
+                    <div class="icon-circle green"><i class="fas fa-video"></i></div>
+                    <h3>Deepfakes & AI Voice Cloning</h3>
+                    <p>
+                        Attackers now use <strong>synthetic video and voice</strong> to impersonate executives.
+                        Treat any unusual request from a “video call” with skepticism — verify out‑of‑band.
+                    </p>
+                    <span class="tag">$25M deepfake heist</span>
+                </div>
+
+                <!-- 10 -->
+                <div class="theory-card">
+                    <div class="icon-circle purple"><i class="fas fa-door-open"></i></div>
+                    <h3>Tailgating (Physical)</h3>
+                    <p>
+                        Don’t hold the door open for strangers — even if they look like employees.
+                        <strong>Badge‑in</strong> securely and report anyone without a badge.
+                    </p>
+                    <span class="tag">physical access = digital access</span>
+                </div>
+
+            </div>
+
+            <!-- Real scenario -->
+            <div class="scenario-box" style="margin-top:1.2rem;">
+                <div class="label"><i class="fas fa-bolt"></i> Real scenario</div>
+                <div class="content">
+                    <i class="fas fa-figma"></i> A designer shares a Figma link on a public Slack channel.
+                    An attacker finds it, extracts the embedded API key from a mock, and compromises the dev environment.
+                    <strong>Fix:</strong> Use view‑only links with expiry and never put real credentials in design files.
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:1.8rem;">
+                <button class="btn" id="goToQuizBtn"><i class="fas fa-question-circle"></i> Take the 20‑Question Quiz</button>
+            </div>
+
+        </div>
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- ─── PANEL: QUIZ ─── -->
+        <!-- ════════════════════════════════════════════════════ -->
+        <div class="panel" id="panelQuiz">
+
+            <div class="quiz-container" id="quizContainer">
+                <div class="quiz-header">
+                    <h2><i class="fas fa-clipboard-list"></i> Security Awareness Quiz</h2>
+                    <div class="quiz-progress">
+                        <span id="answeredCount">0</span>/20 answered
+                        <div class="bar"><div class="fill" id="progressFill"></div></div>
+                    </div>
+                </div>
+
+                <div id="questionsList"></div>
+
+                <div class="quiz-actions">
+                    <div style="font-size:0.85rem; color:#3a5a7a;">
+                        <i class="fas fa-info-circle"></i> <span id="unansweredWarning">All questions optional</span>
+                    </div>
+                    <div style="display:flex; gap:0.8rem; flex-wrap:wrap;">
+                        <button class="btn btn-secondary" id="resetQuizBtn"><i class="fas fa-undo"></i> Reset</button>
+                        <button class="btn btn-success" id="submitQuizBtn"><i class="fas fa-check"></i> Submit & Score</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ════════════════════════════════════════════════════ -->
+        <!-- ─── PANEL: RESULTS ─── -->
+        <!-- ════════════════════════════════════════════════════ -->
+        <div class="results-panel" id="resultsPanel">
+            <div style="display:flex; align-items:center; gap:1.8rem; flex-wrap:wrap; margin-bottom:1.2rem;">
+                <div style="display:flex; align-items:center; gap:1.2rem;">
+                    <div class="score-circle" id="scoreDisplay">0%</div>
+                    <div>
+                        <div style="font-size:1.2rem; font-weight:600;" id="scoreLabel">0 / 20</div>
+                        <div class="score-detail" id="scoreDetail">Not answered all</div>
+                    </div>
+                </div>
+                <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+                    <span style="background:#e0f5e8; padding:0.2rem 1rem; border-radius:40px; font-size:0.8rem; color:#1a7a4a;">
+                        ✅ <span id="correctCount">0</span> correct
+                    </span>
+                    <span style="background:#ffe6e6; padding:0.2rem 1rem; border-radius:40px; font-size:0.8rem; color:#b33;">
+                        ❌ <span id="wrongCount">0</span> wrong
+                    </span>
+                    <span style="background:#eef4fa; padding:0.2rem 1rem; border-radius:40px; font-size:0.8rem; color:#3a5a7a;">
+                        ⏺ <span id="unansweredCountResult">0</span> unanswered
+                    </span>
+                </div>
+            </div>
+            <div id="resultsList"></div>
+            <div style="margin-top:1.2rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+                <button class="btn btn-secondary" id="retakeQuizBtn"><i class="fas fa-rotate-left"></i> Retake Quiz</button>
+                <button class="btn" id="backToTheoryBtn"><i class="fas fa-book-open"></i> Back to Learn</button>
+            </div>
+        </div>
+
+        <!-- ─── FOOTER ─── -->
+        <div class="footer">
+            <i class="fas fa-shield-halved"></i> Security is everyone’s responsibility ·
+            Made for non‑technical teams · Real‑world scenarios
+        </div>
+
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ─── 20 QUESTIONS ────────────────────────────────────────────
+            const questions = [{
+                q: 'What is social engineering?',
+                options: [
+                    'Building social networks for business',
+                    'Manipulating people to divulge confidential information',
+                    'Writing malicious code',
+                    'Testing network firewalls'
+                ],
+                correct: 1,
+                difficulty: 'easy',
+                tag: 'Social',
+                explanation: 'Social engineering exploits human psychology, not technical vulnerabilities. Attackers use trust, fear, or urgency to get information or access.'
+            }, {
+                q: 'You receive an urgent email from "IT Support" asking you to reset your password via a link. What should you do?',
+                options: [
+                    'Click the link and reset immediately',
+                    'Forward it to your team',
+                    'Verify with IT using a known phone number or in-person',
+                    'Ignore it'
+                ],
+                correct: 2,
+                difficulty: 'easy',
+                tag: 'Phishing',
+                explanation: 'Always verify urgent requests through a trusted, independent channel. Never use the contact details provided in the suspicious message.'
+            }, {
+                q: 'Which of these is a sign of a phishing email?',
+                options: [
+                    'The sender address looks slightly off (e.g., "arnazon.com" vs "amazon.com")',
+                    'The email uses your full name correctly',
+                    'The email has no attachments',
+                    'The email comes from a known colleague'
+                ],
+                correct: 0,
+                difficulty: 'easy',
+                tag: 'Phishing',
+                explanation: 'Lookalike domains (homoglyphs, typos) are a classic phishing tactic. Always inspect the sender address carefully.'
+            }, {
+                q: 'What should you do with a Figma design link before sharing it externally?',
+                options: [
+                    'Share it as "Anyone with the link can edit" for convenience',
+                    'Set it to "View only" and add an expiration date if possible',
+                    'Share the raw .fig file instead',
+                    'Post it in a public Slack channel'
+                ],
+                correct: 1,
+                difficulty: 'medium',
+                tag: 'Figma',
+                explanation: 'Use view‑only links with expiry. Never give edit access to external parties, and avoid embedding real secrets in design files.'
+            }, {
+                q: 'You find a USB drive in the office parking lot. What is the safest action?',
+                options: [
+                    'Plug it into your work laptop to check its contents',
+                    'Give it to IT or security to handle',
+                    'Plug it into a personal device first',
+                    'Throw it away'
+                ],
+                correct: 1,
+                difficulty: 'medium',
+                tag: 'USB',
+                explanation: 'USB drives can contain malware that auto‑executes. Always hand found drives to IT/security for safe analysis.'
+            }, {
+                q: 'What is "MFA push bombing"?',
+                options: [
+                    'A new type of firewall',
+                    'Attackers spam MFA requests until a user accidentally approves one',
+                    'A method to speed up MFA authentication',
+                    'A hardware security key'
+                ],
+                correct: 1,
+                difficulty: 'medium',
+                tag: 'MFA',
+                explanation: 'Push bombing is a fatigue attack. Never approve a push notification you didn’t initiate. Use number‑matching or hardware keys for better security.'
+            }, {
+                q: 'Which third‑party app practice is most secure?',
+                options: [
+                    'Connect every tool you find to your company account',
+                    'Periodically audit and remove unused app connections',
+                    'Share your login credentials with teammates',
+                    'Never use third‑party apps'
+                ],
+                correct: 1,
+                difficulty: 'easy',
+                tag: 'Third‑party',
+                explanation: 'Regular audits reduce your attack surface. Remove apps you no longer use and enforce MFA/SSO where supported.'
+            }, {
+                q: 'What is "vishing"?',
+                options: [
+                    'A type of email phishing',
+                    'Voice phishing — attackers call to impersonate trusted entities',
+                    'A new messaging app',
+                    'Physical security breach'
+                ],
+                correct: 1,
+                difficulty: 'medium',
+                tag: 'Vishing',
+                explanation: 'Vishing uses phone calls to manipulate victims. Always hang up and call back using a verified number.'
+            }, {
+                q: 'You receive a Slack message from a "colleague" asking for a one‑time verification code. What do you do?',
+                options: [
+                    'Send it — they seem trustworthy',
+                    'Ask for their full name and send it',
+                    'Do not share it and verify via a separate channel (e.g., in‑person or email)',
+                    'Post it in the team channel for transparency'
+                ],
+                correct: 2,
+                difficulty: 'medium',
+                tag: 'Slack',
+                explanation: 'Never share OTPs or MFA codes with anyone — even if they appear to be a colleague. Verify identity out‑of‑band.'
+            }, {
+                q: 'What is the "zero trust" principle in simple terms?',
+                options: [
+                    'Trust everyone inside the office',
+                    'Never trust, always verify — even internal traffic',
+                    'Disable all security measures',
+                    'Only trust executives'
+                ],
+                correct: 1,
+                difficulty: 'medium',
+                tag: 'Zero Trust',
+                explanation: 'Zero Trust means no implicit trust. Every request, even from inside the network, is verified.'
+            }, {
+                q: 'A deepfake video of your CEO asks you to transfer funds urgently. What should you do?',
+                options: [
+                    'Transfer immediately — it’s the CEO',
+                    'Call the CEO or their assistant on a known number to verify',
+                    'Reply to the video message',
+                    'Forward it to finance'
+                ],
+                correct: 1,
+                difficulty: 'hard',
+                tag: 'Deepfake',
+                explanation: 'Deepfakes are increasingly sophisticated. Always verify high‑stakes requests through a trusted, independent channel.'
+            }, {
+                q: 'Which action best protects your Mac from unauthorized access?',
+                options: [
+                    'Disable the lock screen for speed',
+                    'Enable FileVault disk encryption and use a strong passcode',
+                    'Share your password with IT',
+                    'Leave it unlocked at your desk'
+                ],
+                correct: 1,
+                difficulty: 'easy',
+                tag: 'Mac',
+                explanation: 'FileVault encrypts your disk, and a strong passcode prevents physical access. Always lock your screen when away.'
+            }, {
+                q: 'What is "BEC" (Business Email Compromise)?',
+                options: [
+                    'A type of spam filter',
+                    'Attackers impersonate executives to trick employees into sending money or data',
+                    'A new email protocol',
+                    'A backup system'
+                ],
+                correct: 1,
+                difficulty: 'medium',
+                tag: 'BEC',
+                explanation: 'BEC is a sophisticated scam where attackers spoof or take over executive accounts to authorise fraudulent transfers.'
+            }, {
+                q: 'You need to share a sensitive PDF with a vendor. What is the safest method?',
+                options: [
+                    'Email it as an attachment',
+                    'Use a secure file‑sharing service with a password and expiry',
+                    'Post it on a public drive',
+                    'Send it via Slack'
+                ],
+                correct: 1,
+                difficulty: 'medium',
+                tag: 'File Sharing',
+                explanation: 'Use purpose‑built secure sharing tools that offer encryption, password protection, and expiration. Email is not secure for sensitive data.'
+            }, {
+                q: 'What is "tailgating" in physical security?',
+                options: [
+                    'A car racing event',
+                    'Following an authorized person through a secure door without badging in',
+                    'A type of malware',
+                    'A network scanning technique'
+                ],
+                correct: 1,
+                difficulty: 'easy',
+                tag: 'Physical',
+                explanation: 'Tailgating (or piggybacking) is a physical security breach. Always badge in and don’t hold doors for strangers.'
+            }, {
+                q: 'What should you do if you receive a MFA push notification you didn’t request?',
+                options: [
+                    'Approve it to see what happens',
+                    'Deny it and report the incident to your security team',
+                    'Ignore it — it will go away',
+                    'Forward it to a colleague'
+                ],
+                correct: 1,
+                difficulty: 'easy',
+                tag: 'MFA',
+                explanation: 'Deny unrequested pushes and report them. This could be an attacker testing credentials or performing a push‑bombing attack.'
+            }, {
+                q: 'Which of these is a "red flag" in an email?',
+                options: [
+                    'A sense of urgency ("Act now or your account will be locked")',
+                    'A professional signature',
+                    'A known company logo',
+                    'A reply‑to address matching the sender'
+                ],
+                correct: 0,
+                difficulty: 'easy',
+                tag: 'Phishing',
+                explanation: 'Urgency is a common manipulation tactic. Attackers want you to act before you think.'
+            }, {
+                q: 'You notice a stranger has entered your office and is walking toward the server room. What do you do?',
+                options: [
+                    'Ignore it — they probably have a meeting',
+                    'Politely ask if they need help and escort them to reception if they don’t have a badge',
+                    'Offer to hold the door for them',
+                    'Keep working'
+                ],
+                correct: 1,
+                difficulty: 'medium',
+                tag: 'Physical',
+                explanation: 'A polite but firm "Can I help you?" and escorting to reception is the right response. Never assume someone belongs.'
+            }, {
+                q: 'What is "pretexting" in social engineering?',
+                options: [
+                    'A type of encryption',
+                    'Creating a fabricated scenario to trick a target into sharing information',
+                    'A coding language',
+                    'A network protocol'
+                ],
+                correct: 1,
+                difficulty: 'hard',
+                tag: 'Social',
+                explanation: 'Pretexting is building a believable story (pretext) to gain the target’s trust and extract sensitive information.'
+            }, {
+                q: 'A designer receives a Figma comment from "Support" asking to verify credentials. What should they do?',
+                options: [
+                    'Reply with credentials — it’s Figma support',
+                    'Ignore it and report it to IT/security',
+                    'Delete the comment',
+                    'Forward it to the design team'
+                ],
+                correct: 1,
+                difficulty: 'hard',
+                tag: 'Figma',
+                explanation: 'Figma comments can be abused by attackers. Never share credentials in comments. Verify support requests through official channels.'
+            }];
+
+            // ─── STATE ───
+            const answers = new Array(questions.length).fill(null);
+            let submitted = false;
+
+            // ─── DOM ───
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const panels = {
+                theory: document.getElementById('panelTheory'),
+                quiz: document.getElementById('panelQuiz'),
+                results: document.getElementById('resultsPanel')
+            };
+            const questionsList = document.getElementById('questionsList');
+            const progressFill = document.getElementById('progressFill');
+            const answeredSpan = document.getElementById('answeredCount');
+            const resultsPanel = document.getElementById('resultsPanel');
+            const resultsList = document.getElementById('resultsList');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreLabel = document.getElementById('scoreLabel');
+            const scoreDetail = document.getElementById('scoreDetail');
+            const correctSpan = document.getElementById('correctCount');
+            const wrongSpan = document.getElementById('wrongCount');
+            const unansweredResultSpan = document.getElementById('unansweredCountResult');
+            const resultsTabBtn = document.getElementById('resultsTabBtn');
+
+            // ─── RENDER QUIZ ───
+            function renderQuiz() {
+                questionsList.innerHTML = '';
+                questions.forEach((q, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'question-item';
+                    div.dataset.index = idx;
+
+                    const head = document.createElement('div');
+                    head.className = 'q-head';
+                    head.innerHTML = `
+                        <span class="q-num">${idx+1}.</span>
+                        <span class="q-text">${q.q}</span>
+                    `;
+                    div.appendChild(head);
+
+                    const tags = document.createElement('div');
+                    tags.className = 'q-tags';
+                    const diffTag = document.createElement('span');
+                    diffTag.className = `tag ${q.difficulty}`;
+                    diffTag.textContent = q.difficulty.toUpperCase();
+                    tags.appendChild(diffTag);
+                    const catTag = document.createElement('span');
+                    catTag.className = 'tag';
+                    catTag.textContent = q.tag;
+                    tags.appendChild(catTag);
+                    if (q.explanation && q.explanation.includes('Figma')) {
+                        const scTag = document.createElement('span');
+                        scTag.className = 'tag scenario';
+                        scTag.textContent = '🎯 Scenario';
+                        tags.appendChild(scTag);
+                    }
+                    div.appendChild(tags);
+
+                    const opts = document.createElement('div');
+                    opts.className = 'options';
+                    q.options.forEach((opt, optIdx) => {
+                        const label = document.createElement('label');
+                        label.className = 'opt-label';
+                        const radio = document.createElement('input');
+                        radio.type = 'radio';
+                        radio.name = `q${idx}`;
+                        radio.value = optIdx;
+                        if (answers[idx] === optIdx) radio.checked = true;
+                        radio.addEventListener('change', function() {
+                            if (submitted) return;
+                            if (this.checked) {
+                                answers[idx] = parseInt(this.value);
+                                updateProgress();
+                            }
+                        });
+                        label.appendChild(radio);
+                        label.appendChild(document.createTextNode(opt));
+                        opts.appendChild(label);
+                    });
+                    div.appendChild(opts);
+                    questionsList.appendChild(div);
+                });
+                updateProgress();
+            }
+
+            // ─── UPDATE PROGRESS ───
+            function updateProgress() {
+                const answered = answers.filter(a => a !== null).length;
+                answeredSpan.textContent = answered;
+                const pct = Math.round((answered / questions.length) * 100);
+                progressFill.style.width = pct + '%';
+                const warning = document.getElementById('unansweredWarning');
+                if (answered === questions.length) {
+                    warning.textContent = '✅ All questions answered!';
+                    warning.style.color = '#1a7a4a';
+                } else {
+                    warning.textContent = `${questions.length - answered} questions remaining`;
+                    warning.style.color = '#3a5a7a';
+                }
+            }
+
+            // ─── SUBMIT ───
+            function submitQuiz() {
+                if (submitted) return;
+                const answered = answers.filter(a => a !== null).length;
+                if (answered < questions.length) {
+                    if (!confirm(`You have ${questions.length - answered} unanswered questions. Submit anyway?`)) {
+                        return;
+                    }
+                }
+                submitted = true;
+
+                // Disable all radios
+                document.querySelectorAll('.question-item input[type="radio"]').forEach(el => el.disabled = true);
+
+                // Calculate
+                let correct = 0;
+                let wrong = 0;
+                let unanswered = 0;
+                const details = [];
+
+                questions.forEach((q, idx) => {
+                    const userAns = answers[idx];
+                    const isCorrect = (userAns === q.correct);
+                    if (userAns === null) {
+                        unanswered++;
+                        details.push({ ...q, userAns: null, isCorrect: false });
+                    } else if (isCorrect) {
+                        correct++;
+                        details.push({ ...q, userAns, isCorrect: true });
+                    } else {
+                        wrong++;
+                        details.push({ ...q, userAns, isCorrect: false });
+                    }
+                });
+
+                // Show results panel
+                resultsPanel.classList.add('show');
+                resultsTabBtn.style.display = 'inline-flex';
+
+                // Score
+                const total = questions.length;
+                const pct = Math.round((correct / total) * 100);
+                scoreDisplay.textContent = pct + '%';
+                scoreLabel.textContent = `${correct} / ${total}`;
+                if (pct >= 80) {
+                    scoreDetail.textContent = '🌟 Excellent! You’re security‑aware.';
+                } else if (pct >= 60) {
+                    scoreDetail.textContent = '👍 Good start — review the areas you missed.';
+                } else {
+                    scoreDetail.textContent = '📖 Review the theory section and try again.';
+                }
+                correctSpan.textContent = correct;
+                wrongSpan.textContent = wrong;
+                unansweredResultSpan.textContent = unanswered;
+
+                // Build detailed results
+                let html = '';
+                details.forEach((d, idx) => {
+                    const cls = d.isCorrect ? 'correct' : 'wrong';
+                    const userChoice = d.userAns !== null ? d.options[d.userAns] : 'Not answered';
+                    const correctChoice = d.options[d.correct];
+                    const icon = d.isCorrect ? '✅' : (d.userAns === null ? '⏺' : '❌');
+                    html += `
+                        <div class="result-item ${cls}">
+                            <div class="r-q">${idx+1}. ${d.q} ${icon}</div>
+                            <div class="r-answer">
+                                <strong>Your answer:</strong> ${userChoice}
+                                ${!d.isCorrect && d.userAns !== null ? ` | <strong>Correct:</strong> ${correctChoice}` : ''}
+                                ${d.userAns === null ? ' | <span style="color:#b8860b;">(not answered)</span>' : ''}
+                            </div>
+                            <div class="r-explanation">${d.explanation || 'No explanation provided.'}</div>
+                            <span class="r-tag">${d.tag} · ${d.difficulty}</span>
+                        </div>
+                    `;
+                });
+                resultsList.innerHTML = html;
+
+                // Switch to results tab
+                switchTab('results');
+                resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // ─── RESET ───
+            function resetQuiz() {
+                if (submitted) {
+                    if (!confirm('Reset all answers and results?')) return;
+                }
+                submitted = false;
+                for (let i = 0; i < answers.length; i++) answers[i] = null;
+                resultsPanel.classList.remove('show');
+                resultsTabBtn.style.display = 'none';
+                document.querySelectorAll('.question-item input[type="radio"]').forEach(el => {
+                    el.disabled = false;
+                    el.checked = false;
+                });
+                renderQuiz();
+                switchTab('quiz');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // ─── TAB SWITCHING ───
+            function switchTab(tab) {
+                tabBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tab);
+                });
+                Object.keys(panels).forEach(key => {
+                    const el = panels[key];
+                    if (el) {
+                        if (key === 'results' && tab === 'results') {
+                            el.classList.add('show');
+                        } else {
+                            el.classList.toggle('active', key === tab);
+                            if (key === 'results') {
+                                if (tab !== 'results') el.classList.remove('show');
+                            }
+                        }
+                    }
+                });
+                // Special: results panel visibility
+                if (tab === 'results') {
+                    panels.results.classList.add('show');
+                    panels.results.classList.add('active');
+                } else {
+                    panels.results.classList.remove('show');
+                    if (tab !== 'results') panels.results.classList.remove('active');
+                }
+                // hide/show panels
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                if (tab === 'theory') document.getElementById('panelTheory').classList.add('active');
+                if (tab === 'quiz') document.getElementById('panelQuiz').classList.add('active');
+                if (tab === 'results') {
+                    document.getElementById('panelTheory').classList.remove('active');
+                    document.getElementById('panelQuiz').classList.remove('active');
+                    panels.results.classList.add('active');
+                    panels.results.classList.add('show');
+                }
+            }
+
+            // ─── EVENT LISTENERS ───
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tab = this.dataset.tab;
+                    if (tab === 'results' && !submitted) {
+                        alert('Please submit the quiz first to see results.');
+                        return;
+                    }
+                    switchTab(tab);
+                });
+            });
+
+            document.getElementById('goToQuizBtn').addEventListener('click', () => {
+                switchTab('quiz');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            document.getElementById('submitQuizBtn').addEventListener('click', submitQuiz);
+            document.getElementById('resetQuizBtn').addEventListener('click', resetQuiz);
+            document.getElementById('retakeQuizBtn').addEventListener('click', resetQuiz);
+            document.getElementById('backToTheoryBtn').addEventListener('click', () => {
+                switchTab('theory');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // ─── INIT ───
+            renderQuiz();
+            switchTab('theory');
+
+        })();
+    </script>
+
+</body>
+</html>

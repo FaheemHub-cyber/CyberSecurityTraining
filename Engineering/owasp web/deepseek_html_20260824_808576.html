@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWASP Top 10 2025 · Interactive Attack Lab</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e14;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            color: #e8edf5;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(46, 204, 113, 0.03) 0%, transparent 50%);
+        }
+
+        .app-wrapper {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(18, 26, 38, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 1.8rem 2rem 2rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+        }
+
+        /* header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .app-header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e8edf5;
+        }
+
+        .app-header h1 i {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.12);
+            padding: 8px 12px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+        }
+
+        .app-header .badge {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            color: #8e99ae;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* TABS */
+        .tabs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.5rem 0.7rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.75rem;
+            color: #8e99ae;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .tab-btn i {
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e8edf5;
+        }
+
+        .tab-btn.active {
+            background: rgba(52, 152, 219, 0.15);
+            color: #e8edf5;
+            box-shadow: 0 0 30px rgba(52, 152, 219, 0.05);
+            border: 1px solid rgba(52, 152, 219, 0.15);
+        }
+
+        .tab-btn.active i {
+            color: #3498db;
+            opacity: 1;
+        }
+
+        .tab-btn .full-name {
+            font-weight: 400;
+            font-size: 0.65rem;
+            color: #6a7a8e;
+            margin-left: 2px;
+        }
+
+        .tab-btn.active .full-name {
+            color: #9aa4b8;
+        }
+
+        /* PANEL */
+        .panel {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 28px;
+            padding: 1.8rem 2rem 2rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            min-height: 400px;
+        }
+
+        .attack-example-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.9fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 780px) {
+            .attack-example-grid {
+                grid-template-columns: 1fr;
+            }
+            .app-wrapper {
+                padding: 1rem;
+                border-radius: 28px;
+            }
+            .panel {
+                padding: 1.2rem;
+            }
+            .tab-btn {
+                font-size: 0.65rem;
+                padding: 0.4rem 0.8rem;
+            }
+            .tab-btn .full-name {
+                display: none;
+            }
+        }
+
+        /* Example visual */
+        .example-visual {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 1.3rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .example-visual .preview-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6a7a8e;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .attack-sim {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.82rem;
+            line-height: 1.8;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            color: #b0bacb;
+        }
+
+        .attack-sim .line {
+            padding: 0.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+
+        .attack-sim .line:last-child {
+            border-bottom: none;
+        }
+
+        .attack-sim .method {
+            color: #5b8db8;
+            font-weight: 500;
+            min-width: 50px;
+        }
+
+        .attack-sim .path {
+            color: #8a9aa8;
+        }
+
+        .attack-sim .response {
+            color: #6a8a7a;
+        }
+
+        .attack-sim .highlight-danger {
+            background: rgba(200, 60, 60, 0.15);
+            color: #e88070;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .attack-sim .highlight-success {
+            background: rgba(52, 152, 219, 0.1);
+            color: #5b9bd5;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        /* Interactive attack button */
+        .attack-hint {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .attack-btn {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.15);
+            color: #5b9bd5;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+
+        .attack-btn:hover {
+            background: rgba(52, 152, 219, 0.18);
+            box-shadow: 0 0 30px rgba(52, 152, 219, 0.05);
+            transform: scale(1.02);
+        }
+
+        .attack-btn:active {
+            transform: scale(0.95);
+        }
+
+        .attack-hint-text {
+            color: #6a7a8e;
+            font-size: 0.75rem;
+            font-style: italic;
+        }
+
+        .attack-hint-text i {
+            color: #5b9bd5;
+            opacity: 0.6;
+        }
+
+        .attack-tag {
+            display: inline-block;
+            background: rgba(52, 152, 219, 0.06);
+            color: #6a9ac0;
+            font-size: 0.6rem;
+            font-weight: 500;
+            padding: 0.15rem 0.8rem;
+            border-radius: 40px;
+            margin-top: 0.4rem;
+            border: 1px solid rgba(52, 152, 219, 0.06);
+        }
+
+        /* Feedback area */
+        .feedback-area {
+            margin-top: 0.6rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 2px solid rgba(52, 152, 219, 0.1);
+            font-size: 0.75rem;
+            color: #6a7a8e;
+            min-height: 2.2rem;
+            transition: all 0.3s ease;
+            font-style: italic;
+        }
+
+        .feedback-area.success {
+            border-left-color: #5b9bd5;
+            color: #8aacd0;
+            background: rgba(52, 152, 219, 0.04);
+            font-style: normal;
+        }
+
+        /* Explanation box */
+        .explanation-box {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 1.3rem 1.3rem 1.5rem 1.3rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .explanation-box h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #e8edf5;
+        }
+
+        .explanation-box h3 i {
+            color: #5b9bd5;
+        }
+
+        .explanation-box p {
+            color: #b0bacb;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .popup-trigger {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #b0bacb;
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            width: fit-content;
+            font-family: inherit;
+        }
+
+        .popup-trigger:hover {
+            background: rgba(52, 152, 219, 0.08);
+            border-color: rgba(52, 152, 219, 0.15);
+            color: #e8edf5;
+        }
+
+        .popup-trigger i {
+            color: #5b9bd5;
+        }
+
+        /* POPUP */
+        .popup-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1.5rem;
+        }
+
+        .popup-overlay.open {
+            display: flex;
+        }
+
+        .popup-card {
+            background: #1a2430;
+            max-width: 620px;
+            width: 100%;
+            border-radius: 32px;
+            padding: 2rem 2rem 1.8rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            animation: popIn 0.25s ease;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(12px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .popup-card .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 0.8rem;
+        }
+
+        .popup-card .popup-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #e8edf5;
+        }
+
+        .popup-card .popup-header h2 i {
+            color: #5b9bd5;
+            margin-right: 10px;
+        }
+
+        .popup-card .close-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: none;
+            color: #6a7a8e;
+            width: 36px;
+            height: 36px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-card .close-btn:hover {
+            background: rgba(200, 60, 60, 0.1);
+            color: #e88070;
+        }
+
+        .popup-card .popup-body {
+            color: #b0bacb;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .popup-card .popup-body strong {
+            color: #e8edf5;
+        }
+
+        .popup-card .popup-body ul {
+            margin: 0.8rem 0 0.5rem 1.2rem;
+        }
+
+        .popup-card .popup-body ul li {
+            margin-bottom: 0.3rem;
+        }
+
+        .popup-card .popup-footer {
+            margin-top: 1.2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 1rem;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .popup-tag {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            color: #8e99ae;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .popup-tag.mitigation {
+            background: rgba(52, 152, 219, 0.04);
+            color: #6a9ac0;
+            border-color: rgba(52, 152, 219, 0.06);
+        }
+
+        .text-muted {
+            color: #6a7a8e;
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 480px) {
+            .app-header h1 {
+                font-size: 1.2rem;
+            }
+            .popup-card {
+                padding: 1.5rem;
+                border-radius: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <!-- header -->
+    <div class="app-header">
+        <h1>
+            <i class="fas fa-shield-halved"></i>
+            OWASP Top 10 2025
+            <span style="font-weight:400; font-size:0.8rem; color:#6a7a8e; margin-left:4px;">· Web Security</span>
+        </h1>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="badge"><i class="fas fa-flask"></i> interactive attack lab</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-container" id="tabContainer"></div>
+
+    <!-- Main panel -->
+    <div class="panel" id="mainPanel"></div>
+
+    <!-- POPUP -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-card">
+            <div class="popup-header">
+                <h2 id="popupTitle"><i class="fas fa-info-circle"></i> Vulnerability deep dive</h2>
+                <button class="close-btn" id="closePopupBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="popup-body" id="popupBody"></div>
+            <div class="popup-footer" id="popupFooter"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---- OWASP TOP 10 2025 DATA ----
+        const risks = [
+            {
+                id: 'A01',
+                fullName: 'Broken Access Control',
+                icon: 'fa-lock-open',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/admin/users' },
+                        { type: 'response', text: '403 Forbidden — admin only' },
+                        { type: 'attack', text: 'Attacker changes to: GET /api/users?role=admin' },
+                        { type: 'response', text: '<span class="highlight-danger">200 OK — returns user list with admin data</span>' }
+                    ],
+                    tag: 'IDOR · privilege escalation',
+                    hint: 'Try changing the role parameter in the URL or body to bypass access controls.'
+                },
+                explanation: 'Broken Access Control allows attackers to bypass authorization and access resources they shouldn\'t. This includes vertical and horizontal privilege escalation, insecure direct object references (IDOR), and path traversal.',
+                popup: {
+                    title: 'A01: Broken Access Control',
+                    body: `<p><strong>The #1 web vulnerability in 2025.</strong> Access control enforces policies such that users cannot act outside their intended permissions.</p>
+                           <ul>
+                               <li><strong>Common flaws:</strong> Missing checks on API endpoints, insecure ID references, predictable parameters.</li>
+                               <li><strong>Impact:</strong> Data breach, unauthorized access, complete compromise.</li>
+                               <li><strong>Real example:</strong> Changing user ID in URL to access another user's account.</li>
+                           </ul>
+                           <p><strong>Mitigation:</strong> Use server-side authorization checks, deny by default, enforce access controls on every request.</p>`,
+                    tags: ['CWE-284', 'OWASP A01', 'IDOR', 'mitigation: deny by default']
+                }
+            },
+            {
+                id: 'A02',
+                fullName: 'Security Misconfiguration',
+                icon: 'fa-cogs',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/debug/env' },
+                        { type: 'response', text: '<span class="highlight-danger">200 OK — DEBUG=True, SECRET_KEY exposed</span>' },
+                        { type: 'attack', text: 'Attacker finds /api/swagger and /api/docs exposed' },
+                        { type: 'response', text: 'Full API documentation with all endpoints and parameters.' }
+                    ],
+                    tag: 'Debug endpoints · default configs',
+                    hint: 'Look for exposed debug pages, default credentials, or verbose error messages.'
+                },
+                explanation: 'Security Misconfiguration includes insecure default settings, incomplete or ad-hoc configurations, open cloud storage, misconfigured HTTP headers, and verbose error messages.',
+                popup: {
+                    title: 'A02: Security Misconfiguration',
+                    body: `<p><strong>The #2 risk for 2025.</strong> Improper configuration can expose your entire application.</p>
+                           <ul>
+                               <li><strong>Common issues:</strong> Debug mode enabled in production, default credentials, missing security headers.</li>
+                               <li><strong>Exploitation:</strong> Attackers scan for known misconfigurations.</li>
+                               <li><strong>Impact:</strong> Full system compromise, data exposure.</li>
+                           </ul>
+                           <p><strong>Mitigation:</strong> Harden production configs, disable debug, use automated configuration scanning.</p>`,
+                    tags: ['CWE-16', 'OWASP A02', 'CORS', 'mitigation: configuration hardening']
+                }
+            },
+            {
+                id: 'A03',
+                fullName: 'Software Supply Chain Failures',
+                icon: 'fa-link',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'npm install vulnerable-package@1.2.3' },
+                        { type: 'response', text: 'Package installed with <span class="highlight-danger">known RCE vulnerability</span>' },
+                        { type: 'attack', text: 'Attacker exploits CVE-2025-1234 via dependency' },
+                        { type: 'response', text: '<span class="highlight-danger">Remote Code Execution achieved</span>' }
+                    ],
+                    tag: 'Compromised dependency',
+                    hint: 'Check the package versions used in the application for known vulnerabilities.'
+                },
+                explanation: 'Supply chain failures occur when third-party dependencies, libraries, or frameworks contain vulnerabilities. Attackers target the weakest link in the software chain.',
+                popup: {
+                    title: 'A03: Software Supply Chain Failures',
+                    body: `<p><strong>Rising threat in 2025.</strong> Attackers compromise the tools and dependencies you use.</p>
+                           <ul>
+                               <li><strong>Vectors:</strong> Compromised packages, typosquatting, dependency confusion.</li>
+                               <li><strong>Real incidents:</strong> SolarWinds, Log4j, PyTorch supply chain attack.</li>
+                               <li><strong>Impact:</strong> Full system compromise via trusted dependencies.</li>
+                           </ul>
+                           <p><strong>Defense:</strong> Maintain SBOM, use software composition analysis (SCA), pin versions.</p>`,
+                    tags: ['CWE-494', 'OWASP A03', 'SBOM', 'mitigation: SCA']
+                }
+            },
+            {
+                id: 'A04',
+                fullName: 'Cryptographic Failures',
+                icon: 'fa-lock',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/user/profile' },
+                        { type: 'response', text: 'Cookie: session=user123 (unencrypted, predictable)' },
+                        { type: 'attack', text: 'Attacker guesses session ID: session=admin' },
+                        { type: 'response', text: '<span class="highlight-danger">Access to admin account</span> due to weak crypto' }
+                    ],
+                    tag: 'Weak encryption · predictable tokens',
+                    hint: 'Look for weak encryption algorithms, predictable session tokens, or missing HTTPS.'
+                },
+                explanation: 'Cryptographic failures include weak encryption, insecure key management, use of deprecated algorithms, and failure to encrypt sensitive data in transit or at rest.',
+                popup: {
+                    title: 'A04: Cryptographic Failures',
+                    body: `<p><strong>Formerly "Sensitive Data Exposure".</strong> Crypto failures lead to data breaches.</p>
+                           <ul>
+                               <li><strong>Common issues:</strong> Weak algorithms (MD5, SHA1), hardcoded keys, missing TLS.</li>
+                               <li><strong>Impact:</strong> Data theft, session hijacking, credential exposure.</li>
+                               <li><strong>Real examples:</strong> Heartbleed, weak JWT signing.</li>
+                           </ul>
+                           <p><strong>Mitigation:</strong> Use strong algorithms (AES-256, SHA-256), manage keys securely, enforce TLS.</p>`,
+                    tags: ['CWE-327', 'OWASP A04', 'TLS', 'mitigation: strong crypto']
+                }
+            },
+            {
+                id: 'A05',
+                fullName: 'Injection',
+                icon: 'fa-syringe',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'POST /api/search?q=users' },
+                        { type: 'response', text: 'SELECT * FROM users WHERE name LIKE "%users%"' },
+                        { type: 'attack', text: 'Attacker: q=users%27%3B%20DROP%20TABLE%20users%3B' },
+                        { type: 'response', text: '<span class="highlight-danger">SQL Injection! Table dropped.</span>' }
+                    ],
+                    tag: 'SQL injection · command injection',
+                    hint: 'Try injecting SQL payloads or system commands into input fields.'
+                },
+                explanation: 'Injection occurs when untrusted data is sent to an interpreter. This includes SQL, NoSQL, OS commands, and LDAP injection. Attackers can execute arbitrary code or access data.',
+                popup: {
+                    title: 'A05: Injection',
+                    body: `<p><strong>Classic but still critical in 2025.</strong> Injection flaws allow attackers to execute commands.</p>
+                           <ul>
+                               <li><strong>Types:</strong> SQL, NoSQL, OS command, LDAP, XSS (though XSS is now in A03).</li>
+                               <li><strong>Impact:</strong> Data theft, data destruction, remote code execution.</li>
+                           </ul>
+                           <p><strong>Defense:</strong> Parameterized queries, input validation, strict escaping, use of ORM.</p>`,
+                    tags: ['CWE-89', 'OWASP A05', 'SQLi', 'mitigation: parameterized queries']
+                }
+            },
+            {
+                id: 'A06',
+                fullName: 'Insecure Design',
+                icon: 'fa-drafting-compass',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'POST /api/transfer' },
+                        { type: 'request', text: 'Body: { "from": "user1", "to": "attacker", "amount": 1000 }' },
+                        { type: 'response', text: '200 OK — transfer processed' },
+                        { type: 'attack', text: 'Attacker changes "from" to "admin" and "amount" to 100000' },
+                        { type: 'response', text: '<span class="highlight-danger">[DESIGN FLAW]</span> No validation of source ownership' }
+                    ],
+                    tag: 'Business logic flaw',
+                    hint: 'Think about business rules—can you bypass them by manipulating parameters?'
+                },
+                explanation: 'Insecure Design refers to architectural flaws that cannot be fixed with code patches. It includes missing security controls at the design phase, such as insufficient input validation, improper access control, and insecure defaults.',
+                popup: {
+                    title: 'A06: Insecure Design',
+                    body: `<p><strong>Design-level failures.</strong> Security must be built in from the start.</p>
+                           <ul>
+                               <li><strong>Examples:</strong> Missing rate limiting, insecure business logic, no audit trail.</li>
+                               <li><strong>Impact:</strong> Fundamental security weaknesses that are expensive to fix later.</li>
+                           </ul>
+                           <p><strong>Mitigation:</strong> Threat modeling, security requirements, secure design reviews.</p>`,
+                    tags: ['CWE-1220', 'OWASP A06', 'security by design', 'mitigation: threat modeling']
+                }
+            },
+            {
+                id: 'A07',
+                fullName: 'Authentication Failures',
+                icon: 'fa-user-shield',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'POST /api/login' },
+                        { type: 'request', text: 'Body: { "user": "admin", "pass": "password123" }' },
+                        { type: 'response', text: '200 OK — <span class="highlight-danger">Token: admin_session</span>' },
+                        { type: 'attack', text: 'Attacker brute-forces weak passwords' },
+                        { type: 'response', text: 'Access to multiple accounts with default passwords.' }
+                    ],
+                    tag: 'Weak credentials · token theft',
+                    hint: 'Test for weak passwords, missing rate limiting, or token leakage in logs.'
+                },
+                explanation: 'Authentication failures include weak credential policies, missing multi-factor authentication, session fixation, and credential exposure. Attackers can assume other users\' identities.',
+                popup: {
+                    title: 'A07: Authentication Failures',
+                    body: `<p><strong>Critical identity risks.</strong> Authentication is the gatekeeper.</p>
+                           <ul>
+                               <li><strong>Issues:</strong> Weak passwords, no MFA, predictable session tokens.</li>
+                               <li><strong>Impact:</strong> Account takeover, impersonation.</li>
+                           </ul>
+                           <p><strong>Defense:</strong> Strong password policies, MFA, secure session management.</p>`,
+                    tags: ['CWE-287', 'OWASP A07', 'MFA', 'mitigation: strong auth']
+                }
+            },
+            {
+                id: 'A08',
+                fullName: 'Software or Data Integrity Failures',
+                icon: 'fa-database',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/update/check' },
+                        { type: 'response', text: 'Updates available: malicious-update-2.0.zip' },
+                        { type: 'attack', text: 'Attacker injects tampered update into CI/CD pipeline' },
+                        { type: 'response', text: '<span class="highlight-danger">[INTEGRITY FAILURE]</span> Malicious code deployed' }
+                    ],
+                    tag: 'Tampered updates · CI/CD compromise',
+                    hint: 'Check if updates are signed or verified before installation.'
+                },
+                explanation: 'Integrity failures occur when software or data can be tampered with. This includes insecure deserialization, unauthorized software updates, and integrity verification failures.',
+                popup: {
+                    title: 'A08: Software or Data Integrity Failures',
+                    body: `<p><strong>Trust is not enough.</strong> Verify what you consume.</p>
+                           <ul>
+                               <li><strong>Vectors:</strong> Insecure deserialization, unsigned updates, cache poisoning.</li>
+                               <li><strong>Impact:</strong> Code execution, data corruption.</li>
+                           </ul>
+                           <p><strong>Mitigation:</strong> Code signing, integrity checks, secure update mechanisms.</p>`,
+                    tags: ['CWE-494', 'OWASP A08', 'deserialization', 'mitigation: code signing']
+                }
+            },
+            {
+                id: 'A09',
+                fullName: 'Security Logging and Alerting Failures',
+                icon: 'fa-clipboard-list',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'POST /api/admin/delete' },
+                        { type: 'response', text: '200 OK — data deleted' },
+                        { type: 'attack', text: 'Attacker deletes critical data' },
+                        { type: 'response', text: '<span class="highlight-danger">[NO LOGS]</span> No audit trail, incident undetected' }
+                    ],
+                    tag: 'Audit failure · blind detection',
+                    hint: 'Can you perform sensitive actions without being logged?'
+                },
+                explanation: 'Logging failures prevent detection of breaches. Without proper logs and alerts, attacks go unnoticed, delaying response and increasing damage.',
+                popup: {
+                    title: 'A09: Security Logging and Alerting Failures',
+                    body: `<p><strong>You can't fix what you can't see.</strong> Logging is critical for detection.</p>
+                           <ul>
+                               <li><strong>Issues:</strong> Missing logs for sensitive actions, inadequate monitoring.</li>
+                               <li><strong>Impact:</strong> Undetected breaches, delayed incident response.</li>
+                           </ul>
+                           <p><strong>Defense:</strong> Log all critical events, centralize logs, set up real-time alerts.</p>`,
+                    tags: ['CWE-778', 'OWASP A09', 'logging', 'mitigation: audit logs']
+                }
+            },
+            {
+                id: 'A10',
+                fullName: 'Mishandling of Exceptional Conditions',
+                icon: 'fa-exclamation-triangle',
+                example: {
+                    lines: [
+                        { type: 'request', text: 'GET /api/user/profile?id=invalid' },
+                        { type: 'response', text: '<span class="highlight-danger">500 Error: Stack trace with DB credentials</span>' },
+                        { type: 'attack', text: 'Attacker forces errors to leak sensitive info' },
+                        { type: 'response', text: 'Database connection string exposed in error message.' }
+                    ],
+                    tag: 'Error disclosure · information leakage',
+                    hint: 'Trigger errors with malformed input to see what information is revealed.'
+                },
+                explanation: 'Mishandling of exceptional conditions occurs when applications expose sensitive information through error messages, fail to handle edge cases, or crash insecurely.',
+                popup: {
+                    title: 'A10: Mishandling of Exceptional Conditions',
+                    body: `<p><strong>Errors reveal secrets.</strong> Proper error handling is essential.</p>
+                           <ul>
+                               <li><strong>Issues:</strong> Stack traces, database errors, debugging information exposed.</li>
+                               <li><strong>Impact:</strong> Information leakage, denial of service.</li>
+                           </ul>
+                           <p><strong>Mitigation:</strong> Generic error messages, proper exception handling, input validation.</p>`,
+                    tags: ['CWE-210', 'OWASP A10', 'error handling', 'mitigation: generic errors']
+                }
+            }
+        ];
+
+        // ---- DOM refs ----
+        const tabContainer = document.getElementById('tabContainer');
+        const mainPanel = document.getElementById('mainPanel');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupTitle = document.getElementById('popupTitle');
+        const popupBody = document.getElementById('popupBody');
+        const popupFooter = document.getElementById('popupFooter');
+        const closePopupBtn = document.getElementById('closePopupBtn');
+
+        let activeIndex = 0;
+        let attackCount = {};
+
+        // ---- render tabs ----
+        function renderTabs() {
+            tabContainer.innerHTML = '';
+            risks.forEach((risk, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn ${idx === activeIndex ? 'active' : ''}`;
+                btn.setAttribute('data-index', idx);
+                btn.innerHTML = `<i class="fas ${risk.icon}"></i> ${risk.id} <span class="full-name">${risk.fullName}</span>`;
+                btn.addEventListener('click', () => {
+                    activeIndex = idx;
+                    renderTabs();
+                    renderPanel(idx);
+                });
+                tabContainer.appendChild(btn);
+            });
+        }
+
+        // ---- render panel with interactive attack ----
+        function renderPanel(index) {
+            const risk = risks[index];
+            if (!risk) return;
+
+            const { id, fullName, example, explanation, popup } = risk;
+
+            let linesHtml = '';
+            example.lines.forEach(line => {
+                let className = '';
+                if (line.type === 'request') className = 'method';
+                else if (line.type === 'response') className = 'response';
+                else if (line.type === 'attack') className = 'highlight-success';
+                linesHtml += `
+                    <div class="line">
+                        <span class="${className}">${line.text}</span>
+                    </div>
+                `;
+            });
+
+            const panelHtml = `
+                <div class="attack-example-grid">
+                    <div>
+                        <div class="example-visual">
+                            <div class="preview-title"><i class="fas fa-crosshairs"></i> ${id} · ${fullName}</div>
+                            <div class="attack-sim">
+                                ${linesHtml}
+                            </div>
+                            <div class="attack-hint">
+                                <button class="attack-btn" data-risk-id="${id}" id="attackBtn-${id}">
+                                    <i class="fas fa-skull"></i> Attack this API
+                                </button>
+                                <span class="attack-hint-text"><i class="fas fa-lightbulb"></i> ${example.hint}</span>
+                            </div>
+                            <div id="feedback-${id}" class="feedback-area">Click "Attack" to simulate exploitation.</div>
+                            <div style="margin-top:0.5rem; display:flex; gap:8px; flex-wrap:wrap;">
+                                <span class="attack-tag"><i class="fas fa-skull"></i> ${example.tag}</span>
+                                <span class="attack-tag" style="background:rgba(52,152,219,0.03);"><i class="fas fa-shield"></i> ${id}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="explanation-box">
+                            <h3><i class="fas fa-shield" style="color:#5b9bd5;"></i> ${fullName}</h3>
+                            <p>${explanation}</p>
+                            <button class="popup-trigger" id="popupTriggerBtn"><i class="fas fa-info-circle"></i> View full details</button>
+                            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:0.2rem;">
+                                ${popup.tags.map(t => `<span class="popup-tag ${t.includes('mitigation') ? 'mitigation' : ''}">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            mainPanel.innerHTML = panelHtml;
+
+            // ---- ATTACK INTERACTION ----
+            const attackBtn = document.getElementById(`attackBtn-${id}`);
+            const feedback = document.getElementById(`feedback-${id}`);
+
+            if (attackBtn && feedback) {
+                attackBtn.addEventListener('click', function() {
+                    if (!attackCount[id]) attackCount[id] = 0;
+                    attackCount[id]++;
+
+                    const responses = [
+                        `⚡ <span style="color:#5b9bd5;">Exploit successful!</span> ${fullName} vulnerability confirmed.`,
+                        `🔓 <span style="color:#5b9bd5;">Access granted.</span> The ${fullName} flaw was exploited.`,
+                        `⚠️ <span style="color:#e8a070;">Warning:</span> Sensitive data exposed!`,
+                        `✅ <span style="color:#5b9bd5;">Attack vector validated.</span> ${id} is exploitable.`,
+                        `🔥 <span style="color:#5b9bd5;">System compromised.</span> ${fullName} risk demonstrated.`
+                    ];
+
+                    const msg = responses[Math.floor(Math.random() * responses.length)];
+                    feedback.innerHTML = msg;
+                    feedback.className = 'feedback-area success';
+
+                    attackBtn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        attackBtn.style.transform = 'scale(1)';
+                    }, 200);
+
+                    // Update the attack line
+                    const lines = document.querySelectorAll('.attack-sim .line');
+                    lines.forEach(line => {
+                        if (line.textContent.includes('Attacker')) {
+                            line.innerHTML = `<span class="highlight-success">✓ ATTACK SUCCESS — ${fullName} exploited via ${example.tag}</span>`;
+                        }
+                    });
+                });
+            }
+
+            // popup trigger
+            const trigger = document.getElementById('popupTriggerBtn');
+            if (trigger) {
+                trigger.addEventListener('click', () => openPopup(index));
+            }
+        }
+
+        // ---- POPUP ----
+        function openPopup(index) {
+            const risk = risks[index];
+            if (!risk) return;
+            const pop = risk.popup;
+            popupTitle.innerHTML = `<i class="fas fa-info-circle"></i> ${pop.title}`;
+            popupBody.innerHTML = pop.body;
+            popupFooter.innerHTML = pop.tags.map(t =>
+                `<span class="popup-tag ${t.includes('mitigation') ? 'mitigation' : ''}">${t}</span>`
+            ).join('');
+            popupOverlay.classList.add('open');
+        }
+
+        function closePopup() {
+            popupOverlay.classList.remove('open');
+        }
+
+        closePopupBtn.addEventListener('click', closePopup);
+        popupOverlay.addEventListener('click', (e) => {
+            if (e.target === popupOverlay) closePopup();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePopup();
+        });
+
+        // ---- init ----
+        renderTabs();
+        renderPanel(activeIndex);
+    })();
+</script>
+</body>
+</html>

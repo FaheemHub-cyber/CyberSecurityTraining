@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 ThreatScape · Step-by-Step Animation</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #070b12;
+            min-height: 100vh;
+            color: #e8f0fa;
+            font-size: 14px;
+            overflow-x: hidden;
+        }
+
+        .app {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0.8rem 1.5rem 0.5rem;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1e2a38;
+            padding-bottom: 0.7rem;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .logo h1 {
+            font-weight: 500;
+            font-size: 1.7rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo i { color: #4a9eff; font-size: 1.9rem; }
+        .top-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .top-actions button {
+            background: #141f2b;
+            border: 1px solid #2a3b4d;
+            color: #c8dbf0;
+            padding: 0.4rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.85rem;
+        }
+        .top-actions button:hover { background: #1f3142; border-color: #4e6f92; color: white; }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr 300px;
+            gap: 1.2rem;
+            margin: 1.2rem 0 0.8rem;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .case-panel {
+            background: #0d1622;
+            border-radius: 24px;
+            border: 1px solid #1d2a38;
+            padding: 1.2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .case-panel h3 {
+            font-weight: 400;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid #1a2634;
+            padding-bottom: 0.5rem;
+        }
+        .case-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .case-item {
+            background: #0a141f;
+            padding: 0.6rem 0.8rem;
+            border-radius: 16px;
+            border-left: 3px solid #2d4b6a;
+            cursor: pointer;
+            transition: 0.15s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .case-item:hover { background: #13202e; }
+        .case-item.active { border-left-color: #f7b731; background: #172737; }
+        .case-item .case-title { font-weight: 500; font-size: 0.85rem; }
+        .case-item .case-status {
+            font-size: 0.6rem;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            background: #1f2f3a;
+        }
+        .case-item .case-status.open { background: #1a3a2a; color: #8bdfb0; }
+        .new-case-btn {
+            margin-top: 0.6rem;
+            background: #1a2a3a;
+            border: 1px dashed #3a5a6a;
+            color: #b0cce0;
+            padding: 0.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+            font-size: 0.85rem;
+        }
+        .new-case-btn:hover { background: #1f3142; border-color: #5a8aaa; }
+
+        .center-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-height: 0;
+        }
+
+        .graph-panel {
+            background: #0d1622;
+            border-radius: 24px;
+            border: 1px solid #1d2a38;
+            padding: 0.8rem 1rem 0.6rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+        }
+        .graph-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+        .graph-header h3 { font-weight: 400; font-size: 0.9rem; color: #9bb1d0; }
+        .live-badge {
+            background: #1a352a;
+            color: #8bdfb0;
+            padding: 0.1rem 1rem;
+            border-radius: 60px;
+            font-size: 0.65rem;
+            border: 1px solid #2a6b42;
+        }
+        .graph-canvas {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem 1.5rem;
+            padding: 0.3rem 0;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .node {
+            background: #111e2b;
+            border: 2px solid #2d425a;
+            border-radius: 60px;
+            padding: 0.5rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            z-index: 1;
+        }
+        .node i { color: #6a94cc; font-size: 1rem; }
+        .node .type-tag { font-size: 0.5rem; background: #1b2a3a; padding: 0.05rem 0.6rem; border-radius: 30px; color: #97b5db; }
+
+        .node.attacking {
+            animation: attackPulse 0.6s ease-in-out 4;
+            border-color: #ff4757;
+            z-index: 10;
+        }
+        @keyframes attackPulse {
+            0%, 100% { transform: scale(1); background: #111e2b; }
+            50% { transform: scale(1.2); background: #2a1a1a; box-shadow: 0 0 50px rgba(255, 71, 87, 0.6); }
+        }
+
+        .node.compromised {
+            border-color: #ff4757;
+            background: #2a1a1a;
+            box-shadow: 0 0 30px rgba(255, 71, 87, 0.3);
+            animation: compromisedGlow 1.5s ease-in-out infinite;
+        }
+        @keyframes compromisedGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 71, 87, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(255, 71, 87, 0.5); }
+        }
+        .node.compromised i { color: #ff6b81; }
+
+        .node.secure {
+            border-color: #2ed573;
+            background: #1a2a1a;
+            box-shadow: 0 0 25px rgba(46, 213, 115, 0.2);
+            animation: secureGlow 1.5s ease-in-out infinite;
+        }
+        @keyframes secureGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(46, 213, 115, 0.15); }
+            50% { box-shadow: 0 0 35px rgba(46, 213, 115, 0.3); }
+        }
+        .node.secure i { color: #7bed9f; }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            font-size: 1.2rem;
+            pointer-events: none;
+            z-index: 50;
+            animation: flyParticle 0.8s ease-in forwards;
+        }
+        @keyframes flyParticle {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.5); }
+        }
+
+        .data-stream {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b81, #f7b731);
+            border-radius: 2px;
+            z-index: 5;
+            animation: streamFlow 0.6s ease-in forwards;
+            transform-origin: left center;
+        }
+        @keyframes streamFlow {
+            0% { width: 0; opacity: 1; }
+            100% { width: var(--width); opacity: 0; }
+        }
+
+        .edge-line { color: #3f556b; font-size: 0.8rem; }
+
+        /* Live status */
+        .live-status {
+            background: #0a141f;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            margin-top: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.75rem;
+            border: 1px solid #1a2a3a;
+            min-height: 36px;
+        }
+        .live-status .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .live-status .status-dot.idle { background: #5a7a8a; }
+        .live-status .status-dot.attacking { background: #ff6b81; animation: dotPulse 0.5s ease-in-out infinite; }
+        .live-status .status-dot.fixing { background: #7bed9f; animation: dotPulse 0.8s ease-in-out infinite; }
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        .details-panel {
+            background: #0d1622;
+            border-radius: 24px;
+            border: 1px solid #1d2a38;
+            padding: 1.2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .details-panel h3 {
+            font-weight: 400;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #1a2634;
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .details-content {
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 0.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .detail-item {
+            background: #0a121e;
+            border-left: 3px solid #2d4b6a;
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+        }
+        .detail-item .label { font-size: 0.55rem; text-transform: uppercase; color: #7b96b8; letter-spacing: 0.3px; }
+        .detail-item .value { font-weight: 500; font-size: 0.8rem; color: #d6e5ff; margin-top: 1px; }
+        .evidence-tag {
+            display: inline-block;
+            background: #1a2a3a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            border: 1px solid #2a4a5a;
+            margin: 2px 4px 2px 0;
+        }
+
+        .footer {
+            margin-top: 0.3rem;
+            padding: 0.6rem 0 0.3rem;
+            border-top: 1px solid #1a2634;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem 1.2rem;
+        }
+        .threat-btn {
+            background: #111e2b;
+            border: 2px solid #2a3f54;
+            color: #c6dbf2;
+            padding: 0.5rem 1.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .threat-btn:hover { background: #1f2e3f; border-color: #5b7b9e; color: white; transform: translateY(-2px); }
+        .threat-btn.active { background: #263b52; border-color: #7b9fd1; box-shadow: 0 0 20px #3b6b9e55; }
+        .threat-btn i { color: #7e9fc9; }
+
+        .timestamp { font-size: 0.6rem; color: #6d87a8; margin-top: 0.3rem; border-top: 1px dashed #1f2f3f; padding-top: 0.3rem; }
+
+        /* ===== STORY OVERLAY ===== */
+        .story-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .story-overlay.active { display: flex; }
+
+        .story-box {
+            background: #15222f;
+            border: 1px solid #3a5a7a;
+            border-radius: 32px;
+            max-width: 720px;
+            width: 94%;
+            padding: 2rem 2.2rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .story-box .step-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid #2a4050;
+            padding-bottom: 0.8rem;
+        }
+        .story-box .step-header .step-num {
+            background: #1a3a4a;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #6fcbff;
+            border: 1px solid #3a7a8a;
+            flex-shrink: 0;
+        }
+        .story-box .step-header .step-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #f0e6d0;
+        }
+
+        .story-box .step-body {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #c8dbf0;
+            margin: 0.8rem 0 1.2rem;
+            min-height: 60px;
+        }
+        .story-box .step-body .highlight { color: #f7b731; font-weight: 600; }
+        .story-box .step-body .danger { color: #ff6b81; font-weight: 600; }
+        .story-box .step-body .success { color: #7bed9f; font-weight: 600; }
+        .story-box .step-body .code-block {
+            background: #0a141f;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #b0cce0;
+            margin: 0.6rem 0;
+            border: 1px solid #1a2a3a;
+            overflow-x: auto;
+        }
+
+        .story-box .step-visual {
+            background: #0a141f;
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 0.8rem 0;
+            border: 1px solid #1a2a3a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            min-height: 70px;
+        }
+        .story-box .step-visual .vis-icon {
+            font-size: 2.5rem;
+            animation: floatIcon 2s ease-in-out infinite;
+        }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .story-box .step-visual .vis-label {
+            font-size: 0.8rem;
+            color: #7b96b8;
+            text-align: center;
+        }
+        .story-box .step-visual .vis-arrow {
+            font-size: 1.5rem;
+            color: #4a6a7a;
+            animation: arrowPulse 1s ease-in-out infinite;
+        }
+        @keyframes arrowPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .story-box .step-visual .vis-badge {
+            background: #1a2a3a;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            border: 1px solid #2a4a5a;
+        }
+
+        .story-box .step-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 1.2rem;
+            border-top: 1px solid #1a2a3a;
+            padding-top: 1rem;
+        }
+        .story-box .step-actions button {
+            padding: 0.5rem 2rem;
+            border-radius: 40px;
+            border: 1px solid #3a5a7a;
+            background: #1a2a3a;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+        .story-box .step-actions button:hover { background: #2a4a5a; border-color: #5a8aaa; }
+        .story-box .step-actions .primary-btn {
+            background: #1a3a4a;
+            border-color: #3a8aaa;
+        }
+        .story-box .step-actions .primary-btn:hover { background: #2a5a6a; }
+
+        .story-box .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #1a2a3a;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        .story-box .progress-bar .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3a8aaa, #6fcbff);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid { grid-template-columns: 1fr; gap: 0.8rem; }
+            .case-panel { max-height: 160px; }
+        }
+        @media (max-width: 600px) {
+            .app { padding: 0.5rem 0.8rem; }
+            .node { font-size: 0.6rem; padding: 0.25rem 0.8rem; }
+            .threat-btn { font-size: 0.65rem; padding: 0.3rem 1rem; }
+            .story-box { padding: 1.2rem; }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 998;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: #15202d;
+            max-width: 500px;
+            width: 94%;
+            padding: 2rem;
+            border-radius: 32px;
+            border: 1px solid #3b5068;
+            color: #e2edfc;
+        }
+        .modal-box h2 { font-weight: 400; border-bottom: 1px solid #2e4057; padding-bottom: 0.6rem; margin-bottom: 1rem; }
+        .modal-box input, .modal-box textarea, .modal-box select {
+            width: 100%;
+            background: #0a141f;
+            border: 1px solid #2a3f54;
+            color: #d6e5ff;
+            padding: 0.5rem 1rem;
+            border-radius: 16px;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+        .modal-box input:focus, .modal-box textarea:focus { outline: 2px solid #4a7a9a; border-color: transparent; }
+        .modal-box textarea { min-height: 60px; resize: vertical; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 0.5rem; }
+        .modal-actions button {
+            padding: 0.4rem 1.8rem;
+            border-radius: 40px;
+            border: 1px solid #3a5a7a;
+            background: #1a2a3a;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .modal-actions .primary { background: #1a3a4a; border-color: #3a8aaa; }
+        .modal-actions button:hover { background: #2a4a5a; }
+    </style>
+</head>
+<body>
+<div class="app">
+    <header class="header">
+        <div class="logo"><h1><i class="fas fa-shield-halved"></i> ThreatScape · Step-by-Step</h1></div>
+        <div class="top-actions">
+            <button id="newCaseBtn"><i class="fas fa-plus-circle"></i> New Case</button>
+            <button id="resetBtn"><i class="fas fa-rotate-left"></i> Reset</button>
+            <button id="helpBtn"><i class="fas fa-circle-question"></i> Help</button>
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <div class="case-panel">
+            <h3><span><i class="fas fa-folder-open"></i> Cases</span> <span style="font-size:0.7rem;color:#7b96b8;" id="caseCount">0</span></h3>
+            <div class="case-list" id="caseList"></div>
+            <div class="new-case-btn" id="newCaseBtn2"><i class="fas fa-plus"></i> Create investigation</div>
+        </div>
+
+        <div class="center-panel">
+            <div class="graph-panel">
+                <div class="graph-header">
+                    <h3><i class="fas fa-project-diagram"></i> Entity graph</h3>
+                    <span class="live-badge"><i class="fas fa-circle" style="color:#6fdf9f;"></i> live</span>
+                </div>
+                <div class="graph-canvas" id="graphCanvas"></div>
+                <div class="live-status" id="liveStatus">
+                    <span class="status-dot idle" id="statusDot"></span>
+                    <span id="statusText">🟢 Ready — click a threat button to start</span>
+                </div>
+                <div class="timestamp"><i class="far fa-clock"></i> <span id="timestampText">15:22:41</span></div>
+            </div>
+        </div>
+
+        <div class="details-panel">
+            <h3><i class="fas fa-circle-info" style="color:#6d8fc7;"></i> Case Details</h3>
+            <div class="details-content" id="detailsContent">
+                <div class="detail-item"><div class="label">Case</div><div class="value" id="detailCase">—</div></div>
+                <div class="detail-item"><div class="label">Entity</div><div class="value" id="detailEntity">—</div></div>
+                <div class="detail-item"><div class="label">Status</div><div class="value" id="detailStatus">—</div></div>
+                <div class="detail-item" style="border-left-color:#4a6a3a;"><div class="label">Evidence</div><div class="value" id="detailEvidence"><span class="evidence-tag">—</span></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button class="threat-btn" data-threat="spoofing"><i class="fas fa-user-astronaut"></i> Spoofing</button>
+        <button class="threat-btn" data-threat="tampering"><i class="fas fa-pen-ruler"></i> Tampering</button>
+        <button class="threat-btn" data-threat="repudiation"><i class="fas fa-ban"></i> Repudiation</button>
+        <button class="threat-btn" data-threat="information disclosure"><i class="fas fa-eye"></i> Info Disclosure</button>
+        <button class="threat-btn" data-threat="dos"><i class="fas fa-circle-exclamation"></i> DoS</button>
+        <button class="threat-btn" data-threat="elevation of privilege"><i class="fas fa-arrow-up"></i> Elevation</button>
+    </div>
+</div>
+
+<!-- ===== STORY OVERLAY ===== -->
+<div class="story-overlay" id="storyOverlay">
+    <div class="story-box">
+        <div class="step-header">
+            <div class="step-num" id="stepNum">1</div>
+            <div class="step-title" id="stepTitle">Attack in progress...</div>
+        </div>
+        <div class="step-body" id="stepBody"></div>
+        <div class="step-visual" id="stepVisual"></div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="step-actions">
+            <button id="storyPrevBtn" style="display:none;"><i class="fas fa-arrow-left"></i> Back</button>
+            <button id="storyNextBtn" class="primary-btn">Continue <i class="fas fa-arrow-right"></i></button>
+            <button id="storyCloseBtn">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- New Case Modal -->
+<div class="modal-overlay" id="newCaseModal">
+    <div class="modal-box">
+        <h2><i class="fas fa-folder-plus"></i> New Investigation</h2>
+        <input type="text" id="caseTitleInput" placeholder="Case title">
+        <textarea id="caseDescInput" placeholder="Description"></textarea>
+        <select id="caseTypeInput">
+            <option value="incident">Incident Response</option>
+            <option value="audit">Security Audit</option>
+            <option value="pentest">Penetration Test</option>
+        </select>
+        <div class="modal-actions">
+            <button id="cancelCaseBtn">Cancel</button>
+            <button id="saveCaseBtn" class="primary">Create</button>
+        </div>
+    </div>
+</div>
+
+<!-- Help Modal -->
+<div class="modal-overlay" id="helpModal">
+    <div class="modal-box">
+        <h2><i class="fas fa-lightbulb"></i> Step-by-Step Animation</h2>
+        <p style="margin-bottom:1rem;">Click a threat button to start an <strong>interactive walkthrough</strong>:</p>
+        <ul style="margin-left:1.2rem;margin-bottom:1rem;color:#b0cce0;line-height:1.8;">
+            <li>📖 Each step explains <strong>what's happening</strong></li>
+            <li>🎬 The UI <strong>animates</strong> the attack in real-time</li>
+            <li>⏸️ The animation <strong>repeats</strong> until you click "Continue"</li>
+            <li>🛡️ The final step shows <strong>how to fix it</strong></li>
+        </ul>
+        <button id="closeHelpBtn" style="padding:0.4rem 2rem;border-radius:40px;border:1px solid #3a5a7a;background:#1a2a3a;color:white;cursor:pointer;">Got it</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- DATA ----------
+        const entities = [
+            { id: 'auth0', label: 'Auth0 SSO', type: 'Identity', icon: 'fa-user-lock', threat: 'spoofing', vuln: 'Weak session tokens, no MFA' },
+            { id: 'db', label: 'User DB', type: 'Storage', icon: 'fa-database', threat: 'tampering', vuln: 'No integrity checks, direct write' },
+            { id: 'audit', label: 'Audit Log', type: 'Log', icon: 'fa-scroll', threat: 'repudiation', vuln: 'Logs can be deleted, no crypto proof' },
+            { id: 'vault', label: 'Secrets Vault', type: 'Vault', icon: 'fa-key', threat: 'information disclosure', vuln: 'Plaintext secrets, weak access' },
+            { id: 'api', label: 'API Gateway', type: 'Gateway', icon: 'fa-server', threat: 'dos', vuln: 'No rate limiting, flood vulnerable' },
+            { id: 'admin', label: 'Admin Panel', type: 'Admin', icon: 'fa-user-gear', threat: 'elevation of privilege', vuln: 'Default creds, no RBAC' }
+        ];
+
+        // ---------- STATE ----------
+        let cases = [];
+        let activeCaseId = null;
+        let selectedEntityId = null;
+        let caseIdCounter = 1;
+        let isSimulating = false;
+        let storySteps = [];
+        let currentStepIdx = 0;
+        let animLoopId = null;
+        let isWaitingForContinue = false;
+
+        // ---------- DOM ----------
+        const graphCanvas = document.getElementById('graphCanvas');
+        const caseListEl = document.getElementById('caseList');
+        const caseCountEl = document.getElementById('caseCount');
+        const detailCase = document.getElementById('detailCase');
+        const detailEntity = document.getElementById('detailEntity');
+        const detailStatus = document.getElementById('detailStatus');
+        const detailEvidence = document.getElementById('detailEvidence');
+        const timestampText = document.getElementById('timestampText');
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+
+        const storyOverlay = document.getElementById('storyOverlay');
+        const stepNum = document.getElementById('stepNum');
+        const stepTitle = document.getElementById('stepTitle');
+        const stepBody = document.getElementById('stepBody');
+        const stepVisual = document.getElementById('stepVisual');
+        const progressFill = document.getElementById('progressFill');
+        const storyNextBtn = document.getElementById('storyNextBtn');
+        const storyPrevBtn = document.getElementById('storyPrevBtn');
+        const storyCloseBtn = document.getElementById('storyCloseBtn');
+
+        // ---------- helpers ----------
+        function getTime() { return new Date().toTimeString().slice(0,8); }
+        function updateTimestamp() {
+            timestampText.textContent = getTime();
+        }
+        setInterval(updateTimestamp, 5000);
+        updateTimestamp();
+
+        function setStatus(text, type = 'idle') {
+            statusDot.className = `status-dot ${type}`;
+            statusText.textContent = text;
+        }
+
+        // ---------- render graph ----------
+        function renderGraph() {
+            graphCanvas.innerHTML = '';
+            entities.forEach((entity, idx) => {
+                const node = document.createElement('div');
+                node.className = 'node';
+                node.dataset.entityId = entity.id;
+                node.dataset.threat = entity.threat;
+                node.id = `node-${entity.id}`;
+                node.innerHTML = `<i class="fas ${entity.icon}"></i><span>${entity.label}</span><span class="type-tag">${entity.type}</span>`;
+                node.addEventListener('click', () => {
+                    selectedEntityId = entity.id;
+                    updateDetails(entity);
+                });
+                graphCanvas.appendChild(node);
+                if (idx < entities.length - 1) {
+                    const arrow = document.createElement('span');
+                    arrow.className = 'edge-line';
+                    arrow.innerHTML = ' <i class="fas fa-arrow-right"></i> ';
+                    graphCanvas.appendChild(arrow);
+                }
+            });
+        }
+        renderGraph();
+
+        // ---------- update details ----------
+        function updateDetails(entity) {
+            detailEntity.textContent = `${entity.label} (${entity.type})`;
+            const activeCase = cases.find(c => c.id === activeCaseId);
+            if (activeCase) {
+                const ev = activeCase.evidence?.filter(e => e.entityId === entity.id || e.entityId === 'all') || [];
+                detailEvidence.innerHTML = ev.length > 0 ? ev.slice(-3).map(e => `<span class="evidence-tag">${e.text}</span>`).join(' ') : '<span class="evidence-tag">—</span>';
+            }
+        }
+
+        // ---------- cases ----------
+        function renderCases() {
+            caseListEl.innerHTML = '';
+            if (cases.length === 0) {
+                caseListEl.innerHTML = '<div style="color:#5a7a8a;text-align:center;padding:1rem 0;font-size:0.8rem;">No cases yet.</div>';
+                caseCountEl.textContent = '0';
+                detailCase.textContent = '—';
+                return;
+            }
+            caseCountEl.textContent = cases.length;
+            cases.forEach(c => {
+                const div = document.createElement('div');
+                div.className = `case-item${c.id === activeCaseId ? ' active' : ''}`;
+                div.innerHTML = `
+                    <span class="case-title">${c.title}</span>
+                    <span class="case-status ${c.status}">${c.status}</span>
+                `;
+                div.addEventListener('click', () => {
+                    activeCaseId = c.id;
+                    renderCases();
+                    detailCase.textContent = c.title;
+                });
+                caseListEl.appendChild(div);
+            });
+            const active = cases.find(c => c.id === activeCaseId);
+            if (active) detailCase.textContent = active.title;
+            else if (cases.length > 0) { activeCaseId = cases[0].id; renderCases(); detailCase.textContent = cases[0].title; }
+        }
+
+        function createCase(title, desc, type) {
+            const newCase = {
+                id: caseIdCounter++,
+                title: title || 'Untitled',
+                description: desc || '',
+                type: type || 'incident',
+                status: 'open',
+                evidence: [],
+                findings: []
+            };
+            cases.unshift(newCase);
+            activeCaseId = newCase.id;
+            renderCases();
+            detailCase.textContent = newCase.title;
+            return newCase;
+        }
+
+        // ---------- PARTICLES ----------
+        function spawnParticle(fromEl, toEl, icon = '💀') {
+            if (!fromEl || !toEl) return;
+            const fromRect = fromEl.getBoundingClientRect();
+            const toRect = toEl.getBoundingClientRect();
+            const containerRect = graphCanvas.getBoundingClientRect();
+
+            const startX = fromRect.left - containerRect.left + fromRect.width/2;
+            const startY = fromRect.top - containerRect.top + fromRect.height/2;
+            const endX = toRect.left - containerRect.left + toRect.width/2;
+            const endY = toRect.top - containerRect.top + toRect.height/2;
+
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.textContent = icon;
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            particle.style.setProperty('--tx', (endX - startX) + 'px');
+            particle.style.setProperty('--ty', (endY - startY) + 'px');
+            graphCanvas.appendChild(particle);
+
+            setTimeout(() => {
+                if (particle.parentNode) particle.remove();
+            }, 900);
+        }
+
+        function spawnDataStream(fromEl, toEl) {
+            if (!fromEl || !toEl) return;
+            const fromRect = fromEl.getBoundingClientRect();
+            const toRect = toEl.getBoundingClientRect();
+            const containerRect = graphCanvas.getBoundingClientRect();
+
+            const startX = fromRect.left - containerRect.left + fromRect.width/2;
+            const startY = fromRect.top - containerRect.top + fromRect.height/2;
+            const endX = toRect.left - containerRect.left + toRect.width/2;
+            const endY = toRect.top - containerRect.top + toRect.height/2;
+
+            const stream = document.createElement('div');
+            stream.className = 'data-stream';
+            const dx = endX - startX;
+            const dy = endY - startY;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            stream.style.left = startX + 'px';
+            stream.style.top = startY + 'px';
+            stream.style.width = '4px';
+            stream.style.height = '3px';
+            stream.style.setProperty('--width', dist + 'px');
+            stream.style.transform = `rotate(${Math.atan2(dy, dx)}rad)`;
+            stream.style.transformOrigin = 'left center';
+            graphCanvas.appendChild(stream);
+
+            setTimeout(() => {
+                if (stream.parentNode) stream.remove();
+            }, 700);
+        }
+
+        // ---------- STORY DEFINITIONS ----------
+        const threatStories = {
+            'spoofing': {
+                title: '🔐 Spoofing Attack',
+                steps: [
+                    {
+                        title: 'Step 1: Session Interception',
+                        body: 'The attacker intercepts a legitimate user\'s session cookie during login. They <span class="highlight">copy the session ID</span> from the network traffic using a man-in-the-middle attack.',
+                        visual: '<span class="vis-icon">🍪</span> <span class="vis-label">Session ID: a7f8e3d... intercepted!</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">👤</span> <span class="vis-label">Attacker</span>',
+                        target: 'auth0',
+                        icon: '🍪'
+                    },
+                    {
+                        title: 'Step 2: Identity Theft',
+                        body: 'The attacker uses the stolen session ID to impersonate the user. They now have <span class="danger">full access to the victim\'s account</span> without needing credentials or MFA.',
+                        visual: '<span class="vis-icon">🔑</span> <span class="vis-label">Stolen token injected</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">✅</span> <span class="vis-label">Access granted as victim</span>',
+                        target: 'auth0',
+                        icon: '🔑'
+                    },
+                    {
+                        title: 'Step 3: Impact & Damage',
+                        body: 'The attacker can now <span class="danger">view sensitive data, change settings, and perform actions</span> as the legitimate user. Authentication is completely broken.',
+                        visual: '<span class="vis-icon">💀</span> <span class="vis-label">Account compromised</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">📊</span> <span class="vis-label">Data exfiltration</span>',
+                        target: 'auth0',
+                        icon: '💀'
+                    },
+                    {
+                        title: '🛡️ How to Fix Spoofing',
+                        body: '<span class="success">Implement MFA (Multi-Factor Authentication)</span> - even if the session is stolen, the attacker can\'t bypass the second factor. Also use <span class="success">certificate pinning</span> and <span class="success">secure session binding</span> to prevent token reuse.',
+                        visual: '<span class="vis-icon">🛡️</span> <span class="vis-label">MFA + Certificate Pinning</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#7bed9f;">✅</span> <span class="vis-label">Spoofing blocked</span>',
+                        target: 'auth0',
+                        icon: '✅',
+                        isFix: true
+                    }
+                ]
+            },
+            'tampering': {
+                title: '📝 Tampering Attack',
+                steps: [
+                    {
+                        title: 'Step 1: Database Access',
+                        body: 'The attacker gains <span class="highlight">unauthorized write access</span> to the database through a SQL injection vulnerability or misconfigured permissions.',
+                        visual: '<span class="vis-icon">📊</span> <span class="vis-label">User DB</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">✏️</span> <span class="vis-label">Write access gained</span>',
+                        target: 'db',
+                        icon: '📊'
+                    },
+                    {
+                        title: 'Step 2: Data Modification',
+                        body: 'The attacker modifies <span class="danger">user records, financial data, or application code</span> without any integrity checks stopping them.',
+                        visual: '<span class="vis-icon">✏️</span> <span class="vis-label">Record modified</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">⚠️</span> <span class="vis-label">No integrity check</span>',
+                        target: 'db',
+                        icon: '✏️'
+                    },
+                    {
+                        title: 'Step 3: Impact',
+                        body: 'This can lead to <span class="danger">data corruption, backdoors, and complete system compromise</span>. The system can no longer be trusted.',
+                        visual: '<span class="vis-icon">💀</span> <span class="vis-label">System untrusted</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">🚨</span> <span class="vis-label">Backdoor installed</span>',
+                        target: 'db',
+                        icon: '💀'
+                    },
+                    {
+                        title: '🛡️ How to Fix Tampering',
+                        body: 'Use <span class="success">checksums and digital signatures</span> for all critical data. Implement <span class="success">audit logs</span> to track all changes. Use <span class="success">immutable storage</span> for sensitive records.',
+                        visual: '<span class="vis-icon">🔐</span> <span class="vis-label">Digital signatures</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#7bed9f;">✅</span> <span class="vis-label">Integrity protected</span>',
+                        target: 'db',
+                        icon: '✅',
+                        isFix: true
+                    }
+                ]
+            },
+            'repudiation': {
+                title: '📜 Repudiation Attack',
+                steps: [
+                    {
+                        title: 'Step 1: Log Manipulation',
+                        body: 'After performing malicious actions, the attacker <span class="highlight">deletes or modifies audit logs</span> to remove evidence of their activity.',
+                        visual: '<span class="vis-icon">📋</span> <span class="vis-label">Audit logs</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">🗑️</span> <span class="vis-label">Logs deleted</span>',
+                        target: 'audit',
+                        icon: '📋'
+                    },
+                    {
+                        title: 'Step 2: Denial of Actions',
+                        body: 'The attacker <span class="danger">denies performing the malicious actions</span> and there\'s no cryptographic proof to refute their claim.',
+                        visual: '<span class="vis-icon">🤷</span> <span class="vis-label">"I didn\'t do it"</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">❓</span> <span class="vis-label">No proof available</span>',
+                        target: 'audit',
+                        icon: '🤷'
+                    },
+                    {
+                        title: 'Step 3: Impact',
+                        body: 'This breaks <span class="danger">non-repudiation and accountability</span>. No one can be held responsible for their actions, enabling fraud and abuse.',
+                        visual: '<span class="vis-icon">⚠️</span> <span class="vis-label">Accountability lost</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">🚫</span> <span class="vis-label">No trust</span>',
+                        target: 'audit',
+                        icon: '⚠️'
+                    },
+                    {
+                        title: '🛡️ How to Fix Repudiation',
+                        body: 'Use <span class="success">cryptographically signed audit trails</span> with tamper-proof timestamps. Store logs in <span class="success">write-once media</span> or use <span class="success">blockchain-based logging</span>.',
+                        visual: '<span class="vis-icon">🔏</span> <span class="vis-label">Signed logs</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#7bed9f;">✅</span> <span class="vis-label">Non-repudiation enabled</span>',
+                        target: 'audit',
+                        icon: '✅',
+                        isFix: true
+                    }
+                ]
+            },
+            'information disclosure': {
+                title: '👁️ Information Disclosure',
+                steps: [
+                    {
+                        title: 'Step 1: Secrets Access',
+                        body: 'The attacker exploits <span class="highlight">misconfigured permissions or weak access controls</span> to read the secrets vault containing API keys, tokens, and PII.',
+                        visual: '<span class="vis-icon">🔑</span> <span class="vis-label">Secrets Vault</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">👤</span> <span class="vis-label">Unauthorized read</span>',
+                        target: 'vault',
+                        icon: '🔑'
+                    },
+                    {
+                        title: 'Step 2: Data Exposure',
+                        body: 'Sensitive data is <span class="danger">stored in plaintext or weakly encrypted</span>. The attacker steals customer PII, API keys, and internal credentials.',
+                        visual: '<span class="vis-icon">📊</span> <span class="vis-label">PII + API keys</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">💾</span> <span class="vis-label">Data exfiltrated</span>',
+                        target: 'vault',
+                        icon: '📊'
+                    },
+                    {
+                        title: 'Step 3: Impact',
+                        body: 'This leads to <span class="danger">data breach, privacy violations, and reputational damage</span>. Attackers can use stolen credentials for lateral movement.',
+                        visual: '<span class="vis-icon">🚨</span> <span class="vis-label">Data breach</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">💸</span> <span class="vis-label">Financial & reputational loss</span>',
+                        target: 'vault',
+                        icon: '🚨'
+                    },
+                    {
+                        title: '🛡️ How to Fix Info Disclosure',
+                        body: 'Implement <span class="success">encryption at rest and in transit</span>. Use <span class="success">strict RBAC</span> and <span class="success">automated secret rotation</span>. Regularly audit access permissions.',
+                        visual: '<span class="vis-icon">🔐</span> <span class="vis-label">Encryption + RBAC</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#7bed9f;">✅</span> <span class="vis-label">Data protected</span>',
+                        target: 'vault',
+                        icon: '✅',
+                        isFix: true
+                    }
+                ]
+            },
+            'dos': {
+                title: '🌊 DoS Attack',
+                steps: [
+                    {
+                        title: 'Step 1: Request Flood',
+                        body: 'The attacker sends <span class="highlight">thousands of requests per second</span> to the API gateway using a botnet or simple script, overwhelming the system.',
+                        visual: '<span class="vis-icon">📱</span> <span class="vis-label">1000+ requests/s</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">🚀</span> <span class="vis-label">API Gateway</span>',
+                        target: 'api',
+                        icon: '📱'
+                    },
+                    {
+                        title: 'Step 2: Resource Exhaustion',
+                        body: 'The system has <span class="danger">no rate limiting or circuit breakers</span>. CPU, memory, and connection pools are quickly exhausted.',
+                        visual: '<span class="vis-icon">📊</span> <span class="vis-label">CPU: 100%</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">⚠️</span> <span class="vis-label">Memory full</span>',
+                        target: 'api',
+                        icon: '📊'
+                    },
+                    {
+                        title: 'Step 3: Service Crash',
+                        body: 'The application <span class="danger">crashes or becomes unresponsive</span>. Legitimate users cannot access the service, causing business disruption.',
+                        visual: '<span class="vis-icon">💥</span> <span class="vis-label">Service down</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">🚫</span> <span class="vis-label">No service for users</span>',
+                        target: 'api',
+                        icon: '💥'
+                    },
+                    {
+                        title: '🛡️ How to Fix DoS',
+                        body: 'Implement <span class="success">rate limiting at the API gateway</span>. Use <span class="success">circuit breakers</span> and <span class="success">auto-scaling</span> to handle traffic spikes. Deploy a <span class="success">WAF</span> to filter malicious traffic.',
+                        visual: '<span class="vis-icon">🛡️</span> <span class="vis-label">Rate limiting + WAF</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#7bed9f;">✅</span> <span class="vis-label">Service protected</span>',
+                        target: 'api',
+                        icon: '✅',
+                        isFix: true
+                    }
+                ]
+            },
+            'elevation of privilege': {
+                title: '⬆️ Privilege Escalation',
+                steps: [
+                    {
+                        title: 'Step 1: Default Credentials',
+                        body: 'The attacker finds <span class="highlight">default admin credentials</span> (admin/admin) that were never changed during deployment.',
+                        visual: '<span class="vis-icon">🔑</span> <span class="vis-label">admin/admin</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">👤</span> <span class="vis-label">Admin Panel</span>',
+                        target: 'admin',
+                        icon: '🔑'
+                    },
+                    {
+                        title: 'Step 2: Admin Access',
+                        body: 'The attacker logs in as admin. The system has <span class="danger">no role-based access control (RBAC)</span> and the admin has unrestricted access to everything.',
+                        visual: '<span class="vis-icon">✅</span> <span class="vis-label">Admin login</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">👑</span> <span class="vis-label">Full system access</span>',
+                        target: 'admin',
+                        icon: '👑'
+                    },
+                    {
+                        title: 'Step 3: Complete Compromise',
+                        body: 'The attacker can now <span class="danger">view all data, change configurations, create backdoors, and even delete the entire system</span>. The system is fully compromised.',
+                        visual: '<span class="vis-icon">💀</span> <span class="vis-label">System owned</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#ff6b81;">🚨</span> <span class="vis-label">Full compromise</span>',
+                        target: 'admin',
+                        icon: '💀'
+                    },
+                    {
+                        title: '🛡️ How to Fix Elevation',
+                        body: 'Implement <span class="success">strict RBAC with least privilege</span>. Use <span class="success">MFA for all admin accounts</span>. Regularly <span class="success">audit permissions</span> and change default credentials immediately.',
+                        visual: '<span class="vis-icon">🛡️</span> <span class="vis-label">RBAC + MFA</span> <span class="vis-arrow">→</span> <span class="vis-icon" style="color:#7bed9f;">✅</span> <span class="vis-label">Access controlled</span>',
+                        target: 'admin',
+                        icon: '✅',
+                        isFix: true
+                    }
+                ]
+            }
+        };
+
+        // ---------- STORY ENGINE ----------
+        function showStory(threatKey) {
+            const story = threatStories[threatKey];
+            if (!story) return;
+
+            if (cases.length === 0) {
+                alert('Please create a case first!');
+                return;
+            }
+
+            isSimulating = true;
+            currentStepIdx = 0;
+            storySteps = story.steps;
+
+            // Reset UI
+            document.querySelectorAll('.node.compromised, .node.attacking, .node.secure').forEach(n => {
+                n.classList.remove('compromised', 'attacking', 'secure');
+                const b = n.querySelector('.popup-bubble');
+                if (b) b.remove();
+            });
+            document.querySelectorAll('.threat-btn.active').forEach(b => b.classList.remove('active'));
+            const btn = document.querySelector(`.threat-btn[data-threat="${threatKey}"]`);
+            if (btn) btn.classList.add('active');
+
+            storyOverlay.classList.add('active');
+            renderStoryStep();
+            // Start the animation loop
+            startAnimationLoop();
+        }
+
+        function renderStoryStep() {
+            const step = storySteps[currentStepIdx];
+            if (!step) return;
+
+            stepNum.textContent = currentStepIdx + 1;
+            stepTitle.textContent = step.title;
+            stepBody.innerHTML = step.body;
+            stepVisual.innerHTML = step.visual || '';
+
+            const total = storySteps.length;
+            progressFill.style.width = `${((currentStepIdx + 1) / total) * 100}%`;
+
+            storyPrevBtn.style.display = currentStepIdx > 0 ? 'inline-flex' : 'none';
+            const isLast = currentStepIdx === storySteps.length - 1;
+            storyNextBtn.textContent = isLast ? '✅ Done' : 'Continue →';
+            storyNextBtn.className = isLast ? 'primary-btn' : 'primary-btn';
+
+            // Update status
+            setStatus(`📖 ${step.title}`, 'attacking');
+            detailStatus.textContent = `📖 ${step.title}`;
+
+            // Clear previous node states for this step's target
+            const targetId = step.target;
+            document.querySelectorAll('.node.attacking, .node.compromised, .node.secure').forEach(n => {
+                if (n.id !== `node-${targetId}`) {
+                    n.classList.remove('attacking', 'compromised', 'secure');
+                }
+            });
+
+            // Reset target node
+            const targetNode = document.getElementById(`node-${targetId}`);
+            if (targetNode) {
+                targetNode.classList.remove('attacking', 'compromised', 'secure');
+                const oldBubble = targetNode.querySelector('.popup-bubble');
+                if (oldBubble) oldBubble.remove();
+            }
+
+            isWaitingForContinue = false;
+        }
+
+        // ---------- ANIMATION LOOP ----------
+        function startAnimationLoop() {
+            if (animLoopId) {
+                clearInterval(animLoopId);
+                animLoopId = null;
+            }
+
+            let animCount = 0;
+            const maxAnims = 3; // Repeat animation 3 times then wait for continue
+
+            function runAnimCycle() {
+                if (isWaitingForContinue) return;
+
+                const step = storySteps[currentStepIdx];
+                if (!step) return;
+
+                const targetNode = document.getElementById(`node-${step.target}`);
+                if (!targetNode) return;
+
+                const allNodes = document.querySelectorAll('.node');
+
+                // Reset node state
+                targetNode.classList.remove('attacking', 'compromised', 'secure');
+                const oldBubble = targetNode.querySelector('.popup-bubble');
+                if (oldBubble) oldBubble.remove();
+
+                if (step.isFix) {
+                    // Fix step - show secure state
+                    targetNode.classList.add('secure');
+                    const bubble = document.createElement('div');
+                    bubble.className = 'popup-bubble';
+                    bubble.innerHTML = `
+                        <div class="title">🛡️ ${step.body.replace(/<[^>]*>/g, '').substring(0, 60)}...</div>
+                        <div class="fix">✅ Vulnerability fixed!</div>
+                    `;
+                    targetNode.appendChild(bubble);
+                    setStatus(`🛡️ ${step.title}`, 'fixing');
+                    return;
+                }
+
+                // Attack animation
+                targetNode.classList.add('attacking');
+
+                // Spawn particles
+                const randomNode = allNodes[Math.floor(Math.random() * allNodes.length)];
+                if (randomNode && randomNode !== targetNode) {
+                    spawnDataStream(randomNode, targetNode);
+                    spawnParticle(randomNode, targetNode, step.icon || '💀');
+                }
+
+                // Spawn exfil particles
+                setTimeout(() => {
+                    const otherNode = allNodes[Math.floor(Math.random() * allNodes.length)];
+                    if (otherNode && otherNode !== targetNode) {
+                        spawnParticle(targetNode, otherNode, '📤');
+                    }
+                }, 300);
+
+                // After animation, show compromised state
+                setTimeout(() => {
+                    if (isWaitingForContinue) return;
+                    targetNode.classList.remove('attacking');
+                    targetNode.classList.add('compromised');
+
+                    // Add compromise bubble
+                    const bubble = document.createElement('div');
+                    bubble.className = 'popup-bubble';
+                    const entity = entities.find(e => e.id === step.target);
+                    bubble.innerHTML = `
+                        <div class="title">⚠️ ${threatStories[document.querySelector('.threat-btn.active')?.dataset?.threat]?.title || 'Attack'} in progress</div>
+                        <div>${entity?.vuln || 'Vulnerability detected'}</div>
+                        <div class="fix">🔧 Click "Continue" to see the fix</div>
+                    `;
+                    const oldB = targetNode.querySelector('.popup-bubble');
+                    if (oldB) oldB.remove();
+                    targetNode.appendChild(bubble);
+
+                    // Add evidence
+                    const activeCase = cases.find(c => c.id === activeCaseId);
+                    if (activeCase) {
+                        if (!activeCase.evidence) activeCase.evidence = [];
+                        activeCase.evidence.push({
+                            entityId: step.target,
+                            text: step.title
+                        });
+                        renderCases();
+                        const entity = entities.find(e => e.id === step.target);
+                        if (entity) updateDetails(entity);
+                    }
+
+                    // Increment animation count
+                    animCount++;
+                    if (animCount >= maxAnims) {
+                        // Pause and wait for user to click Continue
+                        isWaitingForContinue = true;
+                        setStatus(`⏸️ Click "Continue" to proceed`, 'idle');
+                    }
+                }, 1200);
+            }
+
+            // Run first cycle immediately
+            setTimeout(runAnimCycle, 300);
+
+            // Set up interval for repeated cycles
+            animLoopId = setInterval(() => {
+                if (isWaitingForContinue) return;
+                // Reset and run again
+                const step = storySteps[currentStepIdx];
+                if (step && !step.isFix) {
+                    runAnimCycle();
+                }
+            }, 3000);
+        }
+
+        // ---------- STORY NAVIGATION ----------
+        function nextStep() {
+            if (isWaitingForContinue) {
+                // User clicked continue, move to next step
+                if (currentStepIdx < storySteps.length - 1) {
+                    currentStepIdx++;
+                    renderStoryStep();
+                    // Restart animation loop for new step
+                    if (animLoopId) {
+                        clearInterval(animLoopId);
+                        animLoopId = null;
+                    }
+                    startAnimationLoop();
+                } else {
+                    // Done - close story
+                    finishStory();
+                }
+            } else {
+                // If not waiting, force proceed (e.g., for fix step)
+                if (currentStepIdx < storySteps.length - 1) {
+                    currentStepIdx++;
+                    renderStoryStep();
+                    if (animLoopId) {
+                        clearInterval(animLoopId);
+                        animLoopId = null;
+                    }
+                    startAnimationLoop();
+                } else {
+                    finishStory();
+                }
+            }
+        }
+
+        function finishStory() {
+            if (animLoopId) {
+                clearInterval(animLoopId);
+                animLoopId = null;
+            }
+            storyOverlay.classList.remove('active');
+            isSimulating = false;
+            setStatus('✅ Simulation complete!', 'idle');
+            detailStatus.textContent = '✅ Attack analyzed & fixed';
+
+            // Mark final state
+            const activeBtn = document.querySelector('.threat-btn.active');
+            if (activeBtn) {
+                const threatKey = activeBtn.dataset.threat;
+                const vulnerableEntities = entities.filter(e => e.threat === threatKey);
+                vulnerableEntities.forEach(entity => {
+                    const node = document.getElementById(`node-${entity.id}`);
+                    if (node) {
+                        node.classList.add('secure');
+                        const bubble = document.createElement('div');
+                        bubble.className = 'popup-bubble';
+                        const info = {
+                            'spoofing': 'Spoofing fixed: MFA enabled',
+                            'tampering': 'Tampering fixed: Checksums added',
+                            'repudiation': 'Repudiation fixed: Crypto signing',
+                            'information disclosure': 'Info Disclosure fixed: Encryption',
+                            'dos': 'DoS fixed: Rate limiting',
+                            'elevation of privilege': 'Elevation fixed: RBAC implemented'
+                        };
+                        bubble.innerHTML = `
+                            <div class="title">🛡️ ${info[threatKey] || 'Fixed!'}</div>
+                            <div class="fix">✅ System secured</div>
+                        `;
+                        const oldB = node.querySelector('.popup-bubble');
+                        if (oldB) oldB.remove();
+                        node.appendChild(bubble);
+                    }
+                });
+            }
+
+            // Add final evidence
+            const activeCase = cases.find(c => c.id === activeCaseId);
+            if (activeCase) {
+                if (!activeCase.evidence) activeCase.evidence = [];
+                const labels = {
+                    'spoofing': 'Spoofing attack simulated & fixed',
+                    'tampering': 'Tampering attack simulated & fixed',
+                    'repudiation': 'Repudiation attack simulated & fixed',
+                    'information disclosure': 'Info Disclosure attack simulated & fixed',
+                    'dos': 'DoS attack simulated & fixed',
+                    'elevation of privilege': 'Privilege Escalation simulated & fixed'
+                };
+                const btn = document.querySelector('.threat-btn.active');
+                const key = btn?.dataset?.threat || '';
+                activeCase.evidence.push({ entityId: 'all', text: labels[key] || 'Attack simulated & fixed' });
+                renderCases();
+                const entity = entities.find(e => e.id === entities[0]?.id);
+                if (entity) updateDetails(entity);
+            }
+        }
+
+        function prevStep() {
+            if (currentStepIdx > 0) {
+                currentStepIdx--;
+                renderStoryStep();
+                if (animLoopId) {
+                    clearInterval(animLoopId);
+                    animLoopId = null;
+                }
+                startAnimationLoop();
+            }
+        }
+
+        // ---------- EVENT LISTENERS ----------
+        document.querySelectorAll('.threat-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                showStory(this.dataset.threat);
+            });
+        });
+
+        storyNextBtn.addEventListener('click', nextStep);
+        storyPrevBtn.addEventListener('click', prevStep);
+        storyCloseBtn.addEventListener('click', () => {
+            if (animLoopId) {
+                clearInterval(animLoopId);
+                animLoopId = null;
+            }
+            storyOverlay.classList.remove('active');
+            isSimulating = false;
+            setStatus('🟢 Simulation cancelled', 'idle');
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (animLoopId) {
+                clearInterval(animLoopId);
+                animLoopId = null;
+            }
+            storyOverlay.classList.remove('active');
+            isSimulating = false;
+            document.querySelectorAll('.node.compromised, .node.attacking, .node.secure').forEach(n => {
+                n.classList.remove('compromised', 'attacking', 'secure');
+                const b = n.querySelector('.popup-bubble');
+                if (b) b.remove();
+            });
+            document.querySelectorAll('.threat-btn.active').forEach(b => b.classList.remove('active'));
+            setStatus('🟢 Ready — click a threat button to start', 'idle');
+            detailStatus.textContent = '—';
+        });
+
+        // New case
+        document.getElementById('newCaseBtn').addEventListener('click', () => document.getElementById('newCaseModal').classList.add('open'));
+        document.getElementById('newCaseBtn2').addEventListener('click', () => document.getElementById('newCaseModal').classList.add('open'));
+        document.getElementById('cancelCaseBtn').addEventListener('click', () => document.getElementById('newCaseModal').classList.remove('open'));
+        document.getElementById('saveCaseBtn').addEventListener('click', () => {
+            const title = document.getElementById('caseTitleInput').value || 'Untitled';
+            const desc = document.getElementById('caseDescInput').value;
+            const type = document.getElementById('caseTypeInput').value;
+            createCase(title, desc, type);
+            document.getElementById('newCaseModal').classList.remove('open');
+            document.getElementById('caseTitleInput').value = '';
+            document.getElementById('caseDescInput').value = '';
+        });
+
+        // Help
+        document.getElementById('helpBtn').addEventListener('click', () => document.getElementById('helpModal').classList.add('open'));
+        document.getElementById('closeHelpBtn').addEventListener('click', () => document.getElementById('helpModal').classList.remove('open'));
+        document.getElementById('helpModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+
+        // ---------- seed ----------
+        createCase('Security Assessment', 'Step-by-step threat simulation', 'audit');
+        if (entities.length > 0) {
+            selectedEntityId = entities[0].id;
+            updateDetails(entities[0]);
+        }
+
+        console.log('ThreatScape Step-by-Step ready!');
+        setStatus('🟢 Ready — click a threat button to start', 'idle');
+    })();
+</script>
+</body>
+</html>
